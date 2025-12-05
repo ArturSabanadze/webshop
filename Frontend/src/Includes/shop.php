@@ -1,0 +1,1 @@
+<p>Shop container</p>

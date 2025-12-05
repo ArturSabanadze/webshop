@@ -1,0 +1,21 @@
+<?php
+$page = $_GET['page'] ?? 'home'; // default page
+
+$allowedPages = [
+    'home' => '../src/Includes/main.php',
+    'shop' => '../src/Includes/shop.php',
+    'categories' => '../src/Includes/categories.php',
+    'about' => '../src/Includes/about.php',
+    'login' => '../src/Includes/login.php',
+    'register' => '../src/Includes/register.php',
+    'contact' => '../src/Includes/contact.php',
+    'impressum' => '../src/Includes/impressum.php',
+    'agb' => '../src/Includes/terms.php'
+];
+if (array_key_exists($page, $allowedPages)) {
+
+    include $allowedPages[$page];
+
+} else {
+    include '/src/Includes/main.php';
+}

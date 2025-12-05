@@ -1,0 +1,155 @@
+/* =========================
+NAVBAR
+========================= */
+.navbarContainerWrapper {
+  position: relative;
+  z-index: 10;
+  background: linear-gradient(to right, #184c7a, #1b51836a);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.desktop-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 20px;
+  color: #fff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logo:hover {
+  transform: scale(1.04);
+}
+
+.logo img {
+  width: clamp(80px, 15vw, 150px);
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  font-size: 1.1rem;
+}
+
+.links a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.links:hover > :not(:hover) {
+  opacity: 0.9;
+  filter: blur(1px);
+}
+
+.dsk-login-btn {
+  background-color: rgb(49, 68, 92);
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.dsk-login-btn svg {
+  display: block;
+}
+
+.dsk-login-btn:hover {
+  background-color: rgb(69, 90, 115);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: rgba(13, 48, 78, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+  z-index: 999;
+}
+
+.mobile-menu .links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 0;
+}
+
+.mobile-menu .links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.mobile-menu .menu-right {
+  margin-top: auto; /* push buttons to bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 0;
+}
+
+.mobile-menu .menu-right,
+.mobile-menu .menu-right .dropdown-btn {
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.nav-open .hamburger span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.nav-open .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+.nav-open .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 1140px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .desktop-menu .links,
+  .desktop-menu .menu-right {
+    display: none; /* hide desktop nav */
+  }
+}

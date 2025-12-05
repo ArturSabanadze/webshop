@@ -1,0 +1,11 @@
+.header-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #b2d5f8;
+  width: 100dvw;
+}
+
+.header-inner-container {
+  margin-left: 1dvw;
+}

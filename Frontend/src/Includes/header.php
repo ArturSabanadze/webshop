@@ -8,7 +8,7 @@
             <h1>AcademiaHub - Online Learn Platform</h1>
         </div>
         <div class="header-lower-element">
-            <button>Your gateway to academic excellence</button>
+            <button class="cta-btn">Your gateway to academic excellence</button>
         </div>
     </div>
     <div class="rgt-btn">&rsaquo;</div>

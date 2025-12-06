@@ -6,11 +6,16 @@
   width: 100dvw;
 }
 
-.header-inner-container {
+.header-container :nth-child(2) {
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.header-inner-container {
   margin-left: 1dvw;
-  height: 35dvh;
+  height: 25dvh;
 }
 
 .header-inner-container h1 {
@@ -20,11 +25,11 @@
 
 .lft-btn,
 .rgt-btn {
-  margin: 15px;
+  margin: 5px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #03244b8f;
+  background-color: #4a90e2;
   color: white;
   font-size: 1.5rem;
   align-self: center;
@@ -40,4 +45,33 @@
 .lft-btn:hover,
 .rgt-btn:hover {
   background-color: #357abd;
+}
+
+.cta-btn {
+  padding: 0.7rem 1.8rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #4a90e2, #357abd);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.cta-btn:hover,
+.cta-btn:focus {
+  background: linear-gradient(135deg, #357abd, #285a8f);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Optional: responsive full-width on mobile */
+@media (max-width: 768px) {
+  .cta-btn {
+    width: 100%;
+    font-size: 0.95rem;
+    text-align: center;
+  }
 }

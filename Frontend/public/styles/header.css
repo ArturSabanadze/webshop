@@ -29,9 +29,10 @@
   margin: 15px;
   width: 40px;
   height: 40px;
-  background: linear-gradient(#05264d, #357abd) padding-box,
-    linear-gradient(45deg, rgb(151, 94, 201), rgb(1, 61, 61)) border-box;
+  background: linear-gradient(45deg, #5b6f8f, #3a4961) padding-box,
+    linear-gradient(45deg, rgb(106, 127, 163), rgb(47, 103, 115)) border-box;
   border: 2px solid transparent;
+  border-radius: 15% 15% 15% 15%;
   color: white;
   font-size: 1.5rem;
   align-self: center;
@@ -42,21 +43,22 @@
   font-family: sans-serif;
   cursor: pointer;
   user-select: none;
-  transition: all 0.2s ease;
-}
-
-.lft-btn {
-  border-radius: 25% 0% 0% 25%;
-}
-.rgt-btn {
-  border-radius: 0% 25% 25% 0%;
+  transition: all 0.4s ease;
 }
 
 .lft-btn:hover,
 .rgt-btn:hover {
   transform: scale(1.05);
   background: linear-gradient(#05264d, #357abd) padding-box,
-    linear-gradient(45deg, rgb(1, 253, 253), #357abd) border-box;
+    linear-gradient(90deg, rgb(91, 111, 143), rgb(58, 73, 97)) border-box;
+}
+
+.lft-btn:hover {
+  border-radius: 25% 0% 0% 25%;
+}
+
+.rgt-btn:hover {
+  border-radius: 0% 25% 25% 0%;
 }
 
 .cta-btn {

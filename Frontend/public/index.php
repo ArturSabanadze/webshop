@@ -3,7 +3,6 @@ include_once '../src/Functions/css_loader.php';
 $incl_path = "../src/Includes/";
 $content_generator = "../src/Controllers/component_handler.php";
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 

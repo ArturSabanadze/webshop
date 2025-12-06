@@ -29,9 +29,8 @@
   margin: 15px;
   width: 40px;
   height: 40px;
-  border-radius: 25% 10%;
   background: linear-gradient(#05264d, #357abd) padding-box,
-    linear-gradient(45deg, red, cyan) border-box;
+    linear-gradient(45deg, rgb(86, 44, 124), rgb(1, 192, 192)) border-box;
   border: 2px solid transparent;
   color: white;
   font-size: 1.5rem;
@@ -46,11 +45,18 @@
   transition: all 0.2s ease;
 }
 
+.lft-btn {
+  border-radius: 25% 0% 0% 25%;
+}
+.rgt-btn {
+  border-radius: 0% 25% 25% 0%;
+}
+
 .lft-btn:hover,
 .rgt-btn:hover {
   transform: scale(1.05);
   background: linear-gradient(#05264d, #357abd) padding-box,
-    linear-gradient(45deg, cyan, #357abd) border-box;
+    linear-gradient(45deg, rgb(1, 253, 253), #357abd) border-box;
 }
 
 .cta-btn {

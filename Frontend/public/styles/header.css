@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: #b2d5f8;
+  background: linear-gradient(120deg, #5778be, #0e4d55);
   width: 100dvw;
 }
 
@@ -30,7 +30,7 @@
   width: 40px;
   height: 40px;
   background: linear-gradient(#05264d, #357abd) padding-box,
-    linear-gradient(45deg, rgb(86, 44, 124), rgb(1, 192, 192)) border-box;
+    linear-gradient(45deg, rgb(151, 94, 201), rgb(1, 61, 61)) border-box;
   border: 2px solid transparent;
   color: white;
   font-size: 1.5rem;

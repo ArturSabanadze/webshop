@@ -1,11 +1,43 @@
 .header-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   background-color: #b2d5f8;
   width: 100dvw;
 }
 
 .header-inner-container {
+  display: flex;
+  flex-direction: column;
   margin-left: 1dvw;
+  height: 35dvh;
+}
+
+.header-inner-container h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+.lft-btn,
+.rgt-btn {
+  margin: 15px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #03244b8f;
+  color: white;
+  font-size: 1.5rem;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  font-family: sans-serif;
+  cursor: pointer;
+  user-select: none;
+}
+
+.lft-btn:hover,
+.rgt-btn:hover {
+  background-color: #357abd;
 }

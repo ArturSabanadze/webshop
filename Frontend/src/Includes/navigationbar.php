@@ -50,10 +50,11 @@
 
 <script>
     function toggleMenu() {
-        const navbar = document.querySelector(".navbar");
+        const navbar = document.querySelector(".navbarContainerWrapper");
         navbar.classList.toggle("nav-open");
 
         const mobileMenu = document.querySelector(".mobile-menu");
+
         if (navbar.classList.contains("nav-open")) {
             mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
         } else {

@@ -10,6 +10,7 @@ $content_generator = "../src/Controllers/component_handler.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AcademiaHub</title>
+    <!-- loading css styles -->
     <?php echo $css_loader; ?>
 </head>
 

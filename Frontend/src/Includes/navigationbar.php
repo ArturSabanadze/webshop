@@ -18,10 +18,10 @@
 
         <!-- Navigation Links (desktop) -->
         <div class="links">
-            <a href="index.php?page=home">Home</a>
-            <a href="index.php?page=shop">Browse</a>
-            <a href="index.php?page=categories">Categories</a>
-            <a href="index.php?page=about">About</a>
+            <a href="index.php?page=home">HOME</a>
+            <a href="index.php?page=shop">BROWSE</a>
+            <a href="index.php?page=categories">CATEGORIES</a>
+            <a href="index.php?page=about">ABOUT</a>
         </div>
         <div>
             <a href="login.php" title="Login" class="dsk-login-btn">
@@ -40,10 +40,10 @@
     <!-- Slide-out mobile menu -->
     <div class="mobile-menu">
         <div class="links">
-            <a href="index.php?page=home">Home</a>
-            <a href="index.php?page=shop">Browse</a>
-            <a href="index.php?page=categories">Categories</a>
-            <a href="index.php?page=about">About</a>
+            <a href="index.php?page=home">HOME</a>
+            <a href="index.php?page=shop">BROWSE</a>
+            <a href="index.php?page=categories">CATEGORIES</a>
+            <a href="index.php?page=about">ABOUT</a>
         </div>
     </div>
 </div>

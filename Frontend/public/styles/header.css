@@ -15,7 +15,7 @@
 }
 
 .header-container :nth-child(2) {
-  height: clamp(10dvh, 25dvh, 30dvh);
+  height: clamp(10dvh, 15dvh, 30dvh);
   flex: clamp(0.5, 0.9, 1);
   display: flex;
   flex-direction: column;
@@ -112,7 +112,7 @@
     align-items: center;
   }
   .header-container :nth-child(2) {
-    height: clamp(10dvh, 25dvh, 30dvh);
+    height: clamp(10dvh, 10dvh, 30dvh);
   }
   .cta-btn {
     width: 100%;

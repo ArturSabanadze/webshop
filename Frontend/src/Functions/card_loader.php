@@ -30,12 +30,12 @@ function generateProductCard(array $row): string
     // HTML als String zurückgeben
     return '
         <div class="course-card">
-            <img src="' . hsc('image') . '" alt="Course thumbnail">
+            <img src="' . hsc($row, 'image') . '" alt="Course thumbnail">
 
             <div class="course-info">
-                <h3 class="course-title">' . hsc('product_name') . '</h3>
+                <h3 class="course-title">' . hsc($row, 'product_name') . '</h3>
 
-                <p class="course-desc">' . hsc('description') . '</p>
+                <p class="course-desc">' . hsc($row, 'description') . '</p>
 
                 <div class="course-meta">
                     <span>€ ' . number_format($row['price'], 2) . '</span>

@@ -1,5 +1,8 @@
 .main-container {
-  padding: 40px 80px;
+  padding-bottom: 80px;
+  padding-top: 80px;
+  padding-left: clamp(40px, 20dvw, 5000px);
+  padding-right: clamp(40px, 20dvw, 5000px);
   min-height: 80dvh;
 }
 
@@ -80,4 +83,10 @@
 
 .course-btn:hover {
   background: #28527a;
+}
+
+@media (min-width: 1100px) {
+  .courses-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }

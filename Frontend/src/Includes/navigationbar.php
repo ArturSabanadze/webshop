@@ -12,7 +12,7 @@
         <!-- Logo -->
         <div class="logo">
             <a href="index.php?page=home">
-                <img src="assets/logo2square.webp" alt="Logo">
+                <img src="assets/Logo/logo1.png" alt="Logo">
             </a>
         </div>
 

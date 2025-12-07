@@ -71,8 +71,8 @@
   margin-top: 10px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(135deg, #00eaff, #0077b6);
-  color: #001219;
+  background-color: rgb(49, 68, 92);
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -81,24 +81,27 @@
 
 .register-btn-main:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 234, 255, 0.3);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
 }
 
 /* --- Secondary Button --- */
 .register-btn-secondary {
   width: 100%;
   padding: 12px;
+  margin-top: 10px;
   border: none;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.2);
-  color: #e6faff;
-  margin-top: 4px;
+  background-color: rgb(69, 91, 117);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: 0.25s;
 }
 
 .register-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
 }
 
 /* --- Divider and small text --- */

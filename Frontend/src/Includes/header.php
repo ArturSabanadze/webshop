@@ -2,13 +2,13 @@
     <div class="lft-btn">&lsaquo;</div>
     <div class="header-inner-container">
         <div class="header-upper-element">
-            <p>upper element</p>
+            <h1>AcademiaHub</h1>
         </div>
         <div class="header-center-element">
-            <h1>AcademiaHub - Online Learn Platform</h1>
+            <h2>Learn Platform</h2>
         </div>
         <div class="header-lower-element">
-            <button class="cta-btn">Your gateway to academic excellence</button>
+            <button class="cta-btn">Browse Courses</button>
         </div>
     </div>
     <div class="rgt-btn">&rsaquo;</div>

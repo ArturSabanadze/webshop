@@ -1,0 +1,26 @@
+/* =========================
+    FOOTER DROPDOWN
+========================= */
+.footer-container {
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #f18888;
+  min-height: 5dvh;
+  width: 100dvw;
+}
+.footer-left {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.footer-center {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.footer-right {
+  width: 100%;
+  border: 1px solid black;
+}

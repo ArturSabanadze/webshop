@@ -1,7 +1,7 @@
 <?php $username = $_SESSION['username'] ?? ''; ?>
 
 <div class="navbarContainerWrapper">
-    <nav class="desktop-menu">
+    <navbar class="desktop-menu">
         <!-- Hamburger -->
         <div class="hamburger" onclick="toggleMenu()">
             <span></span>
@@ -35,7 +35,7 @@
                 </svg>
             </a>
         </div>
-    </nav>
+    </navbar>
 
     <!-- Slide-out mobile menu -->
     <div class="mobile-menu">

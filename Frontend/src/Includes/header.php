@@ -1,4 +1,4 @@
-<header class="header-container">
+<div class="header-container">
     <div class="lft-btn">&lsaquo;</div>
     <div class="header-inner-container">
         <div class="header-upper-element">
@@ -12,4 +12,4 @@
         </div>
     </div>
     <div class="rgt-btn">&rsaquo;</div>
-</header>
+</div>

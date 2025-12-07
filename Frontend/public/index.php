@@ -15,22 +15,23 @@ $content_generator = "../src/Controllers/component_handler.php";
 </head>
 
 <body>
-    <!-- =========================
-            NAVBAR TEMPLATE
-        ========================== -->
-    <?php include $incl_path . 'navigationbar.php'; ?>
-    <!-- =========================
-             HEADER TEMPLATE
-        ========================== -->
-    <?php include $incl_path . 'header.php'; ?>
-    <!-- =========================
-             MAIN TEMPLATE
-        ========================== -->
-    <?php include $content_generator; ?>
-    <!-- =========================
-             FOOTER TEMPLATE
-        ========================== -->
-    <?php include $incl_path . 'footer.php'; ?>
+    
+    <header>
+        <!--NAVBAR -->
+        <?php include $incl_path . 'navigationbar.php'; ?>
+        <!--HEADER-->
+        <?php include $incl_path . 'header.php'; ?>
+    </header>
+
+    <main>
+    <!--MAIN-->
+        <?php include $content_generator; ?>
+    </main>
+
+    <footer>
+    <!--FOOTER-->
+        <?php include $incl_path . 'footer.php'; ?>
+    </footer>
 </body>
 
 </html>

@@ -9,3 +9,10 @@ GLOBAL RESET
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f7fa;
+  color: #333;
+  line-height: 1.6;
+}

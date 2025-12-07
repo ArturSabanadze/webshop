@@ -3,6 +3,11 @@
   flex-direction: row;
   justify-content: space-between;
   background: linear-gradient(120deg, #5778be, #0e4d55);
+  background-image: url("../assets/bgr_images/header_bg.png");
+  background-size: cover;
+  background-position: top;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15))
+    drop-shadow(0 3px 6px rgba(0, 0, 0, 0.1));
   width: 100dvw;
 }
 

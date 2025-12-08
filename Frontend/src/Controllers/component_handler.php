@@ -8,6 +8,7 @@ $allowedPages = [
     'about' => '../src/Includes/about.php',
     'login' => '../src/Includes/login.php',
     'register' => '../src/Includes/register.php',
+    'logout' => '../src/Includes/logout.php',
     'contact' => '../src/Includes/contact.php',
     'impressum' => '../src/Includes/impressum.php',
     'agb' => '../src/Includes/terms.php'

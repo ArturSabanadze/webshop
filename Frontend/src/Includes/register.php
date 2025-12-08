@@ -1,5 +1,14 @@
 <?php
-//TODO php function to handle registration logic
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+require_once '../../Backend/register_handler.php';
+
+
+$error = $_SESSION['register_error'] ?? '';
+$success_message = $_SESSION['register_success_message'] ?? '';
+$success = $_SESSION['register_success'] ?? false;
 ?>
 
 <div class="register-container">
@@ -9,11 +18,11 @@
 
     <?php if ($success): ?>
         <div class="register-msg-ok">
-            Registration successful! You can now <a href="login.php">login</a>.
+            Registration successful! You can now <a href="index.php?page=login">login</a>.
         </div>
     <?php else: ?>
         <form method="post" action="" class="register-form">
-
+            <input type="hidden" name="action" value="register">
             <div class="register-grid">
                 <label>Name
                     <input type="text" name="name" required placeholder="Only letters and spaces allowed"
@@ -79,7 +88,8 @@
 
             <p class="register-login-text">Already have an account?</p>
 
-            <button type="button" class="register-btn-secondary" onclick="window.location.href='login.php'">Login</button>
+            <button type="button" class="register-btn-secondary"
+                onclick="window.location.href='index.php?page=login'">Login</button>
         </form>
     <?php endif; ?>
 </div>

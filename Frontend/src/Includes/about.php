@@ -7,8 +7,9 @@
         </div>
         <div class="about-info">
             <h3>Dominik Kraft</h3>
-            <p>Online Course Manager</p>
-            <p>Dominik manages and curates online courses to ensure they are engaging and educational for our users.</p>
+            <p>Datenbank Engineer</p>
+            <p>Dominik specializes in designing and managing efficient database systems to ensure data integrity and
+                performance.</p>
         </div>
     </div>
 
@@ -19,8 +20,9 @@
         </div>
         <div class="about-info">
             <h3>Artur Sabanadze</h3>
-            <p>Front-End Developer</p>
-            <p>Artur builds smooth, interactive, and responsive interfaces using the latest web technologies.</p>
+            <p>Full-Stack Developer</p>
+            <p>Artur develops both client and server software, ensuring seamless integration and functionality across
+                the entire application stack.</p>
         </div>
     </div>
 

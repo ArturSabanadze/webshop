@@ -23,11 +23,18 @@
 .register-msg-error {
   background: rgba(255, 60, 60, 0.2);
   border-left: 3px solid #ff3c3c;
+  color: rgb(226, 170, 170);
 }
 
 .register-msg-ok {
   background: rgba(0, 200, 120, 0.2);
   border-left: 3px solid #00c878;
+  color: white;
+}
+
+.register-msg-ok a {
+  text-decoration: none;
+  color: wheat;
 }
 
 /* --- Form --- */

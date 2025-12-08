@@ -23,11 +23,16 @@
   background: rgb(229 216 216 / 31%);
   border-left: 3px solid #ff3c3c;
   color: #d38b8b;
+  padding: 10px 20px;
+  border-radius: 4px;
 }
 
-.msg-ok {
+.msg-success {
   background: rgba(0, 200, 120, 0.2);
   border-left: 3px solid #00c878;
+  color: rgb(174, 255, 205);
+  padding: 10px 20px;
+  border-radius: 4px;
 }
 
 /* --- Form --- */

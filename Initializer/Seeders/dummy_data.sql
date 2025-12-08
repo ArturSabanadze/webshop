@@ -10,9 +10,10 @@ INSERT INTO users (username, password_hash, name, surname, email, role) VALUES
 -- DUMMY CATEGORIES
 -- =====================
 INSERT INTO categories (category_name, description) VALUES
-('Programming', 'Courses related to programming and software development'),
-('Design', 'Courses related to graphic and UI/UX design'),
-('Marketing', 'Courses about digital marketing and SEO strategies');
+('Software', 'Courses related to programming and software development'),
+('Web Development', 'Courses related to web development and UI/UX design'),
+('Marketing', 'Courses about digital marketing and SEO strategies'),
+('Business', 'Courses related to business management and entrepreneurship');
 
 -- =====================
 -- DUMMY PRODUCTS
@@ -55,7 +56,16 @@ INSERT INTO users_products (user_id, product_id) VALUES
 -- DUMMY PRODUCTS_CATEGORIES
 -- =====================
 INSERT INTO products_categories (product_id, category_id) VALUES
-(1, 1), -- PHP for Beginners → Programming
-(2, 1), -- Advanced JavaScript → Programming
-(3, 2), -- UI/UX Design Fundamentals → Design
-(4, 3); -- Digital Marketing 101 → Marketing
+(1, 1), -- Python Masterclass → Software
+(2, 1), -- Modern JavaScript Pro → Software
+(3, 2), -- React Native Apps → Web Development
+(4, 1), -- Data Science mit R → Software
+(4, 4), -- Data Science mit R → Business
+(5, 1), -- AI & Machine Learning → Software
+(6, 1), -- Cybersecurity Basics → Software
+(7, 1), -- DevOps: Docker & K8s → Software
+(8, 2), -- C# & Unity Game Dev → Web Development
+(9, 2), -- Fullstack Web Dev → Web Development
+(10, 1), -- AWS Cloud Architect → Software
+(10, 4), -- AWS Cloud Architect → Business
+(4, 3); -- Data Science mit R → Marketing

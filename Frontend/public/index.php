@@ -1,4 +1,15 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$error = $_SESSION['login_error'] ?? '';
+$success_message = $_SESSION['login_success'] ?? '';
+$success = !empty($success_message);
+
+// Clear flash messages
+unset($_SESSION['login_error']);
+unset($_SESSION['login_success']);
 include_once '../src/Functions/css_loader.php';
 $incl_path = "../src/Includes/";
 $content_generator = "../src/Controllers/component_handler.php";
@@ -15,7 +26,7 @@ $content_generator = "../src/Controllers/component_handler.php";
 </head>
 
 <body>
-    
+
     <header>
         <!--NAVBAR -->
         <?php include $incl_path . 'navigationbar.php'; ?>
@@ -24,12 +35,12 @@ $content_generator = "../src/Controllers/component_handler.php";
     </header>
 
     <main>
-    <!--MAIN-->
+        <!--MAIN-->
         <?php include $content_generator; ?>
     </main>
 
     <footer>
-    <!--FOOTER-->
+        <!--FOOTER-->
         <?php include $incl_path . 'footer.php'; ?>
     </footer>
 </body>

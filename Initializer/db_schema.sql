@@ -9,11 +9,20 @@ USE webshop;
 -- =====================
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    username VARCHAR(50) UNIQUE,
+    password_hash VARCHAR(255),
     name VARCHAR(100),
     surname VARCHAR(100),
-    email VARCHAR(100) UNIQUE NOT NULL,
+    gender VARCHAR(10),
+    birthdate DATE,
+    email VARCHAR(100) UNIQUE,
+    country VARCHAR(50),
+    postal_index VARCHAR(50),
+    street VARCHAR(255),
+    phone VARCHAR(20),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
     role VARCHAR(20) DEFAULT 'user'
 ) ENGINE=InnoDB;
 

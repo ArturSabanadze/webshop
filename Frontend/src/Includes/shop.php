@@ -1,7 +1,4 @@
 <!-- MAIN SECTION -->
-<script>
-    let imgElements = 
-</script>
 <section class="main-container">
     <div class="courses-header-filter">
 

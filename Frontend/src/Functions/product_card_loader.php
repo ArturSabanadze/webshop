@@ -27,7 +27,7 @@ function generateProductCard(array $row): string
     // HTML als String zurückgeben
     return '
         <div class="course-card">
-            <img src="' . htmlspecialchars($row['image']) . '" alt="Course thumbnail">
+            <img src="' . htmlspecialchars($row['image_url']) . '" alt="Course thumbnail">
 
             <div class="course-info">
                 <h3 class="course-title">' . htmlspecialchars($row['product_name']) . '</h3>

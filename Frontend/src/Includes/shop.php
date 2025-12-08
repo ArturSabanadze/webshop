@@ -18,7 +18,7 @@ if (file_exists($path)) {
         <select class="filter-category">
             <option value="">All Categories</option>
             <option value="software">Software</option>
-            <option value="design">Design</option>
+            <option value="design">Web Development</option>
             <option value="business">Business</option>
             <option value="marketing">Marketing</option>
         </select>

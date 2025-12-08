@@ -3,6 +3,8 @@ NAVBAR
 ========================= */
 .navbarContainerWrapper {
   position: relative;
+  top: 0;
+  position: sticky;
   z-index: 10;
   background: linear-gradient(
     to right,
@@ -11,9 +13,6 @@ NAVBAR
   );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
 }
 
 .desktop-menu {

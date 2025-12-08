@@ -5,7 +5,7 @@
   padding-left: clamp(40px, 20dvw, 5000px);
   padding-right: clamp(40px, 20dvw, 5000px);
   min-height: 80dvh;
-  background: linear-gradient(to right, rgb(70, 99, 122), rgb(108, 146, 182));
+  background: linear-gradient(to right, rgb(18, 32, 44), rgb(40, 54, 66));
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -34,6 +34,7 @@
 .register-form label {
   margin-bottom: 14px;
   font-size: 0.9rem;
+  color: #e6faff;
 }
 
 .register-form input,
@@ -50,12 +51,13 @@
   transition: 0.5s;
 }
 
-.register-form select {
-  color: black;
+.register-form select option {
+  background-color: rgb(49, 68, 92); /* dropdown background */
+  color: #fff; /* option text */
 }
 
 .register-form input::placeholder {
-  color: rgba(230, 250, 255, 0.6);
+  color: rgb(255, 255, 255);
 }
 
 .register-form input:focus,

@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
+    image_url VARCHAR(255) DEFAULT NULL,
     description VARCHAR(500) DEFAULT 'No description',
     price DECIMAL(10,2) NOT NULL,
     min_capacity INT DEFAULT 0,

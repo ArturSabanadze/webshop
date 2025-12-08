@@ -20,7 +20,7 @@
         <div class="links">
             <a href="index.php?page=home">HOME</a>
             <a href="index.php?page=shop">BROWSE</a>
-            <a href="index.php?page=categories">CATEGORIES</a>
+            <a href="index.php?page=membership">MEMBERSHIP</a>
             <a href="index.php?page=about">ABOUT</a>
         </div>
         <?php if (!isset($_SESSION['username'])): ?>
@@ -67,7 +67,7 @@
         <div class="links">
             <a href="index.php?page=home">HOME</a>
             <a href="index.php?page=shop">BROWSE</a>
-            <a href="index.php?page=categories">CATEGORIES</a>
+            <a href="index.php?page=membership">MEMBERSHIP</a>
             <a href="index.php?page=about">ABOUT</a>
         </div>
     </div>

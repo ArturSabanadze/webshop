@@ -5,14 +5,14 @@
 <section class="main-container">
     <div class="courses-header">
         <h2>Explore Our Courses</h2>
-        <p>Choose from a wide range of expertly crafted online courses.</p>
+        <h3>Choose from a wide range of expertly crafted online courses.</h3>
     </div>
 
     <div class="courses-grid">
 
         <!-- CARD 1 -->
         <div class="course-card">
-            <img src="https://img-c.udemycdn.com/course/240x135/1361718_c60d_4.jpg" alt="Course Image">
+            <img src="../../assets/product_images/aws-cloud-architect.webp" alt="Course Image">
             <h3>Introduction to Programming</h3>
             <p>Learn the basics of coding using modern languages.</p>
             <button class="course-btn">View Course</button>

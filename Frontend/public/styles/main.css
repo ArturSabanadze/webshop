@@ -4,6 +4,7 @@
   padding-left: clamp(40px, 20dvw, 5000px);
   padding-right: clamp(40px, 20dvw, 5000px);
   min-height: 80dvh;
+  background-image: url(/assets/bgr_images/std_patterns_bgr_blured.png);
 }
 
 .courses-header {
@@ -14,6 +15,13 @@
 .courses-header h2 {
   font-size: 2rem;
   margin-bottom: 10px;
+  color: #ffffff;
+}
+
+.courses-header h3 {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #ffffff;
 }
 .courses-grid {
   display: grid;

@@ -11,7 +11,7 @@ $allowedPages = [
     'logout' => '../src/Includes/logout.php',
     'contact' => '../src/Includes/contact.php',
     'impressum' => '../src/Includes/impressum.php',
-    'agb' => '../src/Includes/terms.php'
+    'terms' => '../src/Includes/terms.php'
 ];
 if (array_key_exists($page, $allowedPages)) {
 

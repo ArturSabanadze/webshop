@@ -9,5 +9,7 @@ $css_loader = "<link rel=\"stylesheet\" href=\"styles/index.css\">
 <link rel=\"stylesheet\" href=\"styles/logout.css\">
 <link rel=\"stylesheet\" href=\"styles/shopFilterBar.css\">
 <link rel=\"stylesheet\" href=\"styles/membership.css\">
-<link rel=\"stylesheet\" href=\"styles/about.css\">";
+<link rel=\"stylesheet\" href=\"styles/about.css\">
+<link rel=\"stylesheet\" href=\"styles/contact.css\">
+<link rel=\"stylesheet\" href=\"styles/terms.css\">";
 ?>

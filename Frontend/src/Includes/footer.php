@@ -20,9 +20,9 @@
         <div class="footer-right">
             <p>Quick Links:</p>
             <ul class="quick-links">
-                <li><a href="/agb">AGB</a></li>
-                <li><a href="/impressum">Impressum</a></li>
-                <li><a href="/cookies">Cookie Options</a></li>
+                <li><a href="index.php?page=terms">AGB</a></li>
+                <li><a href="index.php?page=impressum">Impressum</a></li>
+                <li><a href="index.php?page=contact">Kontakt</a></li>
             </ul>
         </div>
     </footer>

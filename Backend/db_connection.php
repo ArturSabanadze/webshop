@@ -1,5 +1,5 @@
 <?php
-$env = parse_ini_file(__DIR__ . '/.env');
+$env = parse_ini_file(__DIR__ . '/config/.env');
 // DB-Zugangsdaten
 $host = $env['DB_HOST'] ?? 'localhost';
 $dbname = $env['DB_NAME'] ?? 'webshop';

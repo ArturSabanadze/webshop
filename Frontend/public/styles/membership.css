@@ -1,0 +1,106 @@
+/* ===== Container ===== */
+.membership-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/assets/bgr_images/std_patterns_bgr_blured.png);
+  padding-bottom: 80px;
+  padding-top: 80px;
+  padding-left: clamp(40px, 20dvw, 5000px);
+  padding-right: clamp(40px, 20dvw, 5000px);
+  min-height: 50dvh;
+}
+
+/* ===== Card Styles ===== */
+.membership-card {
+  width: 25dvw;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 25px rgba(0, 0, 40, 0.3);
+  color: #1d1d1d;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Highlight middle card */
+.membership-card.featured {
+  background: rgba(80, 120, 180, 0.25);
+  border: 1px solid rgba(120, 160, 220, 0.5);
+  transform: scale(1.05);
+}
+
+/* Hover effects */
+.membership-card:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 28px rgba(0, 0, 60, 0.45);
+}
+
+/* ===== Typography ===== */
+.membership-title {
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+  color: #d9e9ff;
+}
+
+.membership-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  color: #7db7ff;
+}
+
+.membership-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem;
+}
+
+.membership-features li {
+  margin: 0.6rem 0;
+  opacity: 0.9;
+}
+
+/* ===== Button ===== */
+.membership-btn {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #4a6fa5, #769acb);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.membership-btn:hover {
+  background: linear-gradient(135deg, #5f89c1, #94b8e4);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .membership-container {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .membership-card {
+    width: 90%;
+    padding: clamp(0.5rem, 1dvw, 1rem);
+  }
+
+  .membership-title,
+  .membership-btn,
+  .membership-features,
+  .membership-price {
+    font-size: clamp(1.5dvh, 2dvh, 1rem);
+  }
+}

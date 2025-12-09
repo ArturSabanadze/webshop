@@ -9,11 +9,20 @@ USE webshop;
 -- =====================
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255) NOT NULL,
+    username VARCHAR(50) UNIQUE,
+    password_hash VARCHAR(255),
     name VARCHAR(100),
     surname VARCHAR(100),
-    email VARCHAR(100) UNIQUE NOT NULL,
+    gender VARCHAR(10),
+    birthdate DATE,
+    email VARCHAR(100) UNIQUE,
+    country VARCHAR(50),
+    postal_index VARCHAR(50),
+    street VARCHAR(255),
+    phone VARCHAR(20),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
     role VARCHAR(20) DEFAULT 'user'
 ) ENGINE=InnoDB;
 
@@ -24,6 +33,10 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
+<<<<<<< HEAD
+=======
+    image_url VARCHAR(255) DEFAULT NULL,
+>>>>>>> 9e6250a4a6e7ddf513940ec36c5f113b74d12ade
     image VARCHAR(200) DEFAULT 'https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png',
     description VARCHAR(500) DEFAULT 'No description',
     price DECIMAL(10,2) NOT NULL,

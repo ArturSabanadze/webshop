@@ -1,0 +1,120 @@
+.login-container {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  padding-left: clamp(40px, 20dvw, 5000px);
+  padding-right: clamp(40px, 20dvw, 5000px);
+  min-height: 80dvh;
+  background: linear-gradient(to right, rgb(18, 32, 44), rgb(40, 54, 66));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* --- Error & success messages --- */
+.msg-error,
+.msg-ok {
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.msg-error {
+  background: rgb(229 216 216 / 31%);
+  border-left: 3px solid #ff3c3c;
+  color: #d38b8b;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.msg-success {
+  background: rgba(0, 200, 120, 0.2);
+  border-left: 3px solid #00c878;
+  color: rgb(174, 255, 205);
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+/* --- Form --- */
+.login-form label {
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #e6faff;
+  display: block;
+}
+
+.login-form input {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  color: #e6faff;
+  backdrop-filter: blur(6px);
+  outline: none;
+  transition: 0.5s;
+}
+
+.login-form input::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.login-form input {
+  border-color: #00eaff31;
+  box-shadow: 0 0 10px rgba(0, 234, 255, 0.3);
+}
+
+/* --- Main Login Button --- */
+.login-btn-main {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgb(49, 68, 92);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.login-btn-main {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
+}
+
+/* --- Secondary Button (e.g., Register) --- */
+.login-btn-secondary {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgb(69, 91, 117);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.login-btn-secondary {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
+}
+
+/* --- Divider --- */
+.login-divider {
+  margin: 1.4rem 0;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* --- Countdown text --- */
+.login-countdown {
+  font-weight: 600;
+  color: #bfe9ff;
+}

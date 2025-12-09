@@ -31,7 +31,7 @@ $page = $_GET['page'] ?? 'home';
             <a href="admin_dashboard.php?page=seminars">Seminare</a>
             <a href="admin_dashboard.php?page=dates">Termine</a>
             <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
-            <a href="/Backend/admin_logout.php">Logout</a>
+            <a href="/index.php?page=logout">Logout</a>
         </nav>
     </header>
 

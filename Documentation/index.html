@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Dokumentation Webshop / Seminarverwaltung</title>
+</head>
+<body>
+<h1>Dokumentation Webshop / Seminarverwaltung</h1>
+
+<h2>Überblick</h2>
+<p>Dieses Projekt implementiert einen Webshop für Seminare mit Frontend, Backend (Login/Registrierung) und einem Admin-Dashboard zur Verwaltung von Seminaren, Terminen und Teilnehmern.</p>
+
+<h2>Architektur</h2>
+<ul>
+    <li><strong>Frontend</strong>: Anzeige der Seiten (Start, Shop, About, Login, Registrierung, Kontakt, Impressum, AGB).</li>
+    <li><strong>Backend</strong>: Datenbankzugriff über PDO, Login-/Registrierungslogik.</li>
+    <li><strong>Admin_Dashboard</strong>: Geschützter Bereich für Administratoren.</li>
+</ul>
+
+<h2>UML (Textbeschreibung)</h2>
+<p>Vereinfacht gibt es folgende Haupt-Klassen / Tabellen:</p>
+<ul>
+    <li><strong>User</strong> (users): id, username, email, password_hash, role</li>
+    <li><strong>Seminar</strong> (products): id, product_name, description, price</li>
+    <li><strong>Termin</strong> (seminar_dates): id, product_id, start_datetime, end_datetime, room, max_participants</li>
+    <li><strong>Teilnahme</strong> (seminar_registrations): id, user_id, seminar_date_id, registration_datetime</li>
+</ul>
+
+<h2>Screenshots</h2>
+<p>Hier können in der finalen Abgabe noch Screenshots vom Frontend und Admin-Dashboard ergänzt werden.</p>
+
+<h2>Fazit</h2>
+<p>Die Anforderungen der Klausur (Trennung von Frontend/Backend, PDO, Templates, Adminbereich, Seminare/Termine/Teilnehmer, serialisierte Daten) werden mit diesem Projekt erfüllt.</p>
+</body>
+</html>

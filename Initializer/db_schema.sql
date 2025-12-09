@@ -82,3 +82,26 @@ CREATE TABLE IF NOT EXISTS products_categories (
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
+
+
+-- Tabelle für Seminartermine
+CREATE TABLE IF NOT EXISTS seminar_dates (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    product_id INT NOT NULL,
+    start_datetime DATETIME NOT NULL,
+    end_datetime DATETIME NOT NULL,
+    room VARCHAR(100),
+    max_participants INT DEFAULT 10,
+    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+);
+
+
+-- Tabelle für Seminar-Anmeldungen (Teilnehmer)
+CREATE TABLE IF NOT EXISTS seminar_registrations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    seminar_date_id INT NOT NULL,
+    registration_datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (seminar_date_id) REFERENCES seminar_dates(id) ON DELETE CASCADE
+);

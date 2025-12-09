@@ -8,7 +8,7 @@
             <h2>Learn Platform</h2>
         </div>
         <div class="header-lower-element">
-            <button class="cta-btn">Browse Courses</button>
+            <button class="cta-btn" onclick="window.location.href='index.php?page=shop'">Browse Courses</button>
         </div>
     </div>
     <div class="rgt-btn">&rsaquo;</div>

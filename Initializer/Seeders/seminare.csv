@@ -1,0 +1,25 @@
+titel;beschreibung;kategorien_id;preis
+PHPA;Objektorientierte Programmierung mit PHP: Grundlagen der PHP-Programmierung;2;1325.95
+PHPB;Objektorientierte Programmierung mit PHP: Webentwicklung mit PHP;2;805.23
+PHPC;Objektorientierte Programmierung mit PHP: PHP & Datenbanken;2;856.70
+PHPD;Objektorientierte Programmierung mit PHP: Fremdformate, Administration und Sicherheit mit PHP;2;923.15
+PHPE;Objektorientierte Programmierung mit PHP: PHP-Fallstudie;2;790.27
+JAS1;Certified JavaScript Developer: JavaScript Grundlagen;2;684.03
+JAS2;Certified JavaScript Developer: JavaScript DOM;2;702.04
+JAS3;Certified JavaScript Developer: Node.js, Express & Websockets;2;652.70
+JAS4;Certified JavaScript Developer: Testdriven Development - TDD, Einstieg in React;2;1254.15
+ZEND;Zend-PHP-Zertifizierung;2;1601.54
+GRHW;Grundlagen Hardware;1;423.46
+SVR1;Grundlagen Server;1;565.70
+GRDB;Grundlagen Relationale Datenbanken / SQL;2;806.23
+WISO;Wirtschafts- und Soziallehre;3;1324.45
+WARE;Wirtschafts- und Arbeitsrecht;3;1343.48
+KWIS;Wirtschafts- und Geschäftsprozesse;4;1295.18
+OSE1;Objektorientierte Programmierung;2;799.99
+UML1;UML - Unified Modeling Language;2;800.00
+JCA1;Java Plattform und Generics;2;600.00
+JCA2;Datentypen, Typisierung, Variablen;2;500.00
+JCA3;Java - Klassen, Objekte und Exceptions;2;1200.00
+PYT1;Python -1 Grundlagen ;2;1750.00
+PYT2;Python -2 Advanced ;2;1950.00
+PYTP1;Python -3 Zertifizierung;2;2250.00

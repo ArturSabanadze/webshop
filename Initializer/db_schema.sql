@@ -33,7 +33,10 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_name VARCHAR(50) NOT NULL,
+<<<<<<< HEAD
+=======
     image_url VARCHAR(255) DEFAULT NULL,
+>>>>>>> 9e6250a4a6e7ddf513940ec36c5f113b74d12ade
     image VARCHAR(200) DEFAULT 'https://cms-images.udemycdn.com/96883mtakkm8/9Gj6y7OdRKhBmHkgJ9lWV/4589dcd6feb8009798924f70f515b731/generative-ai.png',
     description VARCHAR(500) DEFAULT 'No description',
     price DECIMAL(10,2) NOT NULL,

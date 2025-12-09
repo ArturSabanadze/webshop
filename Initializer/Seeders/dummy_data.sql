@@ -2,7 +2,7 @@
 -- DUMMY USERS
 -- =====================
 INSERT INTO users (username, password_hash, name, surname, email, role) VALUES
-('jdoe', '$2y$10$examplehash1', 'John', 'Doe', 'jdoe@example.com', 'admin'),
+('jdoe', '$2y$10$examplehash1', 'John', 'Doe', 'jdoe@example.com', 'user'),
 ('asmith', '$2y$10$examplehash2', 'Alice', 'Smith', 'asmith@example.com', 'user'),
 ('bwayne', '$2y$10$examplehash3', 'Bruce', 'Wayne', 'bwayne@example.com', 'user');
 
@@ -71,11 +71,13 @@ INSERT INTO products_categories (product_id, category_id) VALUES
 (4, 3); -- Data Science mit R → Marketing
 -- =====================
 -- DUMMY USERS
+-- admin user(username: admin, password: admin1)
 -- =====================
 INSERT INTO users (username, password_hash, name, surname, email, role) VALUES
-('jdoe', '$2y$10$examplehash1', 'John', 'Doe', 'jdoe@example.com', 'admin'),
+('jdoe', '$2y$10$examplehash1', 'John', 'Doe', 'jdoe@example.com', 'user'),
 ('asmith', '$2y$10$examplehash2', 'Alice', 'Smith', 'asmith@example.com', 'user'),
-('bwayne', '$2y$10$examplehash3', 'Bruce', 'Wayne', 'bwayne@example.com', 'user');
+('bwayne', '$2y$10$examplehash3', 'Bruce', 'Wayne', 'bwayne@example.com', 'user'),
+('admin', '$2y$12$wTvJXqcfg1e6df0RtRUFB.7vkDvRWdCHJlO/S/6veiGYCJIar5khG', 'Aristotelis', 'Papadopoulos', 'admin@example.com', 'admin');
 
 -- =====================
 -- DUMMY CATEGORIES

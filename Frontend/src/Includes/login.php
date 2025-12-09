@@ -1,15 +1,15 @@
 <?php
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
 require_once '../../Backend/login_handler.php';
 
-
 $error = $_SESSION['login_error'] ?? '';
 $success_message = $_SESSION['login_success'] ?? '';
+
+unset($_SESSION['login_error'], $_SESSION['login_success']);
 $success = !empty($success_message);
+
+
 ?>
 
 <div class="login-container">

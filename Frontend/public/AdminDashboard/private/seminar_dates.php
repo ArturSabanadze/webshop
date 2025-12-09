@@ -11,18 +11,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_date'])) {
     $start = $_POST['start_datetime'] ?? '';
     $end = $_POST['end_datetime'] ?? '';
     $room = trim($_POST['room'] ?? '');
+    $minParticipants = (int) ($_POST['min_participants'] ?? 1);
     $maxParticipants = (int) ($_POST['max_participants'] ?? 10);
 
     if ($productId > 0 && $start !== '' && $end !== '') {
         $stmt = $pdo->prepare("
-            INSERT INTO seminar_dates (product_id, start_datetime, end_datetime, room, max_participants)
-            VALUES (:product_id, :start_dt, :end_dt, :room, :max_participants)
+            INSERT INTO seminar_dates (product_id, start_datetime, end_datetime, room, min_participants, max_participants)
+            VALUES (:product_id, :start_dt, :end_dt, :room, :min_participants, :max_participants)
         ");
         $stmt->execute([
             ':product_id' => $productId,
             ':start_dt' => $start,
             ':end_dt' => $end,
             ':room' => $room,
+            ':min_participants' => $minParticipants,
             ':max_participants' => $maxParticipants,
         ]);
         echo '<p>Termin wurde angelegt.</p>';
@@ -59,7 +61,7 @@ $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <select name="product_id" id="product_id" required>
                 <option value="">Bitte wählen</option>
                 <?php foreach ($seminars as $seminar): ?>
-                    <option value="<?= (int)$seminar['id'] ?>">
+                    <option value="<?= (int) $seminar['id'] ?>">
                         <?= htmlspecialchars($seminar['product_name']) ?>
                     </option>
                 <?php endforeach; ?>
@@ -82,6 +84,11 @@ $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
 
         <div class="form-group">
+            <label for="min_participants">Min. Teilnehmer</label>
+            <input type="number" id="min_participants" name="min_participants" value="1" min="1" max="20">
+        </div>
+
+        <div class="form-group">
             <label for="max_participants">Max. Teilnehmer</label>
             <input type="number" id="max_participants" name="max_participants" value="10" min="1" max="20">
         </div>
@@ -95,32 +102,33 @@ $dates = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php else: ?>
         <table>
             <thead>
-            <tr>
-                <th>ID</th>
-                <th>Seminar</th>
-                <th>Start</th>
-                <th>Ende</th>
-                <th>Raum</th>
-                <th>Belegung</th>
-                <th>Aktionen</th>
-            </tr>
+                <tr>
+                    <th>ID</th>
+                    <th>Seminar</th>
+                    <th>Start</th>
+                    <th>Ende</th>
+                    <th>Raum</th>
+                    <th>Belegung</th>
+                    <th>Aktionen</th>
+                </tr>
             </thead>
             <tbody>
-            <?php foreach ($dates as $date): ?>
-                <tr>
-                    <td><?= (int)$date['id'] ?></td>
-                    <td><?= htmlspecialchars($date['product_name']) ?></td>
-                    <td><?= htmlspecialchars($date['start_datetime']) ?></td>
-                    <td><?= htmlspecialchars($date['end_datetime']) ?></td>
-                    <td><?= htmlspecialchars($date['room']) ?></td>
-                    <td>
-                        <?= (int)$date['used_slots'] ?> / <?= (int)$date['max_participants'] ?>
-                    </td>
-                    <td>
-                        <a href="admin_dashboard.php?page=participants&amp;date_id=<?= (int)$date['id'] ?>">Teilnehmer anzeigen</a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
+                <?php foreach ($dates as $date): ?>
+                    <tr>
+                        <td><?= (int) $date['id'] ?></td>
+                        <td><?= htmlspecialchars($date['product_name']) ?></td>
+                        <td><?= htmlspecialchars($date['start_datetime']) ?></td>
+                        <td><?= htmlspecialchars($date['end_datetime']) ?></td>
+                        <td><?= htmlspecialchars($date['room']) ?></td>
+                        <td>
+                            <?= (int) $date['used_slots'] ?> / <?= (int) $date['max_participants'] ?>
+                        </td>
+                        <td>
+                            <a href="admin_dashboard.php?page=participants&amp;date_id=<?= (int) $date['id'] ?>">Teilnehmer
+                                anzeigen</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     <?php endif; ?>

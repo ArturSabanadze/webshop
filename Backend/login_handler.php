@@ -1,6 +1,5 @@
 <?php
 require_once __DIR__ . '/db_connection.php'; //Tobis Backend - enthält global $pdo
-$redirectToLogin = '../public/index.php';
 
 // POST-Anfragen bearbeiten
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login') {

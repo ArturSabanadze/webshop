@@ -1,0 +1,97 @@
+/* --- User Panel Container --- */
+.user-panel-container {
+  padding-bottom: 80px;
+  padding-top: 80px;
+  padding-left: clamp(40px, 20dvw, 5000px);
+  padding-right: clamp(40px, 20dvw, 5000px);
+  min-height: 80dvh;
+  background: linear-gradient(to right, rgb(18, 32, 44), rgb(40, 54, 66));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.user-panel-container h2 {
+  margin-bottom: 20px;
+  color: #e6faff;
+  font-size: 1.8rem;
+}
+
+.user-panel-container p {
+  color: #bfe9ff;
+  margin-bottom: 20px;
+}
+
+/* --- Info grid (like form fields) --- */
+.user-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+/* Two columns on larger screens */
+@media (min-width: 756px) {
+  .user-info-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.user-info-item {
+  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: #e6faff;
+  backdrop-filter: blur(6px);
+  transition: 0.3s;
+}
+
+.user-info-item strong {
+  color: #ffffff;
+}
+
+/* --- Buttons matching register page --- */
+.btn-primary,
+.btn-danger {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.profile-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+@media (min-width: 756px) {
+  .profile-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Main button style (like register-btn-main) */
+.btn-primary {
+  background-color: rgb(49, 68, 92);
+  color: #ffffff;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
+}
+
+/* Secondary button style (register-btn-secondary variant) */
+.btn-danger {
+  background-color: rgb(69, 91, 117);
+  color: #ffffff;
+}
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(255, 80, 80, 0.2);
+}

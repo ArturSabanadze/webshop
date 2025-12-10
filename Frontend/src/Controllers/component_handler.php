@@ -5,6 +5,7 @@ $allowedPages = [
     'home' => '../src/Includes/main.php',
     'shop' => '../src/Includes/shop.php',
     'membership' => '../src/Includes/membership.php',
+    'user_panel' => '../src/Includes/user_panel.php',
     'about' => '../src/Includes/about.php',
     'login' => '../src/Includes/login.php',
     'register' => '../src/Includes/register.php',
@@ -18,5 +19,5 @@ if (array_key_exists($page, $allowedPages)) {
     include $allowedPages[$page];
 
 } else {
-    include '/src/Includes/main.php';
+    include '../src/Includes/main.php';
 }

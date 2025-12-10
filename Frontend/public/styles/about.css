@@ -30,14 +30,47 @@
   flex-direction: row-reverse;
 }
 
-/* Image */
-.about-image img {
+.about-image-0 {
   width: 180px;
   height: 180px;
-  object-fit: cover;
   border-radius: 50%;
   border: 3px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../assets/profile_images/dominik.jpg"),
+    url("/Die_Fantastische_4/Frontend/public/assets/profile_images/dominik.jpg");
+}
+.about-image-1 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../assets/profile_images/artur.jpg"),
+    url("/Die_Fantastische_4/Frontend/public/assets/profile_images/artur.jpg");
+}
+.about-image-2 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://via.placeholder.com/180");
+}
+.about-image-3 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://via.placeholder.com/180");
 }
 
 /* Info */

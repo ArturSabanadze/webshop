@@ -53,10 +53,7 @@ Dieses Projekt ist ein einfacher Webshop, der es Benutzern ermöglicht, Produkte
    ```
 4. **Entwicklungsserver starten:**
    setup.bat ausführen um den Projekt ordner in xampp automatisch zu kopieren, Datenbank mit test daten initialisieren.
-   in Browser über den link
-   ```
-
-   ```
+   in Browser über den link http://localhost/Die_Fantastische_4/Frontend/public/index.php öffnen.
 
 ## Lizenz
 

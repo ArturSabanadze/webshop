@@ -2,9 +2,7 @@
 
     <!-- Person 1 -->
     <div class="about-person">
-        <div class="about-image">
-            <img src="https://via.placeholder.com/180" alt="Person 1">
-        </div>
+        <div class="about-image-0"></div>
         <div class="about-info">
             <h3>Dominik Kraft</h3>
             <p>Datenbank Engineer</p>
@@ -15,9 +13,7 @@
 
     <!-- Person 2 -->
     <div class="about-person reverse">
-        <div class="about-image">
-            <img src="../../assets/profile_images/artur.jpg" alt="Person 2">
-        </div>
+        <div class="about-image-1"></div>
         <div class="about-info">
             <h3>Artur Sabanadze</h3>
             <p>Full-Stack Developer</p>
@@ -28,9 +24,7 @@
 
     <!-- Person 3 -->
     <div class="about-person">
-        <div class="about-image">
-            <img src="https://via.placeholder.com/180" alt="Person 3">
-        </div>
+        <div class="about-image-2"></div>
         <div class="about-info">
             <h3>Tobias Heinrich Dyck</h3>
             <p>Backend Developer</p>
@@ -41,9 +35,7 @@
 
     <!-- Person 4 -->
     <div class="about-person reverse">
-        <div class="about-image">
-            <img src="https://via.placeholder.com/180" alt="Person 4">
-        </div>
+        <div class="about-image-3"></div>
         <div class="about-info">
             <h3>Ingo Paar</h3>
             <p>Security Specialist</p>

@@ -175,6 +175,7 @@ NAVBAR
   }
 
   .logo img {
+    flex: 1;
     margin-left: 20px;
     width: clamp(60px, 15vw, 100px);
   }
@@ -182,5 +183,12 @@ NAVBAR
   .desktop-menu .links,
   .desktop-menu .menu-right {
     display: none; /* hide desktop nav */
+  }
+
+  .navbar-btn-not-logged,
+  .navbar-btn-logged {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
 }

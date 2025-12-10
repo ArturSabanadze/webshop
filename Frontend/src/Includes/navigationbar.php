@@ -24,7 +24,7 @@
             <a href="index.php?page=about">ABOUT</a>
         </div>
         <?php if (!isset($_SESSION['username'])): ?>
-            <div>
+            <div class="navbar-btn-not-logged">
                 <a href="index.php?page=login" title="Login" class="dsk-login-btn">
                     Login<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -46,7 +46,7 @@
                 </a>
             </div>
         <?php else: ?>
-            <div>
+            <div class="navbar-btn-logged">
                 <a href="index.php?page=logout" title="Logout" class="dsk-login-btn">
                     Logout
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
@@ -56,6 +56,17 @@
                         <!-- Arrow exiting -->
                         <path d="M15 12H3" />
                         <path d="M10 7l5 5-5 5" />
+                    </svg>
+                </a>
+
+                <!-- NEW USER PANEL BUTTON -->
+                <a href="index.php?page=user-panel" title="User Panel" class="dsk-login-btn">
+                    User Panel
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <!-- User icon -->
+                        <circle cx="12" cy="7" r="4" />
+                        <path d="M5.5 21a6.5 6.5 0 0 1 13 0" />
                     </svg>
                 </a>
             </div>

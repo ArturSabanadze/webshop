@@ -47,15 +47,6 @@ if (file_exists($path)) {
 </section>
 
 <script>
-    // FILTER BUTTON
-    document.querySelector('.filter-btn').addEventListener('click', () => {
-        const search = document.querySelector('.filter-search').value;
-        const category = document.querySelector('.filter-category').value;
-        const sort = document.querySelector('.filter-sort').value;
-        const params = new URLSearchParams({ search, category, sort });
-        window.location.href = `?page=shop&${params.toString()}`;
-    });
-
     // OPEN MODAL AND FETCH SEMINAR DATES
     document.querySelectorAll('.course-btn').forEach(btn => {
         btn.addEventListener('click', function () {

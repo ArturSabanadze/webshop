@@ -1,6 +1,5 @@
 <?php
-session_start();
-require_once __DIR__ . '/../../../Backend/db_connection.php';
+require_once '../../Backend/db_connection.php';
 
 function getAllProducts(): array
 {

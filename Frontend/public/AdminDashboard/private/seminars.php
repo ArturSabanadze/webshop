@@ -4,7 +4,9 @@
 
 // Define upload folder
 $uploadDir = __DIR__ . '/../../assets/product_images/'; // adjust path to your project
-$uploadUrlBase = '../../assets/product_images/'; // URL prefix to save in DB
+$uploadUrlBase = '../../assets/product_images/'; // URL prefix to save in DB if you work with Visual Studio Code 
+/* $uploadUrlBase = '/Die_Fantastische_4/Frontend/public/assets/product_images/';  */// URL prefix to save in DB if you work xampp. Project root is assumed to be at /Die_Fantastische_4/Frontend/public/
+
 
 // Seminar anlegen
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {

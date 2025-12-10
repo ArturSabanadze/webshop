@@ -14,7 +14,8 @@ $username = $_SESSION['username'];
    HANDLE ACTIONS (POST ONLY)
 --------------------------------------------*/
 $action = $_POST['action'] ?? null;
-$is_editing = ($action === "edit" || $action === "save");
+$is_editing = ($action === "edit");
+$is_saved = ($action === "save");
 
 if ($action === "save") {
 
@@ -52,8 +53,9 @@ if ($action === "save") {
             ':username' => $username
         ]);
 
+
         $success_msg = "Profile updated successfully!";
-        $is_editing = true;
+        $is_editing = false;
 
     } catch (PDOException $e) {
         $error_msg = "Database error: " . $e->getMessage();
@@ -90,12 +92,25 @@ function e($value)
     <p>Welcome, <strong><?= e($user['username']) ?></strong></p>
 
     <?php if (!empty($success_msg)): ?>
-        <div class="register-msg-ok"><?= e($success_msg) ?></div>
+        <div id="successMessage" class="register-msg-ok"><?= e($success_msg) ?></div>
     <?php endif; ?>
+    <script>
+        setTimeout(() => {
+            const msg = document.getElementById("successMessage");
+            if (msg) msg.style.display = "none";
+        }, 3000);
+    </script>
 
     <?php if (!empty($error_msg)): ?>
-        <div class="register-msg-error"><?= e($error_msg) ?></div>
+        <div id="errorMessage" class="register-msg-error"><?= e($error_msg) ?></div>
     <?php endif; ?>
+
+    <script>
+        setTimeout(() => {
+            const msg = document.getElementById("errorMessage");
+            if (msg) msg.style.display = "none";
+        }, 3000);
+    </script>
 
     <form method="post">
 

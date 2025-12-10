@@ -1,4 +1,0 @@
-# Admin Dashboard Directory
-
-Diese Schnittstelle ist nur von Admins erreichbar. Soll mit hilfe der admin_login.php in Backend entsprechend
-geschützt werden. Multi-layer security ist empfehlenswert (Login, SESSION Tokens, .htaccess, ggf. IP access controll)

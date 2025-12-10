@@ -1,10 +1,17 @@
 <?php
 session_start();
 
-// Nur Admin-Benutzer zulassen
-if (empty($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+$page = $_GET['page'] ?? 'home';
+
+// Nur Admin-Benutzer zulassen, außer auf der Login-Seite
+if ($page !== 'login' && (empty($_SESSION['role']) || $_SESSION['role'] !== 'admin')) {
     $_SESSION['login_error'] = 'You don’t have Admin rights.';
-    header('Location: /index.php?page=login'); // absolute path
+    header('Location: admin_dashboard.php?page=login');
+    exit();
+}
+
+if ($page === 'login' && !empty($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+    header('Location: admin_dashboard.php?page=home');
     exit();
 }
 
@@ -27,11 +34,12 @@ $page = $_GET['page'] ?? 'home';
     <header class="admin-header">
         <h1>Admin-Dashboard</h1>
         <nav class="admin-nav">
-            <a href="admin_dashboard.php?page=home">Übersicht</a>
+            <a href="admin_dashboard.php?page=home">Home</a>
             <a href="admin_dashboard.php?page=seminars">Seminare</a>
             <a href="admin_dashboard.php?page=dates">Termine</a>
             <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
             <a href="admin_dashboard.php?page=tickets">Tickets</a>
+            <a href="admin_dashboard.php?page=login">Login</a>
             <a href="/index.php?page=logout">Logout</a>
         </nav>
     </header>
@@ -50,6 +58,9 @@ $page = $_GET['page'] ?? 'home';
                 break;
             case 'tickets':
                 require __DIR__ . '/tickets.php';
+                break;
+            case 'login':
+                require __DIR__ . '/admin_login.php';
                 break;
             default:
                 ?>

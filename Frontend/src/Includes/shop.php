@@ -1,21 +1,15 @@
 <?php
 require_once '../src/Functions/product_card_loader.php';
 
-// Read filter parameters
 $search = $_GET['search'] ?? '';
 $category = $_GET['category'] ?? '';
 $sort = $_GET['sort'] ?? 'newest';
 ?>
 
-<!-- SHOP SECTION -->
 <section class="main-container">
     <div class="courses-header-filter">
-
-        <!-- Search Input -->
         <input type="text" class="filter-search" placeholder="Search products..."
             value="<?= htmlspecialchars($search) ?>" />
-
-        <!-- Category Select -->
         <select class="filter-category">
             <option value="">All Categories</option>
             <option value="software" <?= $category === 'software' ? 'selected' : '' ?>>Software</option>
@@ -23,18 +17,12 @@ $sort = $_GET['sort'] ?? 'newest';
             <option value="business" <?= $category === 'business' ? 'selected' : '' ?>>Business</option>
             <option value="marketing" <?= $category === 'marketing' ? 'selected' : '' ?>>Marketing</option>
         </select>
-
-        <!-- Sort Select -->
         <select class="filter-sort">
             <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Newest</option>
-            <option value="popular" <?= $sort === 'popular' ? 'selected' : '' ?>>Most Popular</option>
             <option value="price-low" <?= $sort === 'price-low' ? 'selected' : '' ?>>Price: Low → High</option>
             <option value="price-high" <?= $sort === 'price-high' ? 'selected' : '' ?>>Price: High → Low</option>
         </select>
-
-        <!-- Search Button -->
         <button class="filter-btn" type="button">Search</button>
-
     </div>
 
     <div class="courses-grid">
@@ -54,18 +42,93 @@ $sort = $_GET['sort'] ?? 'newest';
         }
         ?>
     </div>
+
+    <!-- ENROLL MODAL -->
+    <div id="enrollModal" class="modal-overlay" style="display:none;">
+        <div class="modal">
+            <span class="modal-close" onclick="closeEnrollModal()">×</span>
+            <h3>Wähle ein Seminar-Datum</h3>
+            <form id="enrollForm">
+                <input type="hidden" name="seminar_date_id" id="modal_seminar_date_id">
+                <select id="seminar_date_select" required></select>
+                <button type="submit">Enroll</button>
+            </form>
+        </div>
+    </div>
 </section>
 
 <script>
-    // JS Filter event
-    const btn = document.querySelector('.filter-btn');
-
-    btn.addEventListener('click', () => {
+    // FILTER BUTTON
+    document.querySelector('.filter-btn').addEventListener('click', () => {
         const search = document.querySelector('.filter-search').value;
         const category = document.querySelector('.filter-category').value;
         const sort = document.querySelector('.filter-sort').value;
-
         const params = new URLSearchParams({ search, category, sort });
         window.location.href = `?page=shop&${params.toString()}`;
     });
+
+    // OPEN MODAL AND FETCH SEMINAR DATES
+    document.querySelectorAll('.course-btn').forEach(btn => {
+        btn.addEventListener('click', function () {
+            const productId = this.dataset.id;
+            const seminarSelect = document.getElementById('seminar_date_select');
+            seminarSelect.innerHTML = '';
+
+            fetch('ajax_get_seminar_dates.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'product_id=' + encodeURIComponent(productId)
+            })
+                .then(res => res.json())
+                .then(dates => {
+                    if (dates.error) {
+                        alert(dates.error);
+                        return;
+                    }
+
+                    if (dates.length === 0) {
+                        const opt = document.createElement('option');
+                        opt.value = '';
+                        opt.textContent = 'No available dates';
+                        seminarSelect.appendChild(opt);
+                    } else {
+                        dates.forEach(d => {
+                            const opt = document.createElement('option');
+                            opt.value = d.id;
+                            opt.textContent = d.start_datetime + ' - ' + d.end_datetime;
+                            seminarSelect.appendChild(opt);
+                        });
+                    }
+
+                    document.getElementById('enrollModal').style.display = 'flex';
+                })
+                .catch(err => console.error('Error fetching seminar dates:', err));
+        });
+    });
+
+    // ENROLL FORM SUBMIT
+    document.getElementById('enrollForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const seminarDateId = document.getElementById('seminar_date_select').value;
+
+        fetch('ajax_enroll.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: 'seminar_date_id=' + encodeURIComponent(seminarDateId)
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.error) {
+                    alert(result.error);
+                } else {
+                    alert(result.success);
+                }
+                closeEnrollModal();
+            })
+            .catch(err => console.error('Error during enrollment:', err));
+    });
+
+    function closeEnrollModal() {
+        document.getElementById('enrollModal').style.display = 'none';
+    }
 </script>

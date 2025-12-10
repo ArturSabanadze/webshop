@@ -10,7 +10,7 @@ set XAMPP_PATH=C:\xampp
 set Htdocs_PATH=%XAMPP_PATH%\htdocs
 set SQL_PATH=%~dp0Initializer\
 set DummyData_PATH=%SQL_PATH%Dummy\
-set CSV_PATH=%~dp0Initializer\Dummy\products.csv
+set CSV_PATH=%~dp0Initializer\Dummy\products_for_xampp.csv
 
 :: -------------------------------
 :: Webshop-Ordner erstellen

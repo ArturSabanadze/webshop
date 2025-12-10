@@ -1,4 +1,4 @@
-LOAD DATA LOCAL INFILE 'products.csv' 
+LOAD DATA LOCAL INFILE 'products_for_xampp.csv' 
 INTO TABLE products
 FIELDS TERMINATED BY ';'
 OPTIONALLY ENCLOSED BY '"'

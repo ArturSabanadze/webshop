@@ -1,5 +1,9 @@
+Datenbank
+
 1. Über cmd an mysql -uroot verbinden
-2. db_schema.sql und dummy_data.sql scripte ausführen
-3. PHP server in Webshop/Frontend/public starten
-4. Um sich als Admin anzumelden nutze (username: admin, password: admin1)
-5. Admin Dashboard ist erreichbar erst wenn man sich als admin eingellogt ist. 
+2. db_schema.sql
+3. dummy_data.sql scripte ausführen
+
+Admin Panel
+1. Um sich als Admin anzumelden nutze (username: admin, password: admin1)
+2. Admin Dashboard link http://localhost:8080/AdminDashboard/private/admin_dashboard.php (port anpassen)

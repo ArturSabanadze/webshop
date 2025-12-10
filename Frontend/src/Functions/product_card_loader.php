@@ -45,3 +45,54 @@ function generateProductCard(array $row): string
         </div>
     ';
 }
+
+function getFilteredProducts($search = '', $category = '', $sort = 'newest')
+{
+    global $pdo;
+
+    //Select all products and also join their categories (if they have any),
+    //keeping products even if they have zero categories.
+    //Start with WHERE 1 so we can add dynamic filters.
+    $query = "SELECT p.* FROM products p
+        LEFT JOIN products_categories pc ON p.id = pc.product_id
+        LEFT JOIN categories c ON c.id = pc.category_id
+        WHERE 1";
+
+    $params = [];
+
+    // Search
+    if (!empty($search)) {
+        $query .= " AND (p.product_name LIKE ? OR p.description LIKE ?)";
+        $params[] = "%$search%";
+        $params[] = "%$search%";
+    }
+
+
+    // Category
+    if (!empty($category)) {
+        $query .= " AND c.category_name = ?";
+        $params[] = $category;
+    }
+
+
+    // Sorting
+    switch ($sort) {
+        case 'price-low':
+            $query .= " ORDER BY p.price ASC";
+            break;
+        case 'price-high':
+            $query .= " ORDER BY p.price DESC";
+            break;
+        case 'newest':
+        default:
+            $query .= " ORDER BY p.created_at DESC";
+            break;
+    }
+
+
+    $stmt = $pdo->prepare($query);
+    $stmt->execute($params);
+
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}

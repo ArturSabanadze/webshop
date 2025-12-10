@@ -1,0 +1,5 @@
+1. Über cmd an mysql -uroot verbinden
+2. db_schema.sql und dummy_data.sql scripte ausführen
+3. PHP server in Webshop/Frontend/public starten
+4. Um sich als Admin anzumelden nutze (username: admin, password: admin1)
+5. Admin Dashboard ist erreichbar erst wenn man sich als admin eingellogt ist. 

@@ -4,7 +4,8 @@
   padding-left: clamp(40px, 20dvw, 5000px);
   padding-right: clamp(40px, 20dvw, 5000px);
   min-height: 80dvh;
-  background-image: url(/assets/bgr_images/std_patterns_bgr_blured.png);
+  background-image: url("/assets/bgr_images/std_patterns_bgr_blured.png"),
+    url("/Die_Fantastische_4/Frontend/public/assets/bgr_images/std_patterns_bgr_blured.png"); /* fallback */
 }
 
 .logout-card {

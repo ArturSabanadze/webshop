@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login
                 $_SESSION['street'] = $user['street'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['login_success'] = 'Login successful! Hello, ' . $user['name'] . ' ' . $user['surname'] . '.';
-
+                echo "<script>window.location.href = 'index.php?page=home';</script>";
             } else {
                 // Ungültiges Passwort message
                 $_SESSION['login_error'] = 'Invalid username or password.';

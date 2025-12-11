@@ -22,6 +22,7 @@
             <a href="index.php?page=shop">BROWSE</a>
             <a href="index.php?page=membership">MEMBERSHIP</a>
             <a href="index.php?page=about">ABOUT</a>
+            <a href="index.php?page=contact">CONTACT</a>
         </div>
         <?php if (!isset($_SESSION['username'])): ?>
             <div class="navbar-btn-not-logged">
@@ -80,6 +81,7 @@
             <a href="index.php?page=shop">BROWSE</a>
             <a href="index.php?page=membership">MEMBERSHIP</a>
             <a href="index.php?page=about">ABOUT</a>
+            <a href="index.php?page=contact">CONTACT</a>
         </div>
     </div>
 </div>

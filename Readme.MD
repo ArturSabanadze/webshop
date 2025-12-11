@@ -1,3 +1,61 @@
+## Installation and Setup
+
+### Prerequisites
+
+- XAMPP (Apache + MySQL)
+- Windows operating system (for setup.bat automation)
+
+### Installation Steps
+
+1. **Clone the repository:** (If you have the Project zip folder skip to step 2)
+
+   ```bash
+   git clone https://github.com/ArturSabanadze/webshop.git
+   cd webshop
+   ```
+
+2. **Install XAMPP:** (If already installed skip to 3)
+
+   - Download and install XAMPP from https://www.apachefriends.org/
+   - Install to default location: `C:\xampp` **<--- (Important for setup.bat workflow)**
+
+3. **Configure MySQL:**
+
+   - Start Apache and MySQL from XAMPP Control Panel
+   - Ensure MySQL has no password (default), or update credentials in:
+     - `Backend/config/.env`
+     - `setup.bat`
+
+4. **Automated Setup:**
+
+   - Run `setup.bat` to:
+     - Copy project files to XAMPP htdocs
+     - Create database schema
+     - Import test data
+     - Configure environment
+
+5. **Access the Application:**
+   - Frontend: `http://localhost/Die_Fantastische_4/Frontend/public/index.php`
+   - Admin Dashboard: `http://localhost/Die_Fantastische_4/Frontend/public/AdminDashboard/private/admin_dashboard.php`
+
+### Manual Database Setup (Alternative)
+
+If automated setup doesn't work:
+
+1. Connect to MySQL:
+
+   ```bash
+   mysql -u root
+   ```
+
+2. Execute SQL scripts:
+   ```sql
+   source Initializer/db_schema.sql;
+   source Initializer/dummy_data.sql;
+   ```
+
+#
+
 # Webshop - Seminar Management System
 
 A comprehensive web-based platform for managing and booking seminars/courses online. This project implements a full-featured webshop specifically designed for educational seminars with user authentication, admin dashboard, and enrollment management.
@@ -95,62 +153,6 @@ The application uses a MySQL database with the following main tables:
   - Fields: id, user_id, seminar_date_id, registration_datetime
 - **users_products**: Many-to-many relationship between users and products
 - **products_categories**: Many-to-many relationship between products and categories
-
-## Installation and Setup
-
-### Prerequisites
-
-- XAMPP (Apache + MySQL)
-- Windows operating system (for setup.bat automation)
-
-### Installation Steps
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/ArturSabanadze/webshop.git
-   cd webshop
-   ```
-
-2. **Install XAMPP:**
-
-   - Download and install XAMPP from https://www.apachefriends.org/
-   - Install to default location: `C:\xampp`
-
-3. **Configure MySQL:**
-
-   - Start Apache and MySQL from XAMPP Control Panel
-   - Ensure MySQL has no password (default), or update credentials in:
-     - `Backend/config/.env`
-     - `setup.bat`
-
-4. **Automated Setup:**
-
-   - Run `setup.bat` to:
-     - Copy project files to XAMPP htdocs
-     - Create database schema
-     - Import test data
-     - Configure environment
-
-5. **Access the Application:**
-   - Frontend: `http://localhost/Die_Fantastische_4/Frontend/public/index.php`
-   - Admin Dashboard: `http://localhost/Die_Fantastische_4/Frontend/public/AdminDashboard/private/admin_dashboard.php`
-
-### Manual Database Setup (Alternative)
-
-If automated setup doesn't work:
-
-1. Connect to MySQL:
-
-   ```bash
-   mysql -u root
-   ```
-
-2. Execute SQL scripts:
-   ```sql
-   source Initializer/db_schema.sql;
-   source Initializer/dummy_data.sql;
-   ```
 
 ## Project Structure
 

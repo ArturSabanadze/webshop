@@ -111,9 +111,9 @@ CREATE TABLE IF NOT EXISTS seminar_dates (
 -- Tabelle für Seminar-Anmeldungen (Teilnehmer)
 CREATE TABLE IF NOT EXISTS seminar_registrations (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL UNIQUE,
+    user_id INT NOT NULL,
     seminar_date_id INT NOT NULL,
     registration_datetime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (seminar_date_id) REFERENCES seminar_dates(product_id) ON DELETE CASCADE
+    FOREIGN KEY (seminar_date_id) REFERENCES seminar_dates(id) ON DELETE CASCADE
 );

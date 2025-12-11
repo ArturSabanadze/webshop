@@ -202,7 +202,7 @@ webshop/
 - **Dominik Kraft** - Database Engineer
 - **Artur Sabanadze** - Full-Stack Developer
 - **Tobias Heinrich Dyck** - Backend Developer
-- **Marcel Czichy** - Frontend Developer
+- **Ingo Paar** - Frontend Developer
 
 ## License
 

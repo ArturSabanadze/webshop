@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $page = $_GET['page'] ?? 'home';
 
@@ -32,16 +34,25 @@ $page = $_GET['page'] ?? 'home';
 
 <body>
     <header class="admin-header">
-        <h1>Admin-Dashboard</h1>
-        <nav class="admin-nav">
-            <a href="admin_dashboard.php?page=home">Home</a>
-            <a href="admin_dashboard.php?page=seminars">Seminare</a>
-            <a href="admin_dashboard.php?page=dates">Termine</a>
-            <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
-            <a href="admin_dashboard.php?page=tickets">Tickets</a>
-            <a href="admin_dashboard.php?page=login">Login</a>
-            <a href="/index.php?page=logout">Logout</a>
-        </nav>
+        <div>
+            <h1>Admin-Dashboard</h1>
+        </div>
+        <div>
+            <nav class="admin-nav">
+                <a href="admin_dashboard.php?page=home">Home</a>
+                <a href="admin_dashboard.php?page=seminars">Seminare</a>
+                <a href="admin_dashboard.php?page=dates">Termine</a>
+                <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
+                <a href="admin_dashboard.php?page=tickets">Tickets</a>
+            </nav>
+        </div>
+        <div>
+            <nav class="right-menu">
+                <a href="admin_dashboard.php?page=login">Login</a>
+                <a href="admin_dashboard.php?page=logout">Logout</a>
+                <a href="../../index.php">Back to Website</a>
+            </nav>
+        </div>
     </header>
 
     <main class="admin-main">
@@ -61,6 +72,9 @@ $page = $_GET['page'] ?? 'home';
                 break;
             case 'login':
                 require __DIR__ . '/admin_login.php';
+                break;
+            case 'logout':
+                require __DIR__ . '/admin_logout.php';
                 break;
             default:
                 ?>

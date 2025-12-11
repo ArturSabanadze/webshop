@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 $error = $_SESSION['login_error'] ?? '';
 $success_message = $_SESSION['login_success'] ?? '';
@@ -20,7 +22,7 @@ require_once '../../../../Backend/login_handler.php';
         <div class="msg-success"><?= htmlspecialchars($success_message) ?></div>
     <?php else: ?>
         <form method="post" class="login-form">
-            <input type="hidden" name="action" value="login">
+            <input type="hidden" name="action" value="admin-login">
             <label>Username
                 <input type="text" name="username" required>
             </label>

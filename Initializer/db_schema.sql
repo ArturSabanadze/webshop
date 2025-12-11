@@ -27,6 +27,21 @@ CREATE TABLE IF NOT EXISTS users (
 ) ENGINE=InnoDB;
 
 -- =====================
+-- ADMINS TABLE
+-- =====================
+CREATE TABLE IF NOT EXISTS admins (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE,
+    password_hash VARCHAR(255),
+    name VARCHAR(100),
+    surname VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    role VARCHAR(20) DEFAULT 'admin'
+) ENGINE=InnoDB;
+
+-- =====================
 -- PRODUCTS TABLE
 -- if a product has min_capacity 
 -- =====================

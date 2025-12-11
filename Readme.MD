@@ -35,8 +35,12 @@
      - Configure environment
 
 5. **Access the Application:**
+
    - Frontend: `http://localhost/Die_Fantastische_4/Frontend/public/index.php`
+   - User Credentials: username: user | password: user1
+
    - Admin Dashboard: `http://localhost/Die_Fantastische_4/Frontend/public/AdminDashboard/private/admin_dashboard.php`
+   - Admin Credentials: username: admin | password: admin1
 
 ### Manual Database Setup (Alternative)
 

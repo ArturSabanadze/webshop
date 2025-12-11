@@ -1,4 +1,4 @@
-## Installation and Setup
+## Installation and Setup (with XAMPP as APACHE and MYSQL server)
 
 ### Prerequisites
 

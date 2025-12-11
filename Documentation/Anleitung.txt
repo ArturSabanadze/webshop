@@ -1,9 +1,32 @@
-Datenbank
+### Installation Steps
 
-1. Über cmd an mysql -uroot verbinden
-2. db_schema.sql
-3. dummy_data.sql scripte ausführen
+1. **Clone the repository:**
 
-Admin Panel
-1. Um sich als Admin anzumelden nutze (username: admin, password: admin1)
-2. Admin Dashboard link http://localhost:8080/AdminDashboard/private/admin_dashboard.php (port anpassen)
+   ```bash
+   git clone https://github.com/ArturSabanadze/webshop.git
+   cd webshop
+   ```
+
+2. **Install XAMPP:**
+
+   - Download and install XAMPP from https://www.apachefriends.org/
+   - Install to default location: `C:\xampp`
+
+3. **Configure MySQL:**
+
+   - Start Apache and MySQL from XAMPP Control Panel
+   - Ensure MySQL has no password (default), or update credentials in:
+     - `Backend/config/.env`
+     - `setup.bat`
+
+4. **Automated Setup:**
+
+   - Run `setup.bat` to:
+     - Copy project files to XAMPP htdocs
+     - Create database schema
+     - Import test data
+     - Configure environment
+
+5. **Access the Application:**
+   - Frontend: `http://localhost/Die_Fantastische_4/Frontend/public/index.php`
+   - Admin Dashboard: `http://localhost/Die_Fantastische_4/Frontend/public/AdminDashboard/private/admin_dashboard.php`

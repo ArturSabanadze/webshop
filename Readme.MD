@@ -188,7 +188,7 @@ webshop/
 - Session-based authentication
 - Role-based access control
 - Input validation and sanitization
-- CSRF protection for forms
+- CSRF protection for forms.
 
 ## Team
 
@@ -211,7 +211,7 @@ For questions or issues:
 
 - Check the Documentation folder for detailed guides
 - Review the Anleitung.txt for setup troubleshooting
-- Contact through the webshop contact form
+- Contact us on GitHub (ArturSabanadze, KenjiPetto, ColaNotPeppsy, in6o)
 
 ---
 

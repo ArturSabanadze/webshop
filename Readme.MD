@@ -1,6 +1,6 @@
 ## Installation and Setup (with XAMPP as APACHE and MYSQL server)
 
-### Prerequisites
+### Prerequisites .
 
 - XAMPP (Apache + MySQL)
 - Windows operating system (for setup.bat automation)

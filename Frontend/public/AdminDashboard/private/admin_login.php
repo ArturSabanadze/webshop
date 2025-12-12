@@ -3,6 +3,11 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// CSRF-Token generieren, falls nicht vorhanden
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 $error = $_SESSION['login_error'] ?? '';
 $success_message = $_SESSION['login_success'] ?? '';
 
@@ -22,6 +27,7 @@ require_once '../../../../Backend/login_handler.php';
         <div class="msg-success"><?= htmlspecialchars($success_message) ?></div>
     <?php else: ?>
         <form method="post" class="login-form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
             <input type="hidden" name="action" value="admin-login">
             <label>Username
                 <input type="text" name="username" required>

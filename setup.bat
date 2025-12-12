@@ -40,6 +40,12 @@ echo Kopiere Frontend nach %Project_PATH%\Frontend...
 C:\Windows\System32\xcopy.exe /E /I /Y "%~dp0Frontend" "%Project_PATH%\Frontend"
 
 :: -------------------------------
+:: Frontend kopieren
+:: -------------------------------
+echo Kopiere Frontend nach %Project_PATH%\Frontend...
+C:\Windows\System32\xcopy.exe /E /I /Y "%~dp0Frontend" "%Project_PATH%\Frontend"
+
+:: -------------------------------
 :: Prüfen, ob mysql.exe existiert
 :: -------------------------------
 if not exist "%XAMPP_PATH%\mysql\bin\mysql.exe" (

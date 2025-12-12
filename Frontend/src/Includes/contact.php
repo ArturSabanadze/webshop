@@ -4,6 +4,8 @@ require_once __DIR__ . '/../Functions/save_contact_messages.php';
 $error = "";
 $captchaCorrect = false;
 $formSubmitted = false;
+$success = isset($_GET['success']);
+$caseId = $_GET['caseId'] ?? null;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
     $formSubmitted = true;
@@ -23,14 +25,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
             $captchaCorrect = false;
         }
 
+        //strlen method to count characters in name
         if (strlen(trim($name)) < 2) {
             $error = "Bitte einen gültigen Namen eingeben.";
             $captchaCorrect = false;
         }
 
-        if (strlen(trim($message)) < 5) {
+        //strlen method to count characters in message
+        if (strlen(trim($message)) < 10) {
             $error = "Bitte eine aussagekräftige Nachricht eingeben.";
             $captchaCorrect = false;
+        }
+
+        // Wenn alles korrekt: speichern & redirect
+        if ($captchaCorrect) {
+            $caseId = saveContactMessage($name, $email, $message);
+            header("Location: index.php?page=contact&success=1&caseId=" . urlencode($caseId));
+            exit;
         }
 
     } else {
@@ -38,15 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
     }
 }
 ?>
+
 <section class="main-container">
-    <div class="content-contact-page">
-        <h1>Kontakt</h1>
-        <p>Sie haben Fragen zu unseren Seminaren oder Ihrem Zugang? Schreiben Sie uns gern eine Nachricht.</p>
+    <?php if ($success): ?>
 
-        <?php if (!$formSubmitted || !$captchaCorrect): ?>
+        <p class="info-message">
+            Vielen Dank für Ihre Nachricht. <br>
+            Ihr Ticket wurde erfolgreich erstellt.<br>
+            <strong>Fallnummer (Case ID): <?= htmlspecialchars($caseId) ?></strong>
+        </p>
 
+    <?php else: ?>
+        <div class="content-contact-page">
+            <h1>Kontakt</h1>
+            <p>Sie haben Fragen zu unseren Seminaren oder Ihrem Zugang? Schreiben Sie uns gern eine Nachricht.</p>
 
-            <!-- Sichere sanitizierte Kontakt formular -->
+            <!-- Formular -->
             <form method="post" action="index.php?page=contact">
 
                 <div class="form-group">
@@ -63,11 +81,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
 
                 <div class="form-group">
                     <label for="contact_message">Nachricht</label>
-                    <textarea id="contact_message" name="message"
-                        required><?= isset($_POST['message']) ? htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8') : '' ?></textarea>
+                    <textarea id="contact_message" name="message" required><?=
+                        isset($_POST['message']) ? htmlspecialchars($_POST['message'], ENT_QUOTES, 'UTF-8') : ''
+                        ?></textarea>
                 </div>
 
-                <!-- Captcha -->
                 <div class="form-group">
                     <label for="contact_captcha">Was ist 3 + 4? (Anti-Spam)</label>
                     <input type="text" id="contact_captcha" name="captcha" required>
@@ -79,22 +97,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
 
                 <button type="submit" name="send_contact" class="login-btn-main">Nachricht senden</button>
             </form>
-
-        <?php else: ?>
-
-            <?php
-            // Save message to serialized data file
-            // Die Werte wurden oben bereits sanitiziert & validiert
-            $caseId = saveContactMessage($name, $email, $message);
-            ?>
-
-            <p class="info-message">
-                Vielen Dank für Ihre Nachricht. <br>
-                Ihr Ticket wurde erfolgreich erstellt.<br>
-                <strong>Fallnummer (Case ID): <?= htmlspecialchars($caseId, ENT_QUOTES, 'UTF-8') ?></strong>
-            </p>
-
-        <?php endif; ?>
-
-    </div>
+        </div>
+    <?php endif; ?>
 </section>

@@ -17,30 +17,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {
 
     // Datumsprüfung (kommentar arthur das sollte so klappen denn es geht auf meiner maschiene)
     $startDate = $_POST['start_date'] ?? '';
-    $endDate   = $_POST['end_date'] ?? '';
+    $endDate = $_POST['end_date'] ?? '';
 
     // Nur prüfen, wenn Felder gesetzt sind
-    if ($startDate !== '') $startDT = new DateTime($startDate);
-    if ($endDate !== '')   $endDT   = new DateTime($endDate);
+    if ($startDate !== '')
+        $startDT = new DateTime($startDate);
+    if ($endDate !== '')
+        $endDT = new DateTime($endDate);
 
     $heute = new DateTime(); // aktuelles Datum
 
     // Validierung
     if ($startDate === '' || $endDate === '') {
         echo '<p style="color:red;">Start- und Enddatum sind Pflichtfelder.</p>';
-    }
-    elseif ($startDT < $heute) {
+        exit;
+    } elseif ($startDT < $heute) {
         echo '<p style="color:red;">Das Startdatum darf nicht in der Vergangenheit liegen.</p>';
-    }
-    elseif ($endDT <= $startDT) {
+        exit;
+    } elseif ($endDT <= $startDT) {
         echo '<p style="color:red;">Das Enddatum muss nach dem Startdatum liegen.</p>';
-    }
-    elseif ($name !== '' && $price !== null && is_numeric($price) 
-        && $_POST['max_capacity'] >= $_POST['min_capacity'])
+        exit;
+    } elseif (
+        $name !== '' && $price !== null && is_numeric($price)
+        && $_POST['max_capacity'] >= $_POST['min_capacity']
+    )
 
 
-    // Handle image upload
-    $imageUrl = '';
+        // Handle image upload
+        $imageUrl = '';
     if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
         $tmpName = $_FILES['image_file']['tmp_name'];
         $fileName = basename($_FILES['image_file']['name']);

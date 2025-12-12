@@ -42,24 +42,6 @@
    - Admin Dashboard: `http://localhost/Die_Fantastische_4/Frontend/public/AdminDashboard/private/admin_dashboard.php`
    - Admin Credentials: username: admin | password: admin1
 
-### Manual Database Setup (Alternative)
-
-If automated setup doesn't work:
-
-1. Connect to MySQL:
-
-   ```bash
-   mysql -u root
-   ```
-
-2. Execute SQL scripts:
-   ```sql
-   source Initializer/db_schema.sql;
-   source Initializer/dummy_data.sql;
-   ```
-
-#
-
 # Webshop - Seminar Management System
 
 A comprehensive web-based platform for managing and booking seminars/courses online. This project implements a full-featured webshop specifically designed for educational seminars with user authentication, admin dashboard, and enrollment management.
@@ -106,24 +88,22 @@ The project follows a modern three-tier architecture:
 
 - **Location**: `Frontend/src/Includes/shop.php`, Backend API endpoints (`ajax_enroll.php`, `ajax_get_seminar_dates.php`)
 - Browse available seminar dates and times
-- View capacity and availability information
 - Real-time enrollment processing via AJAX
+- Save in Database and serialized file (`Frontend/src/Data/enrollments.txxt`)
 - Enrollment confirmation and tracking
 
 ### 5. **User Panel**
 
 - **Location**: `Frontend/src/Includes/user_panel.php`
-- View enrolled seminars
 - Manage personal account information
-- Track registration history
 
 ### 6. **Admin Dashboard**
 
 - **Location**: `Frontend/public/AdminDashboard/*`
-- Comprehensive seminar management (create, edit, delete)
+- Comprehensive seminar management (create, delete)
 - Image upload functionality for seminar promotion
 - Seminar date/schedule management
-- Participant tracking and management
+- Participant tracking
 - Room assignment and capacity control
 - Admin credentials: username: `admin`, password: `admin1`
 
@@ -146,6 +126,8 @@ The project follows a modern three-tier architecture:
 
 The application uses a MySQL database with the following main tables:
 
+- **admins**: seperate table to store users with admin rights
+  - Fields: id, username, password_hash, email, role etc.
 - **users**: User accounts with authentication and profile data
   - Fields: id, username, password_hash, email, role, name, surname, birthdate, etc.
 - **products**: Seminar/course information
@@ -163,34 +145,39 @@ The application uses a MySQL database with the following main tables:
 ```
 webshop/
 ├── Backend/
-│   ├── config/              # Environment configuration
-│   ├── db_connection.php    # PDO database connection
-│   ├── login_handler.php    # Login authentication logic
-│   └── register_handler.php # User registration logic
+│   ├── config/                                 # Environment configuration
+│   ├── db_connection.php                       # PDO database connection
+│   ├── login_handler.php                       # Login authentication logic for Users and Admin
+│   └── register_handler.php                    # User registration logic
 ├── Frontend/
-│   ├── public/              # Public web root
-│   │   ├── AdminDashboard/  # Admin interface
-│   │   ├── assets/          # Images, CSS, JS
-│   │   └── index.php        # Main entry point
+│   ├── public/                                 # Public web root
+│   │   ├── AdminDashboard/                     # Admin interface
+│   │   ├── assets/                             # Images
+│   │   ├── styles/                             # CSS
+│   │   ├── ajax_get_seminar_dates.php          # Read available seminars and return a json
+│   │   ├── ajax_enroll.php                     # Seminar Enrollment handler
+│   │   └── index.php                           # Main entry point
 │   └── src/
-│       ├── Controllers/     # Request handlers
-│       ├── Functions/       # Business logic
-│       └── Includes/        # Page components
+│       ├── Controllers/                        # Request handlers
+│       ├── Functions/                          # Business logic
+│       ├── Data/                               # Serialized data files (Contact messages, seminar enrollments)
+│       └── Includes/                           # Page components / Templates
 ├── Initializer/
-│   ├── db_schema.sql        # Database schema
-│   └── Dummy/               # Test data
+│   ├── db_schema.sql                           # Database schema
+│   └── Dummy/                                  # Test data
+│       ├── products.csv                        # Test data in csv format
+│       └── load_seminare.sql                   # SQL script to load from csv file
 ├── Documentation/
-│   ├── index.html           # Project documentation
-│   └── Anleitung.txt        # Setup instructions
-├── setup.bat                # Automated setup script
-└── Readme.MD                # This file
+│   ├── Use_Case_1.jpg                          # Dokumentation files (UML etc.)
+├── setup.bat                                   # Automated setup script
+└── Readme.MD                                   # This file
 ```
 
 ## Technologies Used
 
 - **Backend**: PHP 7+
 - **Database**: MySQL with PDO
-- **Frontend**: HTML5, CSS3, JavaScript
+- **Frontend**: HTML5, CSS3, PHP, JavaScript
 - **Server**: Apache (XAMPP)
 - **Architecture**: MVC-inspired pattern with separation of concerns
 

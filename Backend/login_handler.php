@@ -1,4 +1,14 @@
 <?php
+
+// Sicherstellen, dass die Sitzung gestartet ist. CRSF-Schutz prüfen
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (!isset($_POST['csrf_token']) || !hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'])) {
+        $_SESSION['login_error'] = 'Security validation failed. Please try again.';
+        header("Location: index.php?page=login");
+        exit;
+    }
+}
+
 require_once __DIR__ . '/db_connection.php'; //Tobis Backend - enthält global $pdo
 
 // User Login POST-Anfragen bearbeiten
@@ -25,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login
         if ($user) {
             if (password_verify($password, $user['password_hash'])) {
                 // Erfolgreicher Login = Session token und Benutzerdaten setzen
+                session_regenerate_id(true);
                 $token = bin2hex(random_bytes(16));
                 $_SESSION['token'] = $token;
                 $_SESSION['user_id'] = $user['id'];
@@ -99,5 +110,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'admin
         // Optional: Fehler für Admin-Logging
         $_SESSION['login_error'] = 'Database error. Please try again later.';
     }
-
 }
+

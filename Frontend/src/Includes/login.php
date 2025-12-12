@@ -3,6 +3,10 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 require_once '../../Backend/login_handler.php';
 
 $error = $_SESSION['login_error'] ?? '';
@@ -23,6 +27,7 @@ $success = !empty($success_message);
         <div class="msg-success"><?= htmlspecialchars($success_message) ?></div>
     <?php else: ?>
         <form method="post" class="login-form">
+            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars($_SESSION['csrf_token']) ?>">
             <input type="hidden" name="action" value="login">
             <label>Username
                 <input type="text" name="username" required>

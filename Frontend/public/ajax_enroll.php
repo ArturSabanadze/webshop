@@ -18,10 +18,21 @@ if (!$seminarDateId) {
 }
 
 global $pdo;
+$logFile = __DIR__ . "/../src/Data/enrollments.txt";
 
 // Check if already enrolled
 $stmt = $pdo->prepare("SELECT COUNT(*) FROM seminar_registrations WHERE user_id = ? AND seminar_date_id = ?");
 $stmt->execute([$userId, $seminarDateId]);
+
+// Prepare log entry as array
+$entry = [
+    'user_id' => $userId,
+    'seminar_date_id' => $seminarDateId,
+    'timestamp' => date('Y-m-d H:i:s')
+];
+
+// Prepare serialized log entry
+$serialized = serialize($entry) . PHP_EOL;
 
 if ($stmt->fetchColumn() > 0) {
     echo json_encode(['error' => 'You are already enrolled in this seminar']);
@@ -50,8 +61,11 @@ if ($overlapCount > 0) {
     exit;
 }
 
-// Enroll user
+// Enroll user, speichere die Anmeldung in der Datenbank
 $stmt = $pdo->prepare("INSERT INTO seminar_registrations (user_id, seminar_date_id) VALUES (?, ?)");
 $stmt->execute([$userId, $seminarDateId]);
+
+//speichere die Anmeldung in der Datei wenn es nicht schon existiert
+file_put_contents($logFile, $serialized, FILE_APPEND);
 
 echo json_encode(['success' => 'Successfully enrolled!']);

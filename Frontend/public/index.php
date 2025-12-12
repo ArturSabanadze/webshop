@@ -1,4 +1,5 @@
 <?php
+ob_start();
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -46,3 +47,6 @@ $content_generator = "../src/Controllers/component_handler.php";
 </body>
 
 </html>
+<?php
+ob_end_flush();
+?>

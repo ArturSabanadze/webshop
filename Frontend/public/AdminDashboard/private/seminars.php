@@ -77,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {
             ':end_date' => $_POST['end_date'] ?? null,
         ]);
         echo '<p>Seminar wurde angelegt.</p>';
+        header("Location: admin_dashboard.php?page=seminars");
+        exit;
     } else {
         echo '<p style="color:red;">Name, Preis und Kapazitäten sind Pflichtfelder und müssen korrekt sein.</p>';
     }

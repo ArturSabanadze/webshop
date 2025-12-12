@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_date'])) {
             ':max_participants' => $maxParticipants,
         ]);
         echo '<p>Termin wurde angelegt.</p>';
+        header("Location: admin_dashboard.php?page=dates");
     } else {
         echo '<p style="color:red;">Seminar, Start- und Endzeit sind Pflichtfelder.</p>';
     }

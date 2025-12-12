@@ -10,7 +10,7 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-$username = $_SESSION['username'];
+$current_username = $_SESSION['username'];
 
 /* -------------------------------------------
    HANDLE ACTIONS (POST ONLY)
@@ -25,26 +25,31 @@ if ($action === "save") {
         $_POST[$k] = trim($v) === "" ? null : trim($v);
     }
 
-    try {
-        $stmt = $pdo->prepare("
-            UPDATE users SET
-                name = :name,
-                surname = :surname,
-                gender = :gender,
-                birthdate = :birthdate,
-                email = :email,
-                country = :country,
-                postal_index = :postal_index,
-                street = :street,
-                phone = :phone,
-                updated_at = NOW()
-            WHERE username = :username
-            LIMIT 1
-        ");
+    // Hash password only if it's provided
+    $passwordHash = $_POST['password'] ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
 
-        $stmt->execute([
+    try {
+        // Use a separate variable for the new username
+        $new_username = $_POST['username'];
+
+        $fields = [
+            "name = :name",
+            "surname = :surname",
+            "username = :new_username",
+            "gender = :gender",
+            "birthdate = :birthdate",
+            "email = :email",
+            "country = :country",
+            "postal_index = :postal_index",
+            "street = :street",
+            "phone = :phone",
+            "updated_at = NOW()"
+        ];
+
+        $params = [
             ':name' => $_POST['name'],
             ':surname' => $_POST['surname'],
+            ':new_username' => $_POST['username'],
             ':gender' => $_POST['gender'],
             ':birthdate' => $_POST['birthdate'],
             ':email' => $_POST['email'],
@@ -52,9 +57,21 @@ if ($action === "save") {
             ':postal_index' => $_POST['postal_index'],
             ':street' => $_POST['street'],
             ':phone' => $_POST['phone'],
-            ':username' => $username
-        ]);
+            ':current_username' => $current_username,
+        ];
 
+        if ($passwordHash) {
+            $fields[] = "password_hash = :password_hash";
+            $params[':password_hash'] = $passwordHash;
+        }
+
+        $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE username = :current_username LIMIT 1";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+
+        // Update session username if it was changed
+        $_SESSION['username'] = $new_username;
 
         $success_msg = "Profile updated successfully!";
         $is_editing = false;
@@ -75,19 +92,21 @@ $stmt = $pdo->prepare("
     LIMIT 1
 ");
 
-$stmt->execute([$username]);
+$stmt->execute([$_SESSION['username']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$user) {
     echo "<div class='register-msg-error'>User not found.</div>";
     exit;
 }
+
 //Helper function for escaping output
 function e($value)
 {
     return htmlspecialchars((string) ($value ?? ''), ENT_QUOTES, 'UTF-8');
 }
 ?>
+
 
 <div class="user-panel-container">
     <h2>User Panel</h2>
@@ -119,6 +138,26 @@ function e($value)
         <input type="hidden" name="action" value="<?= $is_editing ? 'save' : '' ?>">
 
         <div class="user-info-grid">
+
+            <!-- USERNAME -->
+            <label class="user-info-item">
+                <strong>Username:</strong><br>
+                <?php if ($is_editing): ?>
+                    <input type="text" name="username" value="<?= e($user['username']) ?>" required>
+                <?php else: ?>
+                    <?= e($user['username']) ?>
+                <?php endif; ?>
+            </label>
+
+            <!-- PASSWORD -->
+            <label class="user-info-item">
+                <strong>Password:</strong><br>
+                <?php if ($is_editing): ?>
+                    <input type="password" name="password" placeholder="Leave empty to keep current password">
+                <?php else: ?>
+                    ********
+                <?php endif; ?>
+            </label>
 
             <!-- NAME -->
             <label class="user-info-item">
@@ -215,11 +254,8 @@ function e($value)
             </label>
 
             <!-- READ-ONLY FIELDS -->
-            <div class="user-info-item"><strong>Account
-                    Created:</strong><br><?= e($user['created_at'] ?? '') ?></div>
-            <div class="user-info-item"><strong>Last
-                    Updated:</strong><br><?= e($user['updated_at'] ?? '') ?>
-            </div>
+            <div class="user-info-item"><strong>Account Created:</strong><br><?= e($user['created_at'] ?? '') ?></div>
+            <div class="user-info-item"><strong>Last Updated:</strong><br><?= e($user['updated_at'] ?? '') ?></div>
             <div class="user-info-item"><strong>Active:</strong><br><?= $user['is_active'] ? "Yes" : "No" ?></div>
             <div class="user-info-item"><strong>Role:</strong><br><?= e($user['role'] ?? '') ?></div>
 
@@ -242,4 +278,3 @@ function e($value)
         </div>
 
     </form>
-</div>

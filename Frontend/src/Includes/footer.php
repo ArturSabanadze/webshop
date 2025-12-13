@@ -20,9 +20,9 @@
         <div class="footer-right">
             <p>Quick Links:</p>
             <ul class="quick-links">
-                <li><a href="index.php?page=terms">AGB</a></li>
-                <li><a href="index.php?page=impressum">Impressum</a></li>
-                <li><a href="index.php?page=contact">Kontakt</a></li>
+                <li><a href="index.php?page=terms">Terms</a></li>
+                <li><a href="index.php?page=impressum">Imprint</a></li>
+                <li><a href="index.php?page=contact">Contact</a></li>
             </ul>
         </div>
     </footer>

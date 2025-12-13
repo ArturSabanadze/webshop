@@ -95,3 +95,119 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(255, 80, 80, 0.2);
 }
+
+/* --- Enrollment Table --- */
+.enrollments-title {
+  margin-top: 40px;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.enrollments-table-wrapper {
+  overflow-x: auto;
+}
+
+.enrollments-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.enrollments-table th,
+.enrollments-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #e6faff;
+  font-size: 0.95rem;
+}
+
+.enrollments-table th {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.enrollments-table tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 768px) {
+  .enrollments-table th,
+  .enrollments-table td {
+    font-size: 0.85rem;
+    padding: 10px 8px;
+  }
+}
+
+/* =========================================================
+   Modern Input & Select Styling (User Edit Mode)
+   ========================================================= */
+
+.user-info-item input,
+.user-info-item select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: #e6faff;
+
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 8px;
+
+  outline: none;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  transition: border-color 0.25s ease, box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+/* Placeholder styling */
+.user-info-item input::placeholder {
+  color: rgba(230, 250, 255, 0.55);
+  font-size: 0.9rem;
+}
+
+/* Focus state */
+.user-info-item input:focus,
+.user-info-item select:focus {
+  background: rgba(0, 0, 0, 0.35);
+  border-color: rgba(0, 234, 255, 0.6);
+  box-shadow: 0 0 0 2px rgba(0, 234, 255, 0.15);
+}
+
+/* Disabled / read-only feel (future-proof) */
+.user-info-item input:disabled,
+.user-info-item select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Select arrow consistency */
+.user-info-item select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, #e6faff 50%),
+    linear-gradient(135deg, #e6faff 50%, transparent 50%);
+  background-position: calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+
+/* Date input icon visibility */
+.user-info-item input[type="date"] {
+  color-scheme: dark;
+}
+
+/* Subtle hover (desktop only) */
+@media (hover: hover) {
+  .user-info-item input:hover,
+  .user-info-item select:hover {
+    border-color: rgba(255, 255, 255, 0.45);
+  }
+}

@@ -54,9 +54,7 @@ CREATE TABLE IF NOT EXISTS products (
     min_capacity INT DEFAULT 0,
     max_capacity INT DEFAULT NULL,
     start_date DATE,
-    end_date DATE,
-    valid_to_start BOOLEAN DEFAULT FALSE,
-    available_for_reservation BOOLEAN DEFAULT TRUE,
+    end_date DATE
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
@@ -104,6 +102,8 @@ CREATE TABLE IF NOT EXISTS seminar_dates (
     room VARCHAR(100),
     min_participants INT DEFAULT 1,
     max_participants INT DEFAULT 10,
+    valid_to_start BOOLEAN DEFAULT FALSE,
+    available_for_reservation BOOLEAN DEFAULT TRUE,
     FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
 );
 

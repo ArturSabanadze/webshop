@@ -1,201 +1,194 @@
 <?php
 // Admin: Seminare verwalten
-// $pdo wird aus admin_dashboard.php bereitgestellt
+// $pdo is provided by admin_dashboard.php
 
-// Define upload folder
-$uploadDir = __DIR__ . '/../../assets/product_images/'; // adjust path to your project
-$uploadUrlBase = '../../assets/product_images/'; // URL prefix to save in DB if you work with Visual Studio Code 
-/* $uploadUrlBase = '/Die_Fantastische_4/Frontend/public/assets/product_images/';  */// URL prefix to save in DB if you work xampp. Project root is assumed to be at /Die_Fantastische_4/Frontend/public/
+/* ================== CONFIG ================== */
+$uploadDir = __DIR__ . '/../../assets/product_images/';
+$uploadUrlBase = '../../assets/product_images/';
 
+/* ================== HELPERS ================== */
+function e($v)
+{
+    return htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
+}
 
-// Seminar anlegen
+/* ================== STATE ================== */
+$editId = isset($_GET['edit_id']) ? (int) $_GET['edit_id'] : null;
+
+/* ================== CREATE ================== */
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {
+
     $name = trim($_POST['name'] ?? '');
     $description = trim($_POST['description'] ?? '');
     $price = $_POST['price'] ?? null;
+    $min = (int) ($_POST['min_capacity'] ?? 0);
+    $max = (int) ($_POST['max_capacity'] ?? 0);
+    $start = $_POST['start_date'] ?? null;
+    $end = $_POST['end_date'] ?? null;
 
-
-    // Datumsprüfung (kommentar arthur das sollte so klappen denn es geht auf meiner maschiene)
-    $startDate = $_POST['start_date'] ?? '';
-    $endDate = $_POST['end_date'] ?? '';
-
-    // Nur prüfen, wenn Felder gesetzt sind
-    if ($startDate !== '')
-        $startDT = new DateTime($startDate);
-    if ($endDate !== '')
-        $endDT = new DateTime($endDate);
-
-    $heute = new DateTime(); // aktuelles Datum
-
-    // Validierung
-    if ($startDate === '' || $endDate === '') {
-        echo '<p style="color:red;">Start- und Enddatum sind Pflichtfelder.</p>';
-        exit;
-    } elseif ($startDT < $heute) {
-        echo '<p style="color:red;">Das Startdatum darf nicht in der Vergangenheit liegen.</p>';
-        exit;
-    } elseif ($endDT <= $startDT) {
-        echo '<p style="color:red;">Das Enddatum muss nach dem Startdatum liegen.</p>';
-        exit;
-    } elseif (
-        $name !== '' && $price !== null && is_numeric($price)
-        && $_POST['max_capacity'] >= $_POST['min_capacity']
-    )
-
-
-        // Handle image upload
-        $imageUrl = '';
-    if (isset($_FILES['image_file']) && $_FILES['image_file']['error'] === UPLOAD_ERR_OK) {
-        $tmpName = $_FILES['image_file']['tmp_name'];
-        $fileName = basename($_FILES['image_file']['name']);
-        $fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
-        $newFileName = uniqid('product_', true) . '.' . $fileExt; // unique name
-        $destPath = $uploadDir . $newFileName;
-
-        if (move_uploaded_file($tmpName, $destPath)) {
-            $imageUrl = $uploadUrlBase . $newFileName;
-        } else {
-            echo '<p style="color:red;">Bild konnte nicht hochgeladen werden.</p>';
-        }
+    if ($name === '' || !is_numeric($price) || $max < $min) {
+        die('<p style="color:red;">Ungültige Eingaben</p>');
     }
 
-    if ($name !== '' && $price !== null && is_numeric($price) && $_POST['max_capacity'] >= $_POST['min_capacity']) {
-        $stmt = $pdo->prepare("
-            INSERT INTO products 
-            (product_name, image_url, description, price, min_capacity, max_capacity, start_date, end_date) 
-            VALUES 
-            (:name, :image_url, :description, :price, :min_capacity, :max_capacity, :start_date, :end_date)
-        ");
-        $stmt->execute([
-            ':name' => $name,
-            ':image_url' => $imageUrl,
-            ':description' => $description,
-            ':price' => $price,
-            ':min_capacity' => $_POST['min_capacity'] ?? null,
-            ':max_capacity' => $_POST['max_capacity'] ?? null,
-            ':start_date' => $_POST['start_date'] ?? null,
-            ':end_date' => $_POST['end_date'] ?? null,
-        ]);
-        echo '<p>Seminar wurde angelegt.</p>';
-        header("Location: admin_dashboard.php?page=seminars");
-        exit;
-    } else {
-        echo '<p style="color:red;">Name, Preis und Kapazitäten sind Pflichtfelder und müssen korrekt sein.</p>';
+    $imageUrl = null;
+    if (!empty($_FILES['image_file']['name'])) {
+        $ext = pathinfo($_FILES['image_file']['name'], PATHINFO_EXTENSION);
+        $file = uniqid('product_', true) . '.' . $ext;
+        move_uploaded_file($_FILES['image_file']['tmp_name'], $uploadDir . $file);
+        $imageUrl = $uploadUrlBase . $file;
     }
+
+    $stmt = $pdo->prepare("
+        INSERT INTO products
+        (product_name, description, image_url, price, min_capacity, max_capacity, start_date, end_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->execute([$name, $description, $imageUrl, $price, $min, $max, $start, $end]);
+
+    header("Location: admin_dashboard.php?page=seminars");
+    exit;
 }
 
+/* ================== UPDATE ================== */
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seminar_save'])) {
 
-// Seminar löschen inkl. Bild
+    $stmt = $pdo->prepare("
+        UPDATE products SET
+            product_name = ?,
+            description = ?,
+            price = ?,
+            min_capacity = ?,
+            max_capacity = ?,
+            start_date = ?,
+            end_date = ?
+        WHERE id = ?
+    ");
+
+    $stmt->execute([
+        $_POST['name'],
+        $_POST['description'],
+        $_POST['price'],
+        $_POST['min_capacity'],
+        $_POST['max_capacity'],
+        $_POST['start_date'],
+        $_POST['end_date'],
+        (int) $_POST['id']
+    ]);
+
+    header("Location: admin_dashboard.php?page=seminars");
+    exit;
+}
+
+/* ================== DELETE ================== */
 if (isset($_GET['delete_id'])) {
-    $deleteId = (int) $_GET['delete_id'];
-    if ($deleteId > 0) {
-        $stmt = $pdo->prepare("SELECT image_url FROM products WHERE id = :id");
-        $stmt->execute([':id' => $deleteId]);
-        $seminar = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Delete image
-        if ($seminar && !empty($seminar['image_url'])) {
-            $fileName = basename($seminar['image_url']);
-            $imagePath = $uploadDir . $fileName;
-            if (file_exists($imagePath)) {
-                unlink($imagePath);
-            }
-        }
+    $id = (int) $_GET['delete_id'];
 
-        // Delete seminar record
-        $stmt = $pdo->prepare("DELETE FROM products WHERE id = :id");
-        $stmt->execute([':id' => $deleteId]);
-
-        echo '<p>Seminar wurde gelöscht (inkl. Bild).</p>';
+    $stmt = $pdo->prepare("SELECT image_url FROM products WHERE id = ?");
+    $stmt->execute([$id]);
+    if ($img = $stmt->fetchColumn()) {
+        @unlink($uploadDir . basename($img));
     }
+
+    $pdo->prepare("DELETE FROM products WHERE id = ?")->execute([$id]);
+
+    header("Location: admin_dashboard.php?page=seminars");
+    exit;
 }
 
-// Seminare laden
-$stmt = $pdo->query("SELECT id, product_name, price, image_url FROM products ORDER BY id DESC");
-$seminars = $stmt->fetchAll(PDO::FETCH_ASSOC);
+/* ================== LOAD ================== */
+$seminars = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <section>
     <h2>Seminare verwalten</h2>
 
     <h3>Neues Seminar anlegen</h3>
     <form method="post" enctype="multipart/form-data">
-        <div class="form-group">
-            <label for="name">Titel des Seminars</label>
-            <input type="text" id="name" name="name" required>
-        </div>
-
-        <div class="form-group">
-            <label for="description">Beschreibung</label>
-            <textarea id="description" name="description"></textarea>
-        </div>
-
-        <div class="form-group">
-            <label for="image_file">Bild hochladen</label>
-            <input type="file" id="image_file" name="image_file" accept="image/*">
-        </div>
-
-        <div class="form-group">
-            <label for="price">Preis (&euro;)</label>
-            <input type="number" step="0.01" id="price" name="price" required>
-        </div>
-
-        <div class="form-group">
-            <label for="min_capacity">Minimale Kapazität</label>
-            <input type="number" id="min_capacity" name="min_capacity">
-        </div>
-
-        <div class="form-group">
-            <label for="max_capacity">Maximale Kapazität</label>
-            <input type="number" id="max_capacity" name="max_capacity">
-        </div>
-
-        <div class="form-group">
-            <label for="start_date">Startdatum</label>
-            <input type="date" id="start_date" name="start_date">
-        </div>
-
-        <div class="form-group">
-            <label for="end_date">Enddatum</label>
-            <input type="date" id="end_date" name="end_date">
-        </div>
-
-        <button type="submit" name="create_seminar">Speichern</button>
+        <input name="name" placeholder="Titel" required>
+        <textarea name="description" placeholder="Beschreibung"></textarea>
+        <input type="file" name="image_file">
+        <input type="number" step="0.01" name="price" placeholder="Preis" required>
+        <input type="number" name="min_capacity" placeholder="Min">
+        <input type="number" name="max_capacity" placeholder="Max">
+        <input type="date" name="start_date">
+        <input type="date" name="end_date">
+        <button name="create_seminar">Speichern</button>
     </form>
 
     <h3>Vorhandene Seminare</h3>
-    <?php if (count($seminars) === 0): ?>
-        <p>Es sind noch keine Seminare angelegt.</p>
-    <?php else: ?>
-        <table>
-            <thead>
+
+    <table border="1" cellpadding="6">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Titel</th>
+                <th>Beschreibung</th>
+                <th>Preis</th>
+                <th>Min</th>
+                <th>Max</th>
+                <th>Start</th>
+                <th>Ende</th>
+                <th>Aktionen</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <?php foreach ($seminars as $s): ?>
                 <tr>
-                    <th>ID</th>
-                    <th>Titel</th>
-                    <th>Bild</th>
-                    <th>Preis</th>
-                    <th>Aktionen</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($seminars as $seminar): ?>
-                    <tr>
-                        <td><?= (int) $seminar['id'] ?></td>
-                        <td><?= htmlspecialchars($seminar['product_name']) ?></td>
+                    <form method="post">
+
+                        <td><?= $s['id'] ?></td>
+
                         <td>
-                            <?php if ($seminar['image_url']): ?>
-                                <img src="<?= htmlspecialchars($seminar['image_url']) ?>" alt="" style="height:50px;">
+                            <?php if ($editId === (int) $s['id']): ?>
+                                <input name="name" value="<?= e($s['product_name']) ?>">
                             <?php else: ?>
-                                -
+                                <?= e($s['product_name']) ?>
                             <?php endif; ?>
                         </td>
-                        <td><?= htmlspecialchars($seminar['price']) ?> &euro;</td>
+
                         <td>
-                            <a href="admin_dashboard.php?page=seminars&amp;delete_id=<?= (int) $seminar['id'] ?>"
-                                onclick="return confirm('Seminar wirklich löschen?');">Löschen</a>
+                            <?php if ($editId === (int) $s['id']): ?>
+                                <input name="description" value="<?= e($s['description']) ?>">
+                            <?php else: ?>
+                                <?= e($s['description']) ?>
+                            <?php endif; ?>
                         </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php endif; ?>
+
+                        <td>
+                            <?php if ($editId === (int) $s['id']): ?>
+                                <input name="price" value="<?= e($s['price']) ?>">
+                            <?php else: ?>
+                                <?= e($s['price']) ?> €
+                            <?php endif; ?>
+                        </td>
+
+                        <td><?= $editId === (int) $s['id'] ? "<input name='min_capacity' value='{$s['min_capacity']}'>" : e($s['min_capacity']) ?>
+                        </td>
+                        <td><?= $editId === (int) $s['id'] ? "<input name='max_capacity' value='{$s['max_capacity']}'>" : e($s['max_capacity']) ?>
+                        </td>
+                        <td><?= $editId === (int) $s['id'] ? "<input name='start_date' value='{$s['start_date']}'>" : e($s['start_date']) ?>
+                        </td>
+                        <td><?= $editId === (int) $s['id'] ? "<input name='end_date' value='{$s['end_date']}'>" : e($s['end_date']) ?>
+                        </td>
+
+                        <td>
+                            <?php if ($editId === (int) $s['id']): ?>
+                                <input type="hidden" name="id" value="<?= $s['id'] ?>">
+                                <button name="seminar_save">Save</button>
+                                <a href="admin_dashboard.php?page=seminars">Cancel</a>
+                            <?php else: ?>
+                                <a href="?page=seminars&edit_id=<?= $s['id'] ?>">Edit</a>
+                                <a href="?page=seminars&delete_id=<?= $s['id'] ?>"
+                                    onclick="return confirm('Löschen?')">Delete</a>
+                            <?php endif; ?>
+                        </td>
+
+                    </form>
+                </tr>
+            <?php endforeach; ?>
+
+        </tbody>
+    </table>
 </section>

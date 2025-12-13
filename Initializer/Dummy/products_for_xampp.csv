@@ -1,11 +1,11 @@
 product_name;image_url;description;price;min_capacity;max_capacity;start_date;end_date;valid_to_start;available_for_reservation
-Python Masterclass;/Die_Fantastische_4/Frontend/public/assets/product_images/python-bootcamp.webp;Der komplette Einstieg: Von Variablen bis zu Machine Learning Grundlagen.;49.99;6;20;2025-03-01;2025-04-15;0;1
-Modern JavaScript Pro;/Die_Fantastische_4/Frontend/public/assets/product_images/js-frontend-pro.webp;Beherrsche ES6+: Async/Await und DOM-Manipulation wie ein Profi.; 59.90; 8; 25; 2025-03-10;2025-04-20;0;1
-React Native Apps;/Die_Fantastische_4/Frontend/public/assets/product_images/react-native-app.webp;Baue echte iOS und Android Apps mit nur einer Codebasis.; 69.99; 6; 20; 2025-03-15;2025-05-01;0;1
-Data Science mit R;/Die_Fantastische_4/Frontend/public/assets/product_images/data-science-r.webp;Datenvisualisierung und statistische Analyse für Big Data Projekte.; 79.00; 10; 25; 2025-04-01;2025-06-01;0;1
-AI & Machine Learning;/Die_Fantastische_4/Frontend/public/assets/product_images/machine-learning-ai.webp;Trainiere neuronale Netze mit TensorFlow und PyTorch.; 89.99; 10; 20; 2025-04-05;2025-06-15;0;1
-Cybersecurity Basics;/Die_Fantastische_4/Frontend/public/assets/product_images/cyber-security-hacker.webp;Ethisches Hacking Netzwerksicherheit und Penetration Testing.; 64.50; 8; 20; 2025-04-10;2025-05-20;0;1
-DevOps: Docker & K8s;/Die_Fantastische_4/Frontend/public/assets/product_images/docker-kubernetes-devops.webp;Containerisierung und Orchestrierung für skalierbare Cloud-Apps.; 74.90; 6; 15; 2025-05-01;2025-06-01;0;1
-C# & Unity Game Dev;/Die_Fantastische_4/Frontend/public/assets/product_images/c-sharp-game-dev.webp;Entwickle dein erstes 3D-Spiel von Grund auf.; 55.00; 6; 20; 2025-05-15;2025-07-15;0;1
-Fullstack Web Dev;/Die_Fantastische_4/Frontend/public/assets/product_images/web-fullstack-dev.webp;HTML, CSS, NodeJS und Datenbanken – das komplette Paket.; 99.00; 10; 30; 2025-06-01;2025-08-30;0;1
-AWS Cloud Architect;/Die_Fantastische_4/Frontend/public/assets/product_images/aws-cloud-architect.webp;Vorbereitung auf die Zertifizierung und Serverless Computing.; 95.00; 8; 25; 2025-06-15;2025-08-15;0;1
+Python Masterclass;/Die_Fantastische_4/Frontend/public/assets/product_images/python-bootcamp.webp;Der komplette Einstieg: Von Variablen bis zu Machine Learning Grundlagen.;49.99;6;20;2025-03-01;2025-04-15
+Modern JavaScript Pro;/Die_Fantastische_4/Frontend/public/assets/product_images/js-frontend-pro.webp;Beherrsche ES6+: Async/Await und DOM-Manipulation wie ein Profi.; 59.90; 8; 25; 2025-03-10;2025-04-20
+React Native Apps;/Die_Fantastische_4/Frontend/public/assets/product_images/react-native-app.webp;Baue echte iOS und Android Apps mit nur einer Codebasis.; 69.99; 6; 20; 2025-03-15;2025-05-01
+Data Science mit R;/Die_Fantastische_4/Frontend/public/assets/product_images/data-science-r.webp;Datenvisualisierung und statistische Analyse für Big Data Projekte.; 79.00; 10; 25; 2025-04-01;2025-06-01
+AI & Machine Learning;/Die_Fantastische_4/Frontend/public/assets/product_images/machine-learning-ai.webp;Trainiere neuronale Netze mit TensorFlow und PyTorch.; 89.99; 10; 20; 2025-04-05;2025-06-15
+Cybersecurity Basics;/Die_Fantastische_4/Frontend/public/assets/product_images/cyber-security-hacker.webp;Ethisches Hacking Netzwerksicherheit und Penetration Testing.; 64.50; 8; 20; 2025-04-10;2025-05-20
+DevOps: Docker & K8s;/Die_Fantastische_4/Frontend/public/assets/product_images/docker-kubernetes-devops.webp;Containerisierung und Orchestrierung für skalierbare Cloud-Apps.; 74.90; 6; 15; 2025-05-01;2025-06-01
+C# & Unity Game Dev;/Die_Fantastische_4/Frontend/public/assets/product_images/c-sharp-game-dev.webp;Entwickle dein erstes 3D-Spiel von Grund auf.; 55.00; 6; 20; 2025-05-15;2025-07-15
+Fullstack Web Dev;/Die_Fantastische_4/Frontend/public/assets/product_images/web-fullstack-dev.webp;HTML, CSS, NodeJS und Datenbanken – das komplette Paket.; 99.00; 10; 30; 2025-06-01;2025-08-30
+AWS Cloud Architect;/Die_Fantastische_4/Frontend/public/assets/product_images/aws-cloud-architect.webp;Vorbereitung auf die Zertifizierung und Serverless Computing.; 95.00; 8; 25; 2025-06-15;2025-08-15

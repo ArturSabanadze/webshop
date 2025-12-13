@@ -70,7 +70,7 @@ echo Importiere Initial SQL ...
 :: CSV-Datei in products importieren
 :: -------------------------------
 echo Importiere products.csv ...
-"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root webshop -e "LOAD DATA LOCAL INFILE '%CSV_PATH:\=/%' INTO TABLE products FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' IGNORE 1 LINES (product_name, image_url, description, price, min_capacity, max_capacity, start_date, end_date, valid_to_start, available_for_reservation);"
+"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root webshop -e "LOAD DATA LOCAL INFILE '%CSV_PATH:\=/%' INTO TABLE products FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' IGNORE 1 LINES (product_name, image_url, description, price, min_capacity, max_capacity, start_date, end_date);"
 
 
 :: -------------------------------

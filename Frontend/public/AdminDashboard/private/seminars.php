@@ -70,10 +70,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {
     $max = (int) ($_POST['max_capacity'] ?? 0);
     $start = $_POST['start_date'] ?? null;
     $end = $_POST['end_date'] ?? null;
+    if ($start !== '')
+        $startDT = new DateTime($start);
+    if ($end !== '')
+        $endDT = new DateTime($end);
 
-    if ($name === '' || !is_numeric($price) || $max < $min) {
-        die('<p style="color:red;">Ungültige Eingaben</p>');
+    //Invalid input handling
+    if ($name === '' || mb_strlen(trim($name)) < 3) {
+        die('<p style="color:red;">Titel Name empty or too short</p>');
     }
+    if (is_numeric($name)) {
+        die('<p style="color:red;">Titel cant be numeric</p>');
+    }
+    if (!is_numeric($price) || $price < 0) {
+        die('<p style="color:red;">Price invalid</p>');
+    }
+    if ($max < $min) {
+        die('<p style="color:red;">Participant max capacity can not be less than min capacity</p>');
+    }
+    if ($endDT < $startDT) {
+        die('<p style="color:red;">End date must be after start date</p>');
+    }
+
+
 
     $imageUrl = handleImageUpload($uploadDir, $uploadUrlBase);
 
@@ -111,6 +130,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seminar_save'])) {
             end_date     = ?
         WHERE id = ?
     ");
+
+    if ($_POST['name'] === '' || mb_strlen(trim($_POST['name'])) < 3) {
+        die('<p style="color:red;">Titel Name empty or too short</p>');
+    }
+    if (is_numeric($_POST['name'])) {
+        die('<p style="color:red;">Titel cant be numeric</p>');
+    }
+    if (!is_numeric($_POST['price']) || $_POST['price'] < 0) {
+        die('<p style="color:red;">Price invalid</p>');
+    }
+    if ($_POST['max_capacity'] < $_POST['min_capacity']) {
+        die('<p style="color:red;">Participant max capacity can not be less than min capacity</p>');
+    }
+    if ($_POST['end_date'] < $_POST['start_date']) {
+        die('<p style="color:red;">End date must be after start date</p>');
+    }
 
     $stmt->execute([
         $_POST['name'],
@@ -154,15 +189,49 @@ $seminars = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO
 
     <h3>Neues Seminar anlegen</h3>
     <form method="post" enctype="multipart/form-data">
-        <input name="name" placeholder="Titel" required>
-        <textarea name="description" placeholder="Beschreibung"></textarea>
-        <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/gif">
-        <input type="number" step="0.01" name="price" placeholder="Preis" required>
-        <input type="number" name="min_capacity" placeholder="Min">
-        <input type="number" name="max_capacity" placeholder="Max">
-        <input type="date" name="start_date">
-        <input type="date" name="end_date">
-        <button name="create_seminar">Speichern</button>
+        <div>
+            <label for="name">Titel</label>
+            <input id="name" name="name" placeholder="Titel" required>
+        </div>
+
+        <div>
+            <label for="description">Beschreibung</label>
+            <textarea id="description" name="description" placeholder="Beschreibung"></textarea>
+        </div>
+
+        <div>
+            <label for="image_file">Bild</label>
+            <input type="file" id="image_file" name="image_file" accept="image/jpeg,image/png,image/webp,image/gif">
+        </div>
+
+        <div>
+            <label for="price">Preis (€)</label>
+            <input type="number" step="0.01" id="price" name="price" placeholder="Preis" required>
+        </div>
+
+        <div>
+            <label for="min_capacity">Min. Teilnehmer</label>
+            <input type="number" id="min_capacity" name="min_capacity" placeholder="Min">
+        </div>
+
+        <div>
+            <label for="max_capacity">Max. Teilnehmer</label>
+            <input type="number" id="max_capacity" name="max_capacity" placeholder="Max">
+        </div>
+
+        <div>
+            <label for="start_date">Startdatum</label>
+            <input type="date" id="start_date" name="start_date">
+        </div>
+
+        <div>
+            <label for="end_date">Endedatum</label>
+            <input type="date" id="end_date" name="end_date">
+        </div>
+
+        <div>
+            <button name="create_seminar" type="submit">Speichern</button>
+        </div>
     </form>
 
     <h3>Vorhandene Seminare</h3>

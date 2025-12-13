@@ -1,0 +1,7 @@
+Updates in Version 1.1
+===========================
+
+1. Admin Panel:
+ - Seminar list fetching more details from DB
+ - New Seminar Edit feauture. Admin can edit Seminars
+ - New Seminar Dates can be deleted / Edited

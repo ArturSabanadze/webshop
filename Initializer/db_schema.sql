@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS products (
     min_capacity INT DEFAULT 0,
     max_capacity INT DEFAULT NULL,
     start_date DATE,
-    end_date DATE
+    end_date DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 

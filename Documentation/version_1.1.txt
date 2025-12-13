@@ -5,3 +5,12 @@ Updates in Version 1.1
  - Seminar list fetching more details from DB
  - New Seminar Edit feauture. Admin can edit Seminars
  - New Seminar Dates can be deleted / Edited
+ 
+2. User Panel:
+ - Enrollment information and option to cancel it.
+
+3. Product Enrollment
+ - Cheking if the max_capacity is reached.
+
+4. UX-UI Updates
+ - Styling Updates

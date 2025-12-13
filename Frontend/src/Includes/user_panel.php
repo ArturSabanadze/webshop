@@ -17,19 +17,41 @@ $current_username = $_SESSION['username'];
 --------------------------------------------*/
 $action = $_POST['action'] ?? null;
 $is_editing = ($action === "edit");
-$is_saved = ($action === "save");
 
+/* --- DELETE ENROLLMENT --- */
+if ($action === "delete_enrollment" && isset($_POST['registration_id'])) {
+
+    $stmt = $pdo->prepare("
+        DELETE FROM seminar_registrations
+        WHERE id = ?
+          AND user_id = (
+              SELECT id FROM users WHERE username = ?
+          )
+    ");
+
+    $stmt->execute([
+        $_POST['registration_id'],
+        $current_username
+    ]);
+
+    if ($stmt->rowCount() > 0) {
+        $success_msg = "Enrollment cancelled successfully.";
+    } else {
+        $error_msg = "Unable to cancel enrollment.";
+    }
+}
+
+/* --- SAVE PROFILE --- */
 if ($action === "save") {
-
     foreach ($_POST as $k => $v) {
         $_POST[$k] = trim($v) === "" ? null : trim($v);
     }
 
-    // Hash password only if it's provided
-    $passwordHash = $_POST['password'] ? password_hash($_POST['password'], PASSWORD_DEFAULT) : null;
+    $passwordHash = $_POST['password']
+        ? password_hash($_POST['password'], PASSWORD_DEFAULT)
+        : null;
 
     try {
-        // Use a separate variable for the new username
         $new_username = $_POST['username'];
 
         $fields = [
@@ -49,7 +71,7 @@ if ($action === "save") {
         $params = [
             ':name' => $_POST['name'],
             ':surname' => $_POST['surname'],
-            ':new_username' => $_POST['username'],
+            ':new_username' => $new_username,
             ':gender' => $_POST['gender'],
             ':birthdate' => $_POST['birthdate'],
             ':email' => $_POST['email'],
@@ -65,14 +87,13 @@ if ($action === "save") {
             $params[':password_hash'] = $passwordHash;
         }
 
-        $sql = "UPDATE users SET " . implode(", ", $fields) . " WHERE username = :current_username LIMIT 1";
+        $sql = "UPDATE users SET " . implode(", ", $fields) . "
+                WHERE username = :current_username LIMIT 1";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
 
-        // Update session username if it was changed
         $_SESSION['username'] = $new_username;
-
         $success_msg = "Profile updated successfully!";
         $is_editing = false;
 
@@ -82,7 +103,7 @@ if ($action === "save") {
 }
 
 /* -------------------------------------------
-   FETCH USER RECORD
+   FETCH USER DATA
 --------------------------------------------*/
 $stmt = $pdo->prepare("
     SELECT id, username, name, surname, gender, birthdate, email, country,
@@ -91,7 +112,6 @@ $stmt = $pdo->prepare("
     WHERE username = ?
     LIMIT 1
 ");
-
 $stmt->execute([$_SESSION['username']]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -100,41 +120,46 @@ if (!$user) {
     exit;
 }
 
-//Helper function for escaping output
-function e($value)
+/* -------------------------------------------
+   FETCH USER ENROLLMENTS
+--------------------------------------------*/
+$stmt = $pdo->prepare("
+    SELECT 
+        r.id AS registration_id,
+        r.registration_datetime,
+        d.start_datetime,
+        d.end_datetime,
+        p.product_name,
+        p.price
+    FROM seminar_registrations r
+    JOIN seminar_dates d ON r.seminar_date_id = d.id
+    JOIN products p ON d.product_id = p.id
+    WHERE r.user_id = ?
+    ORDER BY r.registration_datetime DESC
+");
+$stmt->execute([$user['id']]);
+$user_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+function e($v)
 {
-    return htmlspecialchars((string) ($value ?? ''), ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string) ($v ?? ''), ENT_QUOTES, 'UTF-8');
 }
 ?>
-
 
 <div class="user-panel-container">
     <h2>User Panel</h2>
     <p>Welcome, <strong><?= e($user['username']) ?></strong></p>
 
     <?php if (!empty($success_msg)): ?>
-        <div id="successMessage" class="register-msg-ok"><?= e($success_msg) ?></div>
+        <div class="register-msg-ok"><?= e($success_msg) ?></div>
     <?php endif; ?>
-    <script>
-        setTimeout(() => {
-            const msg = document.getElementById("successMessage");
-            if (msg) msg.style.display = "none";
-        }, 3000);
-    </script>
 
     <?php if (!empty($error_msg)): ?>
-        <div id="errorMessage" class="register-msg-error"><?= e($error_msg) ?></div>
+        <div class="register-msg-error"><?= e($error_msg) ?></div>
     <?php endif; ?>
 
-    <script>
-        setTimeout(() => {
-            const msg = document.getElementById("errorMessage");
-            if (msg) msg.style.display = "none";
-        }, 3000);
-    </script>
-
-    <form method="post">
-
+    <!-- USER ACCOUNT DATA -->
+    <form method="post" class="user-form">
         <input type="hidden" name="action" value="<?= $is_editing ? 'save' : '' ?>">
 
         <div class="user-info-grid">
@@ -271,10 +296,52 @@ function e($value)
                 <button type="submit" name="action" value="edit" class="btn-primary">
                     Edit Profile
                 </button>
-                <button type="button" onclick="window.location.href='index.php?page=logout'" class="btn-danger">
+                <button type="button" class="btn-danger" onclick="window.location.href='index.php?page=logout'">
                     Logout
                 </button>
             <?php endif; ?>
         </div>
-
     </form>
+
+    <!-- ENROLLMENTS -->
+    <h3 class="enrollments-title">My Seminar Enrollments</h3>
+
+    <?php if (!$user_registrations): ?>
+        <p>You are not enrolled in any seminars yet.</p>
+    <?php else: ?>
+        <div class="enrollments-table-wrapper">
+            <table class="enrollments-table">
+                <thead>
+                    <tr>
+                        <th>Seminar</th>
+                        <th>Price</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Enrolled</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($user_registrations as $reg): ?>
+                        <tr>
+                            <td><?= e($reg['product_name']) ?></td>
+                            <td><?= number_format($reg['price'], 2) ?> €</td>
+                            <td><?= e($reg['start_datetime']) ?></td>
+                            <td><?= e($reg['end_datetime']) ?></td>
+                            <td><?= e($reg['registration_datetime']) ?></td>
+                            <td>
+                                <form method="post" onsubmit="return confirm('Cancel this enrollment?');">
+                                    <input type="hidden" name="action" value="delete_enrollment">
+                                    <input type="hidden" name="registration_id" value="<?= (int) $reg['registration_id'] ?>">
+                                    <button type="submit" class="btn-danger">
+                                        Cancel
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    <?php endif; ?>
+</div>

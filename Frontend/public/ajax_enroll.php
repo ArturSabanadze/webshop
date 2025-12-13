@@ -61,6 +61,32 @@ if ($overlapCount > 0) {
     exit;
 }
 
+// Check max participant capacity
+$capacityQuery = "
+    SELECT 
+        sd.max_participants,
+        COUNT(sr.id) AS current_participants
+    FROM seminar_dates sd
+    LEFT JOIN seminar_registrations sr 
+        ON sr.seminar_date_id = sd.id
+    WHERE sd.id = ?
+    GROUP BY sd.max_participants
+";
+
+$stmt = $pdo->prepare($capacityQuery);
+$stmt->execute([$seminarDateId]);
+$capacity = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$capacity) {
+    echo json_encode(['error' => 'Seminar not found']);
+    exit;
+}
+
+if ($capacity['current_participants'] >= $capacity['max_participants']) {
+    echo json_encode(['error' => 'This seminar is already fully booked']);
+    exit;
+}
+
 // Enroll user, speichere die Anmeldung in der Datenbank
 $stmt = $pdo->prepare("INSERT INTO seminar_registrations (user_id, seminar_date_id) VALUES (?, ?)");
 $stmt->execute([$userId, $seminarDateId]);

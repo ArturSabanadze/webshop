@@ -65,6 +65,7 @@
 }
 
 .profile-actions {
+  margin-top: 5px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 12px;

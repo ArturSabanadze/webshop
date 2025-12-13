@@ -4,7 +4,8 @@
 
 /* ================== CONFIG ================== */
 $uploadDir = __DIR__ . '/../../assets/product_images/';
-$uploadUrlBase = '../../assets/product_images/';
+/* $uploadUrlBase = '../../assets/product_images/'; path for developing via VSC Server*/
+$uploadUrlBase = '/Die_Fantastische_4/Frontend/public/assets/product_images/'; //path for XAMPP server
 
 /* ================== HELPERS ================== */
 function e($v)

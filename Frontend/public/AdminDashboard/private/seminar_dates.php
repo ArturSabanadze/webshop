@@ -26,6 +26,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_date'])) {
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     ");
 
+    if ($_POST['max_participants'] < $_POST['min_participants']) {
+        die('<p style="color:red;">Participant max capacity can not be less than min capacity</p>');
+    }
+    if ($_POST['end_datetime'] < $_POST['start_datetime']) {
+        die('<p style="color:red;">End date must be after start date</p>');
+    }
+
     $stmt->execute([
         (int) $_POST['product_id'],
         $_POST['start_datetime'],
@@ -56,6 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_date'])) {
             available_for_reservation = ?
         WHERE id = ?
     ");
+
+    if ($_POST['max_participants'] < $_POST['min_participants']) {
+        die('<p style="color:red;">Participant max capacity can not be less than min capacity</p>');
+    }
+    if ($_POST['end_datetime'] < $_POST['start_datetime']) {
+        die('<p style="color:red;">End date must be after start date</p>');
+    }
 
     $stmt->execute([
         (int) $_POST['product_id'],

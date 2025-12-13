@@ -14,3 +14,10 @@ Updates in Version 1.1
 
 4. UX-UI Updates
  - Styling Updates
+
+5. Database
+ - Columns valid_to_start and valid_for_registration are
+   moved to seminar_dates table for better administration prozess.
+
+6. Installtion
+ - Updated setup.bat prozess to match the new DB structure.

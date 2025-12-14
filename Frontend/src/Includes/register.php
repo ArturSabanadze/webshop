@@ -5,6 +5,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once '../../Backend/register_handler.php';
 
+$name = $name ?? '';
+$surname = $surname ?? '';
+$email = $email ?? '';
+$gender = $gender ?? '';
+$username = $username ?? '';
+$birthdate = $birthdate ?? '';
+$country = $country ?? '';
+$postal_index = $postal_index ?? '';
+$street = $street ?? '';
+$phone = $phone ?? '';
 
 $error = $_SESSION['register_error'] ?? '';
 $success_message = $_SESSION['register_success_message'] ?? '';

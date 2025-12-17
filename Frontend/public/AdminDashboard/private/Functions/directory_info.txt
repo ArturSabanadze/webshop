@@ -1,4 +1,0 @@
-# Utility-Funktionen
-
-Funktionen die auf pages irgendeine problem lösen sollen hier,
-in separate dateien erstellt und korrekt und erkennbar genannt werden.

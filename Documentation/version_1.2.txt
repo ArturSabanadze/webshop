@@ -1,0 +1,6 @@
+Updates in Version 1.2
+===========================
+
+1. Admin Panel:
+ - Add Functions
+  - get_registrations.php: Return the count of registrations, optionally filtered by date range.

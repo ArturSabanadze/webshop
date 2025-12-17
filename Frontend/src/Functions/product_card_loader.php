@@ -53,13 +53,14 @@ function generateProductCard(array $row): string
     $duration = (!empty($row['start_date']) && !empty($row['end_date']))
         ? (new DateTime($row['start_date']))->diff(new DateTime($row['end_date']))->days . " days"
         : "Flexible";
+    $excerpt = mb_substr($row['description'], 0, 100) . (mb_strlen($row['description']) > 100 ? "..." : "");
 
     return '
     <div class="course-card">
         <img src="' . htmlspecialchars($row['image_url']) . '" alt="Course thumbnail">
         <div class="course-info">
             <h3 class="course-title">' . htmlspecialchars($row['product_name']) . '</h3>
-            <p class="course-desc">' . htmlspecialchars($row['description']) . '</p>
+            <p class="course-desc">' . htmlspecialchars($excerpt) . '</p>
             <div class="course-meta">
                 <span>€ ' . number_format($row['price'], 2) . '</span>
                 <span>' . $duration . '</span>

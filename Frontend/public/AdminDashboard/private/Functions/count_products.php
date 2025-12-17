@@ -3,7 +3,7 @@
 require_once '../../../../../Backend/db_connection.php';
 
 //Return the count of preoducts, optionally filtered by date range
-function count_seminars($start_date = null, $end_date = null): string
+function count_products($start_date = null, $end_date = null): string
 {
     global $pdo;
 
@@ -22,4 +22,4 @@ function count_seminars($start_date = null, $end_date = null): string
 
 //test the function
 /* echo count_seminars();
-echo count_seminars('2024-01-01', '2025-07-15'); */
+echo count_products('2024-01-01', '2025-07-15'); */

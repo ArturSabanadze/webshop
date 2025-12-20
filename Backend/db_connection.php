@@ -2,7 +2,7 @@
 $env = parse_ini_file(__DIR__ . '/config/.env');
 // DB-Zugangsdaten
 $host = $env['DB_HOST'] ?? 'localhost';
-$dbname = $env['DB_NAME'] ?? 'webshop';
+$dbname = $env['DB_NAME'] ?? 'webshopPro';
 $user = $env['DB_USER'] ?? 'root';
 $pass = $env['DB_PASS'] ?? '';
 

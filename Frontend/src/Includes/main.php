@@ -1,10 +1,10 @@
 <!-- MAIN SECTION -->
 <?php
-$path = '../src/Functions/product_card_loader.php';
+$path = '../src/Functions/product_card_loader_pro.php';
 if (file_exists($path)) {
     require_once $path;
 } else {
-    die('Required file product_card_loader.php not found.');
+    die('Required file product_card_loader_pro.php not found.');
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../src/Functions/product_card_loader.php';
+require_once __DIR__ . '/../src/Functions/product_card_loader_pro.php';
 
 header('Content-Type: application/json');
 

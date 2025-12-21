@@ -87,7 +87,8 @@ CREATE TABLE seminars_locations (
 ) ENGINE=InnoDB;
 
 CREATE TABLE live_seminars (
-  product_id       INT UNSIGNED PRIMARY KEY,
+  id              INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  product_id       INT UNSIGNED NOT NULL,
   start_date       DATETIME NOT NULL,
   end_date         DATETIME NOT NULL,
   location_id      INT UNSIGNED NOT NULL,

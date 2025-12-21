@@ -57,9 +57,9 @@ function generateProductCard(array $row): string
     $status = $row['status'] === 'active' ? 'Available' : 'Unavailable';
     return '
     <div class="course-card">
-        <img src="' . htmlspecialchars($row['image_url']) . '" alt="Course thumbnail">
+        <img src="' . htmlspecialchars($row['image_url'] ?? '') . '" alt="Course thumbnail">
         <div class="course-info">
-            <h3 class="course-title">' . htmlspecialchars($row['product_name']) . '</h3>
+            <h3 class="course-title">' . htmlspecialchars($row['title']) . '</h3>
             <p class="course-desc">' . htmlspecialchars($excerpt) . '</p>
             <div class="course-meta">
                 <span>€ ' . number_format($row['price'], 2) . '</span>
@@ -75,10 +75,10 @@ function getSeminarDates(int $productId): array
 {
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT id, start_datetime, end_datetime
-        FROM seminar_dates
+        SELECT product_id, start_date, end_date
+        FROM live_seminars
         WHERE product_id = ?
-        ORDER BY start_datetime ASC
+        ORDER BY start_date ASC
     ");
     $stmt->execute([$productId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

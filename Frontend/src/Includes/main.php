@@ -51,6 +51,7 @@ if (file_exists($path)) {
     document.querySelectorAll('.course-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const productId = this.dataset.id;
+            console.log('Selected product ID:', productId);
             const seminarSelect = document.getElementById('seminar_date_select');
             seminarSelect.innerHTML = '';
 
@@ -75,7 +76,7 @@ if (file_exists($path)) {
                         dates.forEach(d => {
                             const opt = document.createElement('option');
                             opt.value = d.id;
-                            opt.textContent = d.start_datetime + ' - ' + d.end_datetime;
+                            opt.textContent = d.start_date + ' - ' + d.end_date;
                             seminarSelect.appendChild(opt);
                         });
                     }

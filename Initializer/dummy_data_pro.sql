@@ -31,6 +31,9 @@ INSERT INTO products (title, description, image_url, price, status, start_sellin
   ('PHP for Beginners Course', 'Video course for PHP', NULL, 49.00, 'active', NOW()),
   ('Web Development Seminar Athens', '2-day live seminar', NULL, 199.00, 'active', NOW());
 
+INSERT INTO products (title, description, image_url, price, status, start_selling_date) VALUES
+  ('Web Development Seminar Thessaloniki', '2-day live seminar', NULL, 199.00, 'active', NOW());
+
 -- Product category mapping
 INSERT INTO product_categories (product_id, category_id) VALUES
   (1, 1),

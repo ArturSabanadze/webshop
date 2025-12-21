@@ -1,0 +1,109 @@
+.about-container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  padding: 60px clamp(40px, 10vw, 100px);
+  background: linear-gradient(
+    to right,
+    rgba(40, 54, 66, 0.85),
+    rgba(70, 99, 122, 0.85)
+  );
+  color: #eaf6ff;
+  font-family: "Inter", sans-serif;
+}
+
+/* Each person row */
+.about-person {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 20px;
+}
+
+/* Reverse for alternating sides */
+.about-person.reverse {
+  flex-direction: row-reverse;
+}
+
+.about-image-0 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../assets/profile_images/dominik.jpg"),
+    url("/Die_Fantastische_4/Frontend/public/assets/profile_images/dominik.jpg");
+}
+.about-image-1 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../assets/profile_images/artur.jpg"),
+    url("/Die_Fantastische_4/Frontend/public/assets/profile_images/artur.jpg");
+}
+.about-image-2 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://via.placeholder.com/180");
+}
+.about-image-3 {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 20px rgba(0, 0, 40, 0.3);
+  background-size: cover;
+  background-position: center;
+  background-image: url("https://via.placeholder.com/180");
+}
+
+/* Info */
+.about-info {
+  flex: 1;
+}
+
+.about-info h3 {
+  font-size: 1.4rem;
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+}
+
+.about-info p:first-of-type {
+  font-weight: 600;
+  opacity: 0.85;
+  margin-bottom: 0.6rem;
+}
+
+.about-info p:last-of-type {
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  .about-person,
+  .about-person.reverse {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-image img {
+    margin-bottom: 15px;
+  }
+}

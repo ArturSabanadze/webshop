@@ -1,0 +1,8 @@
+Updates in Version 1.2
+===========================
+
+1. Admin Panel:
+ - New Functions
+  - get_registrations.php: Return the count of registrations, optionally filtered by date range.
+  - get_products.php: Return the count of rproducts, optionally filtered by date range.
+  - get_averagePrice.php: Return the average product price.

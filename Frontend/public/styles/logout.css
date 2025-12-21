@@ -1,0 +1,86 @@
+.logout-wrapper {
+  padding-bottom: 80px;
+  padding-top: 80px;
+  padding-left: clamp(40px, 20dvw, 5000px);
+  padding-right: clamp(40px, 20dvw, 5000px);
+  min-height: 80dvh;
+  background-image: url("/assets/bgr_images/std_patterns_bgr_blured.png"),
+    url("/Die_Fantastische_4/Frontend/public/assets/bgr_images/std_patterns_bgr_blured.png"); /* fallback */
+}
+
+.logout-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.logout-illustration {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: #e6edff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px auto;
+  color: #2656e0;
+}
+
+.logout-title {
+  font-size: 1.8rem;
+  margin: 10px 0;
+}
+
+.logout-sub {
+  font-size: 1rem;
+  color: #666;
+  max-width: 520px;
+  margin: 0 auto 20px auto;
+}
+
+.logout-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.lgo-btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  min-width: 130px;
+  text-align: center;
+}
+
+/* Primary button */
+.btn-primary {
+  background: #2656e0;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #1d44b6;
+}
+
+/* Outline button */
+.btn-outline {
+  border: 1px solid #2656e0;
+  color: #2656e0;
+  background: transparent;
+}
+
+.btn-outline:hover {
+  background: #dce6ff;
+}
+
+.logout-footer {
+  font-size: 0.9rem;
+  color: #777;
+  max-width: 520px;
+  margin: 0 auto;
+}

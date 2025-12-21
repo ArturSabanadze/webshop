@@ -1,0 +1,194 @@
+/* =========================
+NAVBAR
+========================= */
+.navbarContainerWrapper {
+  position: relative;
+  top: 0;
+  position: sticky;
+  z-index: 10;
+  background: linear-gradient(
+    to right,
+    rgba(5, 32, 54, 0.8),
+    rgba(27, 81, 131, 0.6)
+  );
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.desktop-menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 20px;
+  color: #fff;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logo:hover {
+  transform: scale(1.04);
+}
+
+.logo img {
+  width: clamp(80px, 15vw, 100px);
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  font-size: 1.1rem;
+}
+
+.links a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.2s;
+  background-color: #2c363a00;
+  padding: 8px 12px;
+  border-radius: 50%;
+  min-width: 100px;
+  text-align: center;
+  font-weight: 400;
+}
+
+.links a:hover {
+  background-color: #d6d6d659;
+  padding: 8px 12px;
+  border-radius: 20%;
+  font-weight: 400;
+}
+
+.links:hover > :not(:hover) {
+  opacity: 0.9;
+  filter: blur(1px);
+  font-weight: 400;
+}
+
+.dsk-login-btn {
+  background-color: rgb(49, 68, 92);
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.dsk-login-btn svg {
+  display: block;
+}
+
+.dsk-login-btn:hover {
+  background-color: rgb(69, 90, 115);
+  transform: translateY(-1px);
+}
+
+.mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: rgba(13, 48, 78, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 0 15px;
+  z-index: 999;
+}
+
+.mobile-menu .links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 0;
+}
+
+.mobile-menu .links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.1rem;
+  text-align: start;
+}
+
+.mobile-menu .menu-right {
+  margin-top: auto; /* push buttons to bottom */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 0;
+}
+
+.mobile-menu .menu-right,
+.mobile-menu .menu-right .dropdown-btn {
+  width: 100%;
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 3px;
+  transition: 0.3s;
+}
+
+.nav-open .hamburger span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.nav-open .hamburger span:nth-child(2) {
+  opacity: 0;
+}
+.nav-open .hamburger span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+@media (max-width: 1140px) {
+  .navbarContainerWrapper {
+    background: linear-gradient(to right, rgb(70, 99, 122), rgb(108, 146, 182));
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+
+  .logo img {
+    flex: 1;
+    margin-left: 20px;
+    width: clamp(60px, 15vw, 100px);
+  }
+
+  .desktop-menu .links,
+  .desktop-menu .menu-right {
+    display: none; /* hide desktop nav */
+  }
+
+  .navbar-btn-not-logged,
+  .navbar-btn-logged {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+}

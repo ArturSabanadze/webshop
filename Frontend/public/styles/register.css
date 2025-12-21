@@ -1,0 +1,150 @@
+/* --- Registration Page Container --- */
+.register-container {
+  padding-bottom: 80px;
+  padding-top: 80px;
+  padding-left: clamp(40px, 20dvw, 5000px);
+  padding-right: clamp(40px, 20dvw, 5000px);
+  min-height: 80dvh;
+  background: linear-gradient(to right, rgb(18, 32, 44), rgb(40, 54, 66));
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* --- Error & success messages --- */
+.register-msg-error,
+.register-msg-ok {
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.register-msg-error {
+  background: rgba(255, 60, 60, 0.2);
+  border-left: 3px solid #ff3c3c;
+  color: rgb(226, 170, 170);
+}
+
+.register-msg-ok {
+  background: rgba(0, 200, 120, 0.2);
+  border-left: 3px solid #00c878;
+  color: white;
+}
+
+.register-msg-ok a {
+  text-decoration: none;
+  color: wheat;
+}
+
+/* --- Form --- */
+.register-form label {
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+  color: #e6faff;
+}
+
+.register-form input,
+.register-form select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.2);
+  color: #e6faff;
+  backdrop-filter: blur(6px);
+  outline: none;
+  transition: 0.5s;
+}
+
+.register-form select option {
+  background-color: rgb(49, 68, 92); /* dropdown background */
+  color: #fff; /* option text */
+}
+
+.register-form input::placeholder {
+  color: rgb(255, 255, 255);
+}
+
+.register-form input:focus,
+.register-form select:focus {
+  border-color: #00eaff31;
+  box-shadow: 0 0 10px rgba(0, 234, 255, 0.3);
+}
+
+/* --- Main Register Button --- */
+.register-btn-main {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgb(49, 68, 92);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.register-btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
+}
+
+/* --- Secondary Button --- */
+.register-btn-secondary {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background-color: rgb(69, 91, 117);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.register-btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 234, 255, 0.2);
+}
+
+/* --- Divider and small text --- */
+.register-divider {
+  margin: 1.4rem 0;
+  border: none;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.register-login-text {
+  text-align: center;
+  margin-bottom: 0.5rem;
+  color: #bfe9ff;
+}
+
+.register-grid {
+  display: grid;
+  grid-template-columns: 3fr;
+  gap: 16px;
+}
+
+/* Two columns on wider screens */
+@media (min-width: 756px) {
+  .register-grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  /* Make certain fields span both columns */
+  .register-grid label:nth-child(3),  /* Username */
+    .register-grid label:nth-child(5),  /* Password */
+    .register-grid label:nth-child(7),  /* Gender */
+    .register-grid label:nth-child(11), /* Street */
+    .register-grid label:nth-child(12)  /* Phone */ {
+    grid-column: span 2;
+  }
+}

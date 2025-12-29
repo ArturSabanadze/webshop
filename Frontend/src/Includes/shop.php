@@ -1,5 +1,5 @@
 <?php
-require_once '../src/Functions/product_card_loader.php';
+require_once '../src/Functions/product_card_loader_pro.php';
 
 $search = $_GET['search'] ?? '';
 $category = $_GET['category'] ?? '';
@@ -12,10 +12,10 @@ $sort = $_GET['sort'] ?? 'newest';
             value="<?= htmlspecialchars($search) ?>" />
         <select class="filter-category">
             <option value="">All Categories</option>
-            <option value="software" <?= $category === 'software' ? 'selected' : '' ?>>Software</option>
-            <option value="design" <?= $category === 'design' ? 'selected' : '' ?>>Web Development</option>
-            <option value="business" <?= $category === 'business' ? 'selected' : '' ?>>Business</option>
-            <option value="marketing" <?= $category === 'marketing' ? 'selected' : '' ?>>Marketing</option>
+            <option value="electronics" <?= $category === 'electronics' ? 'selected' : '' ?>>Electronics</option>
+            <option value="e-books" <?= $category === 'e-books' ? 'selected' : '' ?>>E-Books</option>
+            <option value="online courses" <?= $category === 'online courses' ? 'selected' : '' ?>>Online Courses</option>
+            <option value="seminars" <?= $category === 'seminars' ? 'selected' : '' ?>>Seminars</option>
         </select>
         <select class="filter-sort">
             <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Newest</option>

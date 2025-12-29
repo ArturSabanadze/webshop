@@ -22,17 +22,23 @@ $_SESSION['register_success'] = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'register') {
 
-    // Sanitize
-    $name = trim($_POST['name'] ?? '');
-    $surname = trim($_POST['surname'] ?? '');
+    //users fields
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+
+    //users_adresses fields
+    $country = trim($_POST['country'] ?? '');
+    $zip_code = trim($_POST['zip_code'] ?? '');
+    $street = trim($_POST['street'] ?? '');
+    
+    // users_profile fields
+    $name = trim($_POST['name'] ?? '');
+    $surname = trim($_POST['surname'] ?? '');
+    $biography = trim($_POST['biography'] ?? '');
+    $profile_img_url = trim($_POST['profile_img_url'] ?? '');
     $gender = trim($_POST['gender'] ?? '');
     $birthdate = $_POST['birthdate'] ?? '';
-    $country = trim($_POST['country'] ?? '');
-    $postal_index = trim($_POST['postal_index'] ?? '');
-    $street = trim($_POST['street'] ?? '');
     $phone = trim($_POST['phone'] ?? '');
 
     // Validation
@@ -60,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
                 // Insert new user
                 $insert = $pdo->prepare("
                     INSERT INTO users 
-                    (username, password_hash, name, surname, email, gender, birthdate, country, postal_index, street, phone)
-                    VALUES (:username, :hash, :name, :surname, :email, :gender, :birthdate, :country, :postal_index, :street, :phone)
+                    (username, password_hash, name, surname, email, gender, birthdate, country, zip_code, street, phone)
+                    VALUES (:username, :hash, :name, :surname, :email, :gender, :birthdate, :country, :zip_code, :street, :phone)
                 ");
 
                 $insert->execute([

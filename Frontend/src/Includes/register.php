@@ -15,6 +15,7 @@ $country = $country ?? '';
 $postal_index = $postal_index ?? '';
 $street = $street ?? '';
 $phone = $phone ?? '';
+$biography = $biography ?? '';
 
 $error = $_SESSION['register_error'] ?? '';
 $success_message = $_SESSION['register_success_message'] ?? '';
@@ -44,8 +45,6 @@ $success = $_SESSION['register_success'] ?? false;
                         value="<?= htmlspecialchars($surname) ?>">
                 </label>
 
-
-
                 <label>Email
                     <input type="email" name="email" required placeholder="Your email"
                         value="<?= htmlspecialchars($email) ?>">
@@ -69,8 +68,6 @@ $success = $_SESSION['register_success'] ?? false;
                     <input type="password" name="password" required placeholder="Choose a strong password">
                 </label>
 
-
-
                 <label>Birthdate
                     <input type="date" name="birthdate" value="<?= htmlspecialchars($birthdate) ?>">
                 </label>
@@ -90,6 +87,11 @@ $success = $_SESSION['register_success'] ?? false;
                 <label>Phone
                     <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>">
                 </label>
+
+                <label for="biography">Biography
+                    <textarea name="biography" rows="5" style="width: 100%;" placeholder="Tell us something about yourself..."><?= htmlspecialchars($biography) ?></textarea>
+                </label>
+
             </div>
 
             <button type="submit" class="register-btn-main">Register</button>

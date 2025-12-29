@@ -14,7 +14,7 @@ function getFilteredProducts(string $search = '', string $category = '', string 
     global $pdo;
 
     $query = "SELECT p.* FROM products p
-        LEFT JOIN products_categories pc ON p.id = pc.product_id
+        LEFT JOIN product_categories pc ON p.id = pc.product_id
         LEFT JOIN categories c ON c.id = pc.category_id
         WHERE 1";
     $params = [];

@@ -18,29 +18,6 @@ $current_username = $_SESSION['username'];
 $action = $_POST['action'] ?? null;
 $is_editing = ($action === "edit");
 
-/* --- DELETE ENROLLMENT --- */
-if ($action === "delete_enrollment" && isset($_POST['registration_id'])) {
-
-    $stmt = $pdo->prepare("
-        DELETE FROM seminar_registrations
-        WHERE id = ?
-          AND user_id = (
-              SELECT id FROM users WHERE username = ?
-          )
-    ");
-
-    $stmt->execute([
-        $_POST['registration_id'],
-        $current_username
-    ]);
-
-    if ($stmt->rowCount() > 0) {
-        $success_msg = "Enrollment cancelled successfully.";
-    } else {
-        $error_msg = "Unable to cancel enrollment.";
-    }
-}
-
 /* --- SAVE PROFILE --- */
 if ($action === "save") {
     foreach ($_POST as $k => $v) {
@@ -54,18 +31,24 @@ if ($action === "save") {
     try {
         $new_username = $_POST['username'];
 
-        $fields = [
+        $user_fields = [
+            "username = :new_username",
+            "email = :email",
+        ];
+
+        $user_profile_fields = [
             "name = :name",
             "surname = :surname",
-            "username = :new_username",
             "gender = :gender",
             "birthdate = :birthdate",
-            "email = :email",
-            "country = :country",
-            "postal_index = :postal_index",
-            "street = :street",
             "phone = :phone",
-            "updated_at = NOW()"
+        ];
+
+        $user_adresses_fields = [
+            "country = :country",
+            "zip_code = :zip_code",
+            "street = :street",
+            "street_number = :street_number",
         ];
 
         $params = [
@@ -76,19 +59,25 @@ if ($action === "save") {
             ':birthdate' => $_POST['birthdate'],
             ':email' => $_POST['email'],
             ':country' => $_POST['country'],
-            ':postal_index' => $_POST['postal_index'],
+            ':zip_code' => $_POST['zip_code'],
+            ':province' => $_POST['province'],
             ':street' => $_POST['street'],
+            ':street_number' => $_POST['street_number'],
             ':phone' => $_POST['phone'],
             ':current_username' => $current_username,
         ];
 
         if ($passwordHash) {
-            $fields[] = "password_hash = :password_hash";
+            $user_fields[] = "password_hash = :password_hash";
             $params[':password_hash'] = $passwordHash;
         }
 
-        $sql = "UPDATE users SET " . implode(", ", $fields) . "
+        $sql = "UPDATE users SET " . implode(", ", $user_fields) . "
                 WHERE username = :current_username LIMIT 1";
+        $sql .= " ; UPDATE users_profiles SET " . implode(", ", $user_profile_fields) . "
+                WHERE user_id = (SELECT id FROM users WHERE username = :current_username) LIMIT 1";
+        $sql .= " ; UPDATE users_addresses SET " . implode(", ", $user_adresses_fields) . "
+                WHERE user_id = (SELECT id FROM users WHERE username = :current_username) LIMIT 1";
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($params);
@@ -106,10 +95,12 @@ if ($action === "save") {
    FETCH USER DATA
 --------------------------------------------*/
 $stmt = $pdo->prepare("
-    SELECT id, username, name, surname, gender, birthdate, email, country,
-           postal_index, street, phone, created_at, updated_at, is_active, role
-    FROM users
-    WHERE username = ?
+    SELECT u.id, u.username, up.name, up.surname, up.gender, up.birthdate, u.email, ua.country,
+           ua.zip_code, ua.province, ua.street, ua.street_number, up.phone, u.role
+    FROM users u
+    LEFT JOIN users_profiles up ON u.id = up.user_id
+    LEFT JOIN users_addresses ua ON u.id = ua.user_id
+    WHERE u.username = ?
     LIMIT 1
 ");
 $stmt->execute([$_SESSION['username']]);
@@ -119,26 +110,6 @@ if (!$user) {
     echo "<div class='register-msg-error'>User not found.</div>";
     exit;
 }
-
-/* -------------------------------------------
-   FETCH USER ENROLLMENTS
---------------------------------------------*/
-$stmt = $pdo->prepare("
-    SELECT 
-        r.id AS registration_id,
-        r.registration_datetime,
-        d.start_datetime,
-        d.end_datetime,
-        p.product_name,
-        p.price
-    FROM seminar_registrations r
-    JOIN seminar_dates d ON r.seminar_date_id = d.id
-    JOIN products p ON d.product_id = p.id
-    WHERE r.user_id = ?
-    ORDER BY r.registration_datetime DESC
-");
-$stmt->execute([$user['id']]);
-$user_registrations = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 function e($v)
 {
@@ -250,11 +221,21 @@ function e($v)
 
             <!-- POSTAL INDEX -->
             <label class="user-info-item">
-                <strong>Postal Code:</strong><br>
+                <strong>Zip Code:</strong><br>
                 <?php if ($is_editing): ?>
-                    <input type="text" name="postal_index" value="<?= e($user['postal_index'] ?? '') ?>">
+                    <input type="text" name="zip_code" value="<?= e($user['zip_code'] ?? '') ?>">
                 <?php else: ?>
-                    <?= e($user['postal_index'] ?? '') ?>
+                    <?= e($user['zip_code'] ?? '') ?>
+                <?php endif; ?>
+            </label>
+
+            <!-- PROVINCE -->
+            <label class="user-info-item">
+                <strong>Province:</strong><br>
+                <?php if ($is_editing): ?>
+                    <input type="text" name="province" value="<?= e($user['province'] ?? '') ?>">
+                <?php else: ?>
+                    <?= e($user['province'] ?? '') ?>
                 <?php endif; ?>
             </label>
 
@@ -265,6 +246,16 @@ function e($v)
                     <input type="text" name="street" value="<?= e($user['street'] ?? '') ?>">
                 <?php else: ?>
                     <?= e($user['street'] ?? '') ?>
+                <?php endif; ?>
+            </label>
+
+            <!-- STREET NUMBER -->
+            <label class="user-info-item">
+                <strong>Street Number:</strong><br>
+                <?php if ($is_editing): ?>
+                    <input type="text" name="street_number" value="<?= e($user['street_number'] ?? '') ?>">
+                <?php else: ?>
+                    <?= e($user['street_number'] ?? '') ?>
                 <?php endif; ?>
             </label>
 
@@ -279,9 +270,6 @@ function e($v)
             </label>
 
             <!-- READ-ONLY FIELDS -->
-            <div class="user-info-item"><strong>Account Created:</strong><br><?= e($user['created_at'] ?? '') ?></div>
-            <div class="user-info-item"><strong>Last Updated:</strong><br><?= e($user['updated_at'] ?? '') ?></div>
-            <div class="user-info-item"><strong>Active:</strong><br><?= $user['is_active'] ? "Yes" : "No" ?></div>
             <div class="user-info-item"><strong>Role:</strong><br><?= e($user['role'] ?? '') ?></div>
 
         </div>
@@ -303,45 +291,5 @@ function e($v)
         </div>
     </form>
 
-    <!-- ENROLLMENTS -->
-    <h3 class="enrollments-title">My Seminar Enrollments</h3>
-
-    <?php if (!$user_registrations): ?>
-        <p>You are not enrolled in any seminars yet.</p>
-    <?php else: ?>
-        <div class="enrollments-table-wrapper">
-            <table class="enrollments-table">
-                <thead>
-                    <tr>
-                        <th>Seminar</th>
-                        <th>Price</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Enrolled</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($user_registrations as $reg): ?>
-                        <tr>
-                            <td><?= e($reg['product_name']) ?></td>
-                            <td><?= number_format($reg['price'], 2) ?> €</td>
-                            <td><?= e($reg['start_datetime']) ?></td>
-                            <td><?= e($reg['end_datetime']) ?></td>
-                            <td><?= e($reg['registration_datetime']) ?></td>
-                            <td>
-                                <form method="post" onsubmit="return confirm('Cancel this enrollment?');">
-                                    <input type="hidden" name="action" value="delete_enrollment">
-                                    <input type="hidden" name="registration_id" value="<?= (int) $reg['registration_id'] ?>">
-                                    <button type="submit" class="btn-danger">
-                                        Cancel
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    <?php endif; ?>
+    
 </div>

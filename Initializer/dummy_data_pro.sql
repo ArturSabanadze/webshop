@@ -1,10 +1,10 @@
 USE webshop_pro;
 
 -- Users
-INSERT INTO users (username, password_hash, email) VALUES
-  ('alice', 'hash1', 'alice@example.com'),
-  ('bob',   'hash2', 'bob@example.com'),
-  ('carol', 'hash3', 'carol@example.com');
+INSERT INTO users (username, password_hash, email, role) VALUES
+  ('alice', 'hash1', 'alice@example.com', 'user'),
+  ('bob',   'hash2', 'bob@example.com', 'user'),
+  ('carol', 'hash3', 'carol@example.com', 'user');
 
 INSERT INTO users_profiles (user_id, name, surname, biography, profile_img_url) VALUES
   (1, 'Alice', 'Anderson', 'Loves online courses', NULL),

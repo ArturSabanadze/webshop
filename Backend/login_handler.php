@@ -23,9 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login
 
     try {
         // Benutzer aus der Datenbank abrufen
-        $stmt = $pdo->prepare("SELECT id, username, password_hash, name, surname, gender, birthdate, 
-        email, country, postal_index, street, phone, created_at, updated_at, is_active, role  
-                               FROM users WHERE username = :username LIMIT 1");
+        $stmt = $pdo->prepare("SELECT u.id, u.username, u.password_hash, u.role, up.name, up.surname, up.gender, up.birthdate, 
+        u.email, ua.country, ua.zip_code, ua.street, up.phone  
+                               FROM users u
+                               LEFT JOIN users_profiles up ON u.id = up.user_id
+                               LEFT JOIN users_addresses ua ON u.id = ua.user_id
+                               WHERE u.username = :username LIMIT 1");
         // Benutzer anhand des Benutzernamens abrufen                       
         $stmt->execute([':username' => $username]);
         // Fetch the user data
@@ -46,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login
                 $_SESSION['birthdate'] = $user['birthdate'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['country'] = $user['country'];
-                $_SESSION['postal_index'] = $user['postal_index'];
+                $_SESSION['zip_code'] = $user['zip_code'];
                 $_SESSION['street'] = $user['street'];
                 $_SESSION['role'] = $user['role'];
                 $_SESSION['login_success'] = 'Login successful! Hello, ' . $user['name'] . ' ' . $user['surname'] . '.';
@@ -60,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'login
         }
     } catch (PDOException $e) {
         // Optional: Fehler für Admin-Logging
-        $_SESSION['login_error'] = 'Database error. Please try again later.';
+        $_SESSION['login_error'] = 'Database error. Please try again later.' . $e->getMessage();
     }
 
 }

@@ -22,7 +22,7 @@ $_SESSION['register_success'] = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'register') {
 
-    //users fields
+    //users fields new datenbank
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
     $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);

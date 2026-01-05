@@ -35,6 +35,7 @@ $success = $_SESSION['register_success'] ?? false;
         <form method="post" action="" class="register-form">
             <input type="hidden" name="action" value="register">
             <div class="register-grid">
+                <!-- Register fields -->
                 <label>Name
                     <input type="text" name="name" required placeholder="Only letters and spaces allowed"
                         value="<?= htmlspecialchars($name) ?>">

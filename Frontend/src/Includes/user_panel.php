@@ -96,7 +96,7 @@ if ($action === "save") {
 --------------------------------------------*/
 $stmt = $pdo->prepare("
     SELECT u.id, u.username, up.name, up.surname, up.gender, up.birthdate, u.email, ua.country,
-           ua.zip_code, ua.province, ua.street, ua.street_number, up.phone, u.role
+           ua.zip_code, ua.province, ua.street, ua.street_number, up.phone, up.profile_img_url, u.role
     FROM users u
     LEFT JOIN users_profiles up ON u.id = up.user_id
     LEFT JOIN users_addresses ua ON u.id = ua.user_id
@@ -118,9 +118,6 @@ function e($v)
 ?>
 
 <div class="user-panel-container">
-    <h2>User Panel</h2>
-    <p>Welcome, <strong><?= e($user['username']) ?></strong></p>
-
     <?php if (!empty($success_msg)): ?>
         <div class="register-msg-ok"><?= e($success_msg) ?></div>
     <?php endif; ?>
@@ -129,6 +126,13 @@ function e($v)
         <div class="register-msg-error"><?= e($error_msg) ?></div>
     <?php endif; ?>
 
+    
+    <p>Welcome, <strong><?= e($user['username']) ?></strong></p>
+    <div class="profile-image-container">
+    <img src="<?= e($user['profile_img_url'] ?? 'assets/default_profile.png') ?>" alt="Profile Image" class="profile-image">
+    </div>
+    
+        <h2>User Panel</h2>
     <!-- USER ACCOUNT DATA -->
     <form method="post" class="user-form">
         <input type="hidden" name="action" value="<?= $is_editing ? 'save' : '' ?>">

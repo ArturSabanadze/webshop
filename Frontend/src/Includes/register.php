@@ -40,7 +40,7 @@ $success = $_SESSION['register_success'] ?? false;
             Registration successful! You can now <a href="index.php?page=login">login</a>.
         </div>
     <?php else: ?>
-        <form method="post" action="" class="register-form">
+        <form method="post" action="" class="register-form" enctype="multipart/form-data">
             <input type="hidden" name="action" value="register">
             <div class="register-grid">
                 <!-- Users fields -->
@@ -89,7 +89,7 @@ $success = $_SESSION['register_success'] ?? false;
                 </label>
 
                 <label>Profile Image
-                    <input type="file" name="profile_img_url" value="<?= htmlspecialchars($profile_img_url) ?>">
+                    <input type="file" name="profile_img_url" accept="image/*">
                 </label>
 
                 <label>Biography

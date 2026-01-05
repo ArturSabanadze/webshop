@@ -22,6 +22,48 @@ $_SESSION['register_success'] = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'register') {
 
+    if (isset($_FILES['profile_img_url']) && $_FILES['profile_img_url']['error'] === UPLOAD_ERR_OK) {
+
+        $uploadDir = '../public/assets/profile_images/';
+        if (!is_dir($uploadDir)) {
+            $_SESSION['register_error'] = 'Failed to create upload directory.';
+            return;
+        }
+        
+
+        $fileTmpPath = $_FILES['profile_img_url']['tmp_name'];
+        $fileName = $_FILES['profile_img_url']['name'];
+        $fileSize = $_FILES['profile_img_url']['size'];
+        $fileType = mime_content_type($fileTmpPath);
+
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+        if (!in_array($fileType, $allowedTypes)) {
+            $_SESSION['register_error'] = 'Invalid image format.';
+            return;
+        }
+
+        if ($fileSize > 2 * 1024 * 1024) { // 2MB
+            $_SESSION['register_error'] = 'Profile image too large (max 2MB).';
+            return;
+        }
+
+        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+        $newFileName = uniqid('profile_', true) . '.' . $extension;
+
+        $destination = $uploadDir . $newFileName;
+
+        if (move_uploaded_file($fileTmpPath, $destination)) {
+            // Save relative path in DB
+            $profile_img_url = '/assets/profile_images/' . $newFileName;
+        } else {
+            $_SESSION['register_error'] = 'Failed to upload profile image.';
+            return;
+        }
+    } else {
+        $profile_img_url = null; // optional image
+    }
+
     //users fields new datenbank
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
@@ -39,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
     $name = trim($_POST['name'] ?? '');
     $surname = trim($_POST['surname'] ?? '');
     $biography = trim($_POST['biography'] ?? '');
-    $profile_img_url = trim($_POST['profile_img_url'] ?? '');
     $gender = trim($_POST['gender'] ?? '');
     $birthdate = $_POST['birthdate'] ?? '';
     $phone = trim($_POST['phone'] ?? '');

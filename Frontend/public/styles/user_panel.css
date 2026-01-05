@@ -22,6 +22,12 @@
   margin-bottom: 20px;
 }
 
+.profile-image-container img {
+  margin-bottom: 20px;
+  max-width: 100px;
+  height: auto;
+}
+
 /* --- Info grid (like form fields) --- */
 .user-info-grid {
   display: grid;

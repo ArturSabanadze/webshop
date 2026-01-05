@@ -95,7 +95,7 @@ if (file_exists($path)) {
         fetch('ajax_enroll.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: 'seminar_date_id=' + encodeURIComponent(seminarDateId)
+            body: 'seminar_id=' + encodeURIComponent(seminarDateId)
         })
             .then(res => res.json())
             .then(result => {
@@ -112,4 +112,11 @@ if (file_exists($path)) {
     function closeEnrollModal() {
         document.getElementById('enrollModal').style.display = 'none';
     }
+
+    // LOG SELECTED SEMINAR DATE ID
+    const seminarSelect = document.getElementById('seminar_date_select');
+
+    seminarSelect.addEventListener('change', function () {
+        console.log('Selected seminar_date_id:', this.value);
+    });
 </script>

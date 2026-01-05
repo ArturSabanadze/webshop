@@ -5,7 +5,7 @@ require_once __DIR__ . '/../src/Functions/product_card_loader_pro.php';
 header('Content-Type: application/json');
 
 $userId = (int) ($_SESSION['user_id'] ?? 0);
-$seminarDateId = (int) ($_POST['seminar_date_id'] ?? 0);
+$seminarDateId = (int) ($_POST['seminar_id'] ?? 0);
 
 if (!$userId) {
     echo json_encode(['error' => 'You must be logged in']);
@@ -21,13 +21,13 @@ global $pdo;
 $logFile = __DIR__ . "/../src/Data/enrollments.txt";
 
 // Check if already enrolled
-$stmt = $pdo->prepare("SELECT COUNT(*) FROM seminar_registrations WHERE user_id = ? AND seminar_date_id = ?");
+$stmt = $pdo->prepare("SELECT COUNT(*) FROM seminar_participants WHERE user_id = ? AND seminar_id = ?");
 $stmt->execute([$userId, $seminarDateId]);
 
 // Prepare log entry as array
 $entry = [
     'user_id' => $userId,
-    'seminar_date_id' => $seminarDateId,
+    'seminar_id' => $seminarDateId,
     'timestamp' => date('Y-m-d H:i:s')
 ];
 
@@ -39,38 +39,16 @@ if ($stmt->fetchColumn() > 0) {
     exit;
 }
 
-// Check for overlapping seminar dates
-$overlapQuery = "
-    SELECT COUNT(*) 
-    FROM seminar_registrations sr
-    JOIN seminar_dates sd_existing ON sr.seminar_date_id = sd_existing.id
-    JOIN seminar_dates sd_new ON sd_new.id = ?
-    WHERE sr.user_id = ?
-    AND (
-        sd_existing.start_datetime < sd_new.end_datetime
-        AND sd_existing.end_datetime > sd_new.start_datetime
-    )
-";
-
-$stmt = $pdo->prepare($overlapQuery);
-$stmt->execute([$seminarDateId, $userId]);
-$overlapCount = $stmt->fetchColumn();
-
-if ($overlapCount > 0) {
-    echo json_encode(['error' => 'You are already registered for another seminar that overlaps in time.']);
-    exit;
-}
-
 // Check max participant capacity
 $capacityQuery = "
     SELECT 
-        sd.max_participants,
-        COUNT(sr.id) AS current_participants
-    FROM seminar_dates sd
-    LEFT JOIN seminar_registrations sr 
-        ON sr.seminar_date_id = sd.id
-    WHERE sd.id = ?
-    GROUP BY sd.max_participants
+        ls.max_participants,
+        COUNT(sp.id) AS current_participants
+    FROM live_seminars ls
+    LEFT JOIN seminar_participants sp 
+        ON sp.seminar_id = ls.id
+    WHERE ls.id = ?
+    GROUP BY ls.max_participants
 ";
 
 $stmt = $pdo->prepare($capacityQuery);
@@ -88,8 +66,8 @@ if ($capacity['current_participants'] >= $capacity['max_participants']) {
 }
 
 // Enroll user, speichere die Anmeldung in der Datenbank
-$stmt = $pdo->prepare("INSERT INTO seminar_registrations (user_id, seminar_date_id) VALUES (?, ?)");
-$stmt->execute([$userId, $seminarDateId]);
+$stmt = $pdo->prepare("INSERT INTO seminar_participants (seminar_id, user_id) VALUES (?, ?)");
+$stmt->execute([$seminarDateId, $userId]);
 
 //speichere die Anmeldung in der Datei wenn es nicht schon existiert
 file_put_contents($logFile, $serialized, FILE_APPEND);

@@ -125,6 +125,9 @@ CREATE TABLE users_profiles (
   user_id       INT UNSIGNED PRIMARY KEY,
   name          VARCHAR(100),
   surname       VARCHAR(100),
+  gender        ENUM('male','female') DEFAULT '',
+  birthdate     DATE,
+  phone         VARCHAR(20),
   biography     TEXT,
   profile_img_url VARCHAR(500),
   CONSTRAINT fk_up_user
@@ -318,7 +321,7 @@ CREATE TABLE users_voucher (
 -- Add the missing foreign keys for seminar_participants
 ALTER TABLE seminar_participants
   ADD CONSTRAINT fk_sp_seminar
-    FOREIGN KEY (seminar_id) REFERENCES live_seminars(product_id)
+    FOREIGN KEY (seminar_id) REFERENCES live_seminars(id)
     ON DELETE CASCADE,
   ADD CONSTRAINT fk_sp_user
     FOREIGN KEY (user_id) REFERENCES users(id)

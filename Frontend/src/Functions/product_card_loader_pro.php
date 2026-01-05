@@ -75,10 +75,10 @@ function getSeminarDates(int $productId): array
 {
     global $pdo;
     $stmt = $pdo->prepare("
-        SELECT product_id, start_date, end_date
+        SELECT id, product_id, start_date, end_date
         FROM live_seminars
         WHERE product_id = ?
-        ORDER BY start_date ASC
+        ORDER BY id ASC
     ");
     $stmt->execute([$productId]);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);

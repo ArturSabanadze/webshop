@@ -28,6 +28,7 @@ $sort = $_GET['sort'] ?? 'newest';
     <div class="courses-grid">
         <?php
         try {
+            if (!empty($search) || !empty($category) || $sort !== 'newest') {
             $products = getFilteredProducts($search, $category, $sort);
 
             if (!empty($products)) {
@@ -37,6 +38,16 @@ $sort = $_GET['sort'] ?? 'newest';
             } else {
                 echo "<p>No products found.</p>";
             }
+        } else {
+            $products = getAllProducts();
+            if (!empty($products)) {
+                foreach ($products as $row) {
+                    echo generateProductCard($row);
+                }
+            } else {
+                echo "<p>No products available at the moment.</p>";
+            }
+        }
         } catch (Exception $e) {
             echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
         }
@@ -71,6 +82,7 @@ $sort = $_GET['sort'] ?? 'newest';
     document.querySelectorAll('.course-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const productId = this.dataset.id;
+            console.log('Selected product ID:', productId);
             const seminarSelect = document.getElementById('seminar_date_select');
             seminarSelect.innerHTML = '';
 

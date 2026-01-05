@@ -5,17 +5,25 @@ if (session_status() === PHP_SESSION_NONE) {
 
 require_once '../../Backend/register_handler.php';
 
+
+$email = $email ?? '';
+$username = $username ?? '';
+
 $name = $name ?? '';
 $surname = $surname ?? '';
-$email = $email ?? '';
-$gender = $gender ?? '';
-$username = $username ?? '';
-$birthdate = $birthdate ?? '';
-$country = $country ?? '';
-$postal_index = $postal_index ?? '';
-$street = $street ?? '';
-$phone = $phone ?? '';
 $biography = $biography ?? '';
+$profile_img_url = $profile_img_url ?? '';
+$gender = $gender ?? '';
+$phone = $phone ?? '';
+$birthdate = $birthdate ?? '';
+
+$type = $type ?? '';
+$street = $street ?? '';
+$street_number = $street_number ?? '';
+$state = $state ?? '';
+$province = $province ?? '';
+$country = $country ?? '';
+$zip_code = $zip_code ?? '';
 
 $error = $_SESSION['register_error'] ?? '';
 $success_message = $_SESSION['register_success_message'] ?? '';
@@ -35,21 +43,34 @@ $success = $_SESSION['register_success'] ?? false;
         <form method="post" action="" class="register-form">
             <input type="hidden" name="action" value="register">
             <div class="register-grid">
-                <!-- Register fields -->
+                <!-- Users fields -->
+
+                <label>Username
+                    <input type="text" minlength="3" maxlength="32" name="username" required
+                        placeholder="3-32 chars: letters, numbers, spaces, hyphens" autocomplete="username"
+                        value="<?= htmlspecialchars($username) ?>">
+                </label>
+
+                <label>Password
+                    <input type="password" name="password" autocomplete="new-password" required placeholder="Choose a strong password">
+                </label>
+                
+                <label>Email
+                    <input type="email" name="email" autocomplete="email" required placeholder="Your email"
+                        value="<?= htmlspecialchars($email) ?>">
+                </label>                
+
+                <!-- User profile fields -->
                 <label>Name
-                    <input type="text" name="name" required placeholder="Only letters and spaces allowed"
+                    <input type="text" name="name" autocomplete="name" required placeholder="Only letters and spaces allowed"
                         value="<?= htmlspecialchars($name) ?>">
                 </label>
 
                 <label>Surname
-                    <input type="text" name="surname" required placeholder="Only letters and spaces allowed"
+                    <input type="text" name="surname" autocomplete="family-name" required placeholder="Only letters and spaces allowed"
                         value="<?= htmlspecialchars($surname) ?>">
                 </label>
 
-                <label>Email
-                    <input type="email" name="email" required placeholder="Your email"
-                        value="<?= htmlspecialchars($email) ?>">
-                </label>
                 <label>Gender
                     <select name="gender">
                         <option value="" <?= $gender === '' ? 'selected' : '' ?>>Select</option>
@@ -59,38 +80,54 @@ $success = $_SESSION['register_success'] ?? false;
                     </select>
                 </label>
 
-                <label>Username
-                    <input type="text" minlength="3" maxlength="32" name="username" required
-                        placeholder="3-32 chars: letters, numbers, spaces, hyphens"
-                        value="<?= htmlspecialchars($username) ?>">
-                </label>
-
-                <label>Password
-                    <input type="password" name="password" required placeholder="Choose a strong password">
-                </label>
-
                 <label>Birthdate
                     <input type="date" name="birthdate" value="<?= htmlspecialchars($birthdate) ?>">
                 </label>
 
-                <label>Country
-                    <input type="text" name="country" value="<?= htmlspecialchars($country) ?>">
+                <label>Phone
+                    <input type="text" name="phone" autocomplete="tel" value="<?= htmlspecialchars($phone) ?>">
                 </label>
 
-                <label>Postal Index
-                    <input type="text" name="postal_index" value="<?= htmlspecialchars($postal_index) ?>">
+                <label>Profile Image
+                    <input type="file" name="profile_img_url" value="<?= htmlspecialchars($profile_img_url) ?>">
+                </label>
+
+                <label>Biography
+                    <textarea name="biography" rows="5" style="width: 100%;" placeholder="Tell us something about yourself..."><?= htmlspecialchars($biography) ?></textarea>
+                </label>
+
+                <!-- Address fields -->
+                 <label>Private / Business type
+                    <select name="type">
+                        <option value="" <?= $type === '' ? 'selected' : '' ?>>Select</option>
+                        <option value="private" <?= $type === 'private' ? 'selected' : '' ?>>Private</option>
+                        <option value="business" <?= $type === 'business' ? 'selected' : '' ?>>Business</option>
+                        <option value="general" <?= $type === 'general' ? 'selected' : '' ?>>General</option>
+                    </select>
                 </label>
 
                 <label>Street
-                    <input type="text" name="street" value="<?= htmlspecialchars($street) ?>">
+                    <input type="text" name="street" autocomplete="address-line1" value="<?= htmlspecialchars($street) ?>">
                 </label>
 
-                <label>Phone
-                    <input type="text" name="phone" value="<?= htmlspecialchars($phone) ?>">
+                <label>Street Nr.
+                    <input type="number" name="street_number" autocomplete="address-line2" value="<?= htmlspecialchars($street_number) ?>">
                 </label>
 
-                <label for="biography">Biography
-                    <textarea name="biography" rows="5" style="width: 100%;" placeholder="Tell us something about yourself..."><?= htmlspecialchars($biography) ?></textarea>
+                <label>State
+                    <input type="text" name="state" autocomplete="address-level1" value="<?= htmlspecialchars($state) ?>">
+                </label>
+
+                <label>Province
+                    <input type="text" name="province" autocomplete="address-level2" value="<?= htmlspecialchars($province) ?>">
+                </label>
+
+                <label>Country
+                    <input type="text" name="country" autocomplete="country" value="<?= htmlspecialchars($country) ?>">
+                </label>
+
+                <label>Postal Index
+                    <input type="text" name="zip_code" autocomplete="postal-code" value="<?= htmlspecialchars($zip_code) ?>">
                 </label>
 
             </div>

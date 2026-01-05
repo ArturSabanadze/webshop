@@ -31,6 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
     $country = trim($_POST['country'] ?? '');
     $zip_code = trim($_POST['zip_code'] ?? '');
     $street = trim($_POST['street'] ?? '');
+    $street_number = trim($_POST['street_number'] ?? '');
+    $state = trim($_POST['state'] ?? '');
+    $province = trim($_POST['province'] ?? '');
     
     // users_profile fields
     $name = trim($_POST['name'] ?? '');
@@ -66,21 +69,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
                 // Insert new user
                 $insert = $pdo->prepare("
                     INSERT INTO users 
-                    (username, password_hash, name, surname, email, gender, birthdate, country, zip_code, street, phone)
-                    VALUES (:username, :hash, :name, :surname, :email, :gender, :birthdate, :country, :zip_code, :street, :phone)
+                    (username, password_hash, email)
+                    VALUES (:username, :hash, :email);
+
+                    INSERT INTO users_profiles ( user_id, name, surname, biography, profile_img_url, gender, phone, birthdate)
+                    VALUES (LAST_INSERT_ID(), :name, :surname, :biography, :profile_img_url, :gender, :phone, :birthdate);
+
+                    INSERT INTO users_addresses (user_id, country, zip_code, street, street_number, state, province)
+                    VALUES (LAST_INSERT_ID(), :country, :zip_code, :street, :street_number, :state, :province);
                 ");
 
                 $insert->execute([
                     ':username' => $username,
+                    ':email' => $email,
                     ':hash' => $hash,
                     ':name' => $name,
                     ':surname' => $surname,
-                    ':email' => $email,
+                    ':biography' => $biography,
+                    ':profile_img_url' => $profile_img_url,
                     ':gender' => $gender,
                     ':birthdate' => $birthdate,
                     ':country' => $country,
-                    ':postal_index' => $postal_index,
+                    ':zip_code' => $zip_code,
                     ':street' => $street,
+                    ':street_number' => $street_number,
+                    ':state' => $state,
+                    ':province' => $province,
                     ':phone' => $phone
                 ]);
 
@@ -93,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
             }
 
         } catch (PDOException $e) {
-            $_SESSION['register_error'] = 'Database error. Please try again later.';
+            $_SESSION['register_error'] = 'Database error. Please try again later.' . $e->getMessage();
         }
     }
 }

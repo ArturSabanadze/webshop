@@ -129,14 +129,14 @@
 
 .register-grid {
   display: grid;
-  grid-template-columns: 3fr;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
 /* Two columns on wider screens */
 @media (min-width: 756px) {
   .register-grid {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
   }
 
   /* Make certain fields span both columns */

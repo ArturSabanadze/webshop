@@ -2,195 +2,66 @@
 
 class User
 {
-//user table fields
-private $id = "";
-private $username = "";
-private $password_hash = "";
-private $email = "";
-//users_profiles table fields
-private $role = "";
-private $name = "";
-private $surname = "";
-private $gender = "";
-private $birthdate = "";
-private $phone = "";
-private $biography = "";
-private $profile_img_url = "";
-//users_addresses table fields
-private $type = ""; //Adress type: billing/shipping
-private $zip_code = "";
-private $country = "";
-private $street = "";
-private $street_number = "";
-private $state = "";
-private $province = "";
+    //user table fields
+    private ?int $id = null;
+    private string $username = "";
+    private string $password_hash = "";
+    private string $email = "";
 
-//Methoden, Funktionen - Getter/Setter
-	public function getName()
-	{
-		return $this->name;
-	}
-
-    public function setName($name)
+    function __construct($username, $plain_password, $email)
     {
-        $this->name = $name;
+        $this->username = $username;
+        $this->password_hash = password_hash($plain_password, PASSWORD_DEFAULT);
+        $this->email = filter_var($email, FILTER_VALIDATE_EMAIL);
+        if ($email === false) {
+            throw new InvalidArgumentException('Invalid email');
+        }
+        $this->email = $email;
     }
 
-    public function getSurname()
-    {
-        return $this->surname;
-    }
-
-    public function setSurname($surname)
-    {
-        $this->surname = $surname;
-    }
-
-    public function getGender()
-    {
-        return $this->gender;
-    }
-
-    public function setGender($gender)
-    {
-        $this->gender = $gender;
-    }
-
-    public function getBirthdate()
-    {
-        return $this->birthdate;
-    }
-    public function setBirthdate($birthdate)
-    {
-        $this->birthdate = $birthdate;
-    }
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    }
-    public function getBiography()
-    {
-        return $this->biography;
-    }
-    public function setBiography($biography)
-    {
-        $this->biography = $biography;
-    }
-    public function getProfileImgUrl()
-    {
-        return $this->profile_img_url;
-    }
-    public function setProfileImgUrl($profile_img_url)
-    {
-        $this->profile_img_url = $profile_img_url;
-    }
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
-    public function getPasswordHash()
-    {
-        return $this->password_hash;
-    }
-    public function setPasswordHash($password_hash)
-    {
-        $this->password_hash = $password_hash;
-    }
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
-    public function setEmail($email)
+    public function getPasswordHash(): string
     {
-        $this->email = $email;
+        return $this->password_hash;
     }
-    public function getType()
-    {
-        return $this->type;
-    }
-    public function setType($type)
-    {
-        $this->type = $type;
-    }
-    public function getZipCode()
-    {
-        return $this->zip_code;
-    }
-    public function setZipCode($zip_code)
-    {
-        $this->zip_code = $zip_code;
-    }
-    public function getCountry()
-    {
-        return $this->country;
-    }
-    public function setCountry($country)
-    {
-        $this->country = $country;
-    }
-    public function getStreet()
-    {
-        return $this->street;
-    }
-    public function setStreet($street)
-    {
-        $this->street = $street;
-    }
-    public function getStreetNumber()
-    {
-        return $this->street_number;
-    }
-    public function setStreetNumber($street_number)
-    {
-        $this->street_number = $street_number;
-    }
-    public function getState()
-    {
-        return $this->state;
-    }
-    public function setState($state)
-    {
-        $this->state = $state;
-    }
-    public function getProvince()
-    {
-        return $this->province;
-    }
-    public function setProvince($province)
-    {
-        $this->province = $province;
-    }
-    
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function exist($db): bool
+    {
+        $stmt = $db->prepare("SELECT id FROM users WHERE username = :u OR email = :e LIMIT 1");
+        $stmt->execute([':u' => $this->username, ':e' => $this->email]);
+        return (bool)$stmt->fetch();
+    }
+
+    public function save($db)
+    {
+        $insert = $db->prepare("
+            INSERT INTO users 
+            (username, password_hash, email)
+            VALUES (:username, :hash, :email);
+        ");
+        $insert->execute([
+            ':username' => $this->username,
+            ':email' => $this->email,
+            ':hash' => $this->password_hash
+        ]);
+    }
 }
 
-//Instanziieren
-$person = new Person();
-$person2 = new Person();
-echo gettype($person);
-echo "<br>";
-
-var_dump($person);
-//object(Person)#1 (2) { ["vorname"]=> string(0) "" ["nachname"]=> string(0) "" }
-echo "<br>";
-var_dump($person2);
-echo "<br>";
-$person->vorname = "John";
-$person->nachname = "Doe";
-var_dump($person);
-echo "<br>";
-//object(Person)#1 (2) { ["vorname"]=> string(4) "John" ["nachname"]=> string(3) "Doe" }
-echo "Hallo " . $person->vorname . " " . $person->nachname;
-
-
-
-#echo Person::$vorname;
 ?>

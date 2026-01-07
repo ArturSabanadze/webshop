@@ -10,7 +10,11 @@ if (isset($_SESSION['token'])) {
     exit;
 }
 
-require_once __DIR__ . '/db_connection.php'; // gives you $pdo (PDO)
+require_once __DIR__ . '/db_connection.php'; // gives you global $pdo (PDO)
+require_once __DIR__ . '/../Frontend/src/Classes/User.php';
+require_once __DIR__ . '/../Frontend/src/Classes/UserAddress.php';
+require_once __DIR__ . '/../Frontend/src/Classes/UserProfile.php';
+
 
 $namePattern = '/^[a-zA-Z\s-]+$/';
 $usernamePattern = '/^[a-zA-Z0-9\s-]+$/';
@@ -18,7 +22,6 @@ $usernamePattern = '/^[a-zA-Z0-9\s-]+$/';
 $_SESSION['register_error'] = '';
 $_SESSION['register_success_message'] = '';
 $_SESSION['register_success'] = false;
-
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'register') {
 
@@ -30,7 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
             return;
         }
         
-
         $fileTmpPath = $_FILES['profile_img_url']['tmp_name'];
         $fileName = $_FILES['profile_img_url']['name'];
         $fileSize = $_FILES['profile_img_url']['size'];
@@ -61,13 +63,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
             return;
         }
     } else {
-        $profile_img_url = null; // optional image
+        $profile_img_url = null; // optional image 
     }
 
-    //users fields new datenbank
+    //users table fields and his object
     $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
-    $email = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
+    $email = $_POST['email'] ?? '';
+    $user = new User($username, $password, $email);
 
     //users_adresses fields
     $country = trim($_POST['country'] ?? '');
@@ -76,6 +79,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
     $street_number = trim($_POST['street_number'] ?? '');
     $state = trim($_POST['state'] ?? '');
     $province = trim($_POST['province'] ?? '');
+    $type = trim($_POST['type'] ?? '');
+    $userAddress = new UserAddress(
+        $user->getId(),
+        $type,
+        $street,
+        $street_number,
+        $state,
+        $province,
+        $country,
+        $zip_code
+    );
     
     // users_profile fields
     $name = trim($_POST['name'] ?? '');
@@ -84,6 +98,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
     $gender = trim($_POST['gender'] ?? '');
     $birthdate = $_POST['birthdate'] ?? '';
     $phone = trim($_POST['phone'] ?? '');
+    $userProfile = new UserProfile(
+        $user->getId(),
+        $name,
+        $surname,
+        $gender,
+        $birthdate,
+        $phone,
+        $biography,
+        $profile_img_url
+    );
 
     // Validation
     if (!$name || !$surname || !$username || !$password || !$email) {
@@ -97,54 +121,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
     } else {
 
         try {
-            // Check duplicates
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE username = :u OR email = :e LIMIT 1");
-            $stmt->execute([':u' => $username, ':e' => $email]);
-
-            if ($stmt->fetch()) {
+            // Check if user exists
+            if ($user->exist($pdo)) {
                 $_SESSION['register_error'] = 'Username or email already exists.';
             } else {
-                // Hash password
-                $hash = password_hash($password, PASSWORD_DEFAULT);
-
-                // Insert new user
-                $insert = $pdo->prepare("
-                    INSERT INTO users 
-                    (username, password_hash, email)
-                    VALUES (:username, :hash, :email);
-
-                    INSERT INTO users_profiles ( user_id, name, surname, biography, profile_img_url, gender, phone, birthdate)
-                    VALUES (LAST_INSERT_ID(), :name, :surname, :biography, :profile_img_url, :gender, :phone, :birthdate);
-
-                    INSERT INTO users_addresses (user_id, country, zip_code, street, street_number, state, province)
-                    VALUES (LAST_INSERT_ID(), :country, :zip_code, :street, :street_number, :state, :province);
-                ");
-
-                $insert->execute([
-                    ':username' => $username,
-                    ':email' => $email,
-                    ':hash' => $hash,
-                    ':name' => $name,
-                    ':surname' => $surname,
-                    ':biography' => $biography,
-                    ':profile_img_url' => $profile_img_url,
-                    ':gender' => $gender,
-                    ':birthdate' => $birthdate,
-                    ':country' => $country,
-                    ':zip_code' => $zip_code,
-                    ':street' => $street,
-                    ':street_number' => $street_number,
-                    ':state' => $state,
-                    ':province' => $province,
-                    ':phone' => $phone
-                ]);
+                $user->save($pdo);
+                $userAddress->save($pdo);
+                $userProfile->save($pdo);
 
                 $_SESSION['register_success_message'] = 'Registration successful! You can now log in.';
                 $_SESSION['register_success'] = true;
 
                 // Clear form
-                $name = $surname = $username = $email = $gender = $birthdate =
-                    $country = $postal_index = $street = $phone = '';
+                $password = $email = $name = $surname = $username = $gender = $birthdate = $profile_img_url =
+                $country = $postal_index = $street = $street_number = $state = $province = $biography = $phone = '';
             }
 
         } catch (PDOException $e) {

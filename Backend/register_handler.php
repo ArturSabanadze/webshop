@@ -14,7 +14,7 @@ require_once __DIR__ . '/db_connection.php'; // gives you global $pdo (PDO)
 require_once __DIR__ . '/../Frontend/src/Classes/User.php';
 require_once __DIR__ . '/../Frontend/src/Classes/UserAddress.php';
 require_once __DIR__ . '/../Frontend/src/Classes/UserProfile.php';
-
+require_once __DIR__ . '/../Frontend/src/Functions/image_upload.php';
 
 $namePattern = '/^[a-zA-Z\s-]+$/';
 $usernamePattern = '/^[a-zA-Z0-9\s-]+$/';
@@ -25,46 +25,8 @@ $_SESSION['register_success'] = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'register') {
 
-    if (isset($_FILES['profile_img_url']) && $_FILES['profile_img_url']['error'] === UPLOAD_ERR_OK) {
-
-        $uploadDir = '../public/assets/profile_images/';
-        if (!is_dir($uploadDir)) {
-            $_SESSION['register_error'] = 'Failed to create upload directory.';
-            return;
-        }
-        
-        $fileTmpPath = $_FILES['profile_img_url']['tmp_name'];
-        $fileName = $_FILES['profile_img_url']['name'];
-        $fileSize = $_FILES['profile_img_url']['size'];
-        $fileType = mime_content_type($fileTmpPath);
-
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
-
-        if (!in_array($fileType, $allowedTypes)) {
-            $_SESSION['register_error'] = 'Invalid image format.';
-            return;
-        }
-
-        if ($fileSize > 2 * 1024 * 1024) { // 2MB
-            $_SESSION['register_error'] = 'Profile image too large (max 2MB).';
-            return;
-        }
-
-        $extension = pathinfo($fileName, PATHINFO_EXTENSION);
-        $newFileName = uniqid('profile_', true) . '.' . $extension;
-
-        $destination = $uploadDir . $newFileName;
-
-        if (move_uploaded_file($fileTmpPath, $destination)) {
-            // Save relative path in DB
-            $profile_img_url = '/assets/profile_images/' . $newFileName;
-        } else {
-            $_SESSION['register_error'] = 'Failed to upload profile image.';
-            return;
-        }
-    } else {
-        $profile_img_url = null; // optional image 
-    }
+    // Handle image upload
+    $profile_img_url = handleImageUpload();
 
     //users table fields and his object
     $username = trim($_POST['username'] ?? '');

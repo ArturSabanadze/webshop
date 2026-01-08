@@ -8,15 +8,14 @@ class User
     private string $password_hash = "";
     private string $email = "";
 
-    function __construct($username, $plain_password, $email)
+    function __construct(Array $user_data)
     {
-        $this->username = $username;
-        $this->password_hash = password_hash($plain_password, PASSWORD_DEFAULT);
-        $this->email = filter_var($email, FILTER_VALIDATE_EMAIL);
-        if ($email === false) {
+        $this->username = $user_data['username'] ?? "";
+        $this->password_hash = password_hash($user_data['plain_password'] ?? "", PASSWORD_DEFAULT);
+        $this->email = filter_var($user_data['email'] ?? "", FILTER_VALIDATE_EMAIL);
+        if ($this->email === false) {
             throw new InvalidArgumentException('Invalid email');
         }
-        $this->email = $email;
     }
 
     public function getUsername(): string
@@ -61,6 +60,7 @@ class User
             ':email' => $this->email,
             ':hash' => $this->password_hash
         ]);
+        $this->id = $db->lastInsertId();
     }
 }
 

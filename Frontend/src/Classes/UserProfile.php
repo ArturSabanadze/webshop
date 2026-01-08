@@ -12,16 +12,16 @@ class UserProfile
     private ?string $biography = null;
     private ?string $profile_img_url = null;
 
-    function __construct($user_id, $name = null, $surname = null, $gender = null, $birthdate = null, $phone = null, $biography = null, $profile_img_url = null)
+    function __construct(Array $profile_data, $userID)
     {
-        $this->user_id = $user_id;
-        $this->name = $name;
-        $this->surname = $surname;
-        $this->gender = $gender;
-        $this->birthdate = $birthdate;
-        $this->phone = $phone;
-        $this->biography = $biography;
-        $this->profile_img_url = $profile_img_url;
+        $this->user_id = $userID;
+        $this->name = $profile_data['name'] ?? null;
+        $this->surname = $profile_data['surname'] ?? null;
+        $this->gender = $profile_data['gender'] ?? null;
+        $this->birthdate = $profile_data['birthdate'] ?? null;
+        $this->phone = $profile_data['phone'] ?? null;
+        $this->biography = $profile_data['biography'] ?? null;
+        $this->profile_img_url = $profile_data['profile_img_url'] ?? null;
     }
 
     public function getUserId(): ?int

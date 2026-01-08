@@ -1,9 +1,9 @@
 <?php
 
-class UserAddress 
+class UserAddress
 {
-    private ?int $id = null;
-    private int $user_id;
+    private ?int $id;
+    private ?int $user_id;
     private ?string $type;
     private ?string $street;
     private ?string $street_number;
@@ -12,16 +12,16 @@ class UserAddress
     private ?string $country;
     private ?string $zip_code;
 
-    function __construct($user_id, $type = null, $street = null, $street_number = null, $state = null, $province = null, $country = null, $zip_code = null)
+    function __construct(Array $address_data, $userID)
     {
-        $this->user_id = $user_id;
-        $this->type = $type;
-        $this->street = $street;
-        $this->street_number = $street_number;
-        $this->state = $state;
-        $this->province = $province;
-        $this->country = $country;
-        $this->zip_code = $zip_code;
+        $this->user_id = $userID;
+        $this->type = $address_data['type'] ?? 'default';
+        $this->street = $address_data['street'] ?? null;
+        $this->street_number = $address_data['street_number'] ?? null;
+        $this->state = $address_data['state'] ?? null;
+        $this->province = $address_data['province'] ?? null;
+        $this->country = $address_data['country'] ?? null;
+        $this->zip_code = $address_data['zip_code'] ?? null;
     }
 
     public function getUserId(): int

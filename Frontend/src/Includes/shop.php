@@ -1,5 +1,6 @@
 <?php
-require_once '../src/Functions/product_card_loader_pro.php';
+require_once '../src/Functions/product_card_loader.php';
+require_once '../api/products_api.php';
 
 $search = $_GET['search'] ?? '';
 $category = $_GET['category'] ?? '';
@@ -29,7 +30,7 @@ $sort = $_GET['sort'] ?? 'newest';
         <?php
         try {
             if (!empty($search) || !empty($category) || $sort !== 'newest') {
-            $products = getFilteredProducts($search, $category, $sort);
+            $products = getProducts($search, $category, $sort);
 
             if (!empty($products)) {
                 foreach ($products as $row) {
@@ -39,7 +40,7 @@ $sort = $_GET['sort'] ?? 'newest';
                 echo "<p>No products found.</p>";
             }
         } else {
-            $products = getAllProducts();
+            $products = getProducts();
             if (!empty($products)) {
                 foreach ($products as $row) {
                     echo generateProductCard($row);

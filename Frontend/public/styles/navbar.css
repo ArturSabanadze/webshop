@@ -192,3 +192,34 @@ NAVBAR
     gap: 2px;
   }
 }
+
+@media (max-width: 500px) {
+  .navbar-btn-not-logged,
+  .navbar-btn-logged {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .dsk-login-btn {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-height: 800px) {
+
+  .logo img {
+    width: clamp(50px, 15vw, 80px);
+  }
+
+  .dsk-login-btn {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+  }
+
+  .desktop-menu {
+    padding: 4px 8px;
+  }
+
+}

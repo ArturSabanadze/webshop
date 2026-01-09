@@ -1,11 +1,7 @@
 <!-- MAIN SECTION -->
 <?php
-$path = '../src/Functions/product_card_loader_pro.php';
-if (file_exists($path)) {
-    require_once $path;
-} else {
-    die('Required file product_card_loader_pro.php not found.');
-}
+require_once '../src/Functions/product_card_loader.php';
+require_once '../api/products_api.php';
 
 ?>
 <section class="main-container">
@@ -17,7 +13,7 @@ if (file_exists($path)) {
     <div class="courses-grid">
         <?php
         try {
-            $products = getAllProducts();
+            $products = getProducts();
 
             if (!empty($products)) {
                 foreach ($products as $row) {

@@ -101,14 +101,14 @@
 
 @media (min-width: 1200px) {
   .header-container {
-    height: clamp(15dvw, 25dvw, 35dvw);
+    height: clamp(15dvh, 25dvh, 35dvh);
   }
 }
 
 /* Optional: responsive full-width on mobile */
 @media (max-width: 768px) {
   .header-container {
-    height: clamp(20dvh, 25dvh, 30dvh);
+    height: clamp(15dvh, 20dvh, 30dvh);
     align-items: center;
   }
   .header-container :nth-child(2) {

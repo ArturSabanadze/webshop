@@ -80,8 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'admin
 
     try {
         // Benutzer aus der Datenbank abrufen
-        $stmt = $pdo->prepare("SELECT id, username, password_hash, name, surname, 
-        email, created_at, updated_at, role FROM admins WHERE username = :username LIMIT 1");
+        $stmt = $pdo->prepare("SELECT id, username, password_hash, role FROM users WHERE username = :username AND role = 'admin' LIMIT 1");
         // Benutzer anhand des Benutzernamens abrufen                       
         $stmt->execute([':username' => $username]);
         // Fetch the user data

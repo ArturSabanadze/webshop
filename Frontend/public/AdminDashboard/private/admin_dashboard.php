@@ -40,7 +40,7 @@ $page = $_GET['page'] ?? 'home';
         <div>
             <nav class="admin-nav">
                 <a href="admin_dashboard.php?page=home">Home</a>
-                <a href="admin_dashboard.php?page=seminars">Seminare</a>
+                <a href="admin_dashboard.php?page=products">Products</a>
                 <a href="admin_dashboard.php?page=dates">Termine</a>
                 <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
                 <a href="admin_dashboard.php?page=tickets">Tickets</a>
@@ -58,8 +58,8 @@ $page = $_GET['page'] ?? 'home';
     <main class="admin-main">
         <?php
         switch ($page) {
-            case 'seminars':
-                require __DIR__ . '/seminars.php';
+            case 'products':
+                require __DIR__ . '/products.php';
                 break;
             case 'dates':
                 require __DIR__ . '/seminar_dates.php';

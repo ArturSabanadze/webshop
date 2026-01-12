@@ -3,6 +3,8 @@
 // $pdo is provided by admin_dashboard.php
 
 /* ================== CONFIG ================== */
+require_once __DIR__ . '/Functions/admin_image_upload.php'; // image upload function
+
 $uploadDir = __DIR__ . '/../../assets/product_images/';
 /* $uploadUrlBase = '../../assets/product_images/'; path for developing via VSC Server*/
 $uploadUrlBase = '/Die_Fantastische_4/Frontend/public/assets/product_images/'; //path for XAMPP server
@@ -16,54 +18,10 @@ function e($v)
 /* ================== STATE ================== */
 $editId = isset($_GET['edit_id']) ? (int) $_GET['edit_id'] : null;
 
-/* ================== IMAGE UPLOAD HELPER ================== */
-function handleImageUpload(string $uploadDir, string $uploadUrlBase, ?string $oldImage = null): string
-{
-    if (empty($_FILES['image_file']['name'])) {
-        return $oldImage ?? '';
-    }
-
-    if ($_FILES['image_file']['error'] !== UPLOAD_ERR_OK) {
-        die('<p style="color:red;">Upload fehlgeschlagen</p>');
-    }
-
-    if ($_FILES['image_file']['size'] > 1024 * 1024) {
-        die('<p style="color:red;">Bild darf maximal 1 MB groß sein</p>');
-    }
-
-    $info = getimagesize($_FILES['image_file']['tmp_name']);
-    if ($info === false) {
-        die('<p style="color:red;">Datei ist kein gültiges Bild</p>');
-    }
-
-    $allowed = [
-        'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/webp' => 'webp',
-        'image/gif' => 'gif'
-    ];
-
-    if (!isset($allowed[$info['mime']])) {
-        die('<p style="color:red;">Nur JPG, PNG, WEBP oder GIF erlaubt</p>');
-    }
-
-    $filename = uniqid('product_', true) . '.' . $allowed[$info['mime']];
-
-    if (!move_uploaded_file($_FILES['image_file']['tmp_name'], $uploadDir . $filename)) {
-        die('<p style="color:red;">Datei konnte nicht gespeichert werden</p>');
-    }
-
-    if ($oldImage) {
-        @unlink($uploadDir . basename($oldImage));
-    }
-
-    return $uploadUrlBase . $filename;
-}
-
 /* ================== CREATE ================== */
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_product'])) {
 
-    $name = trim($_POST['name'] ?? '');
+    $name = trim($_POST['title'] ?? '');
     $desc = trim($_POST['description'] ?? '');
     $price = $_POST['price'] ?? null;
     $min = (int) ($_POST['min_capacity'] ?? 0);
@@ -103,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_seminar'])) {
     ");
     $stmt->execute([$name, $desc, $imageUrl, $price, $min, $max, $start, $end]);
 
-    header("Location: admin_dashboard.php?page=seminars");
+    header("Location: admin_dashboard.php?page=products");
     exit;
 }
 
@@ -159,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seminar_save'])) {
         $id
     ]);
 
-    header("Location: admin_dashboard.php?page=seminars");
+    header("Location: admin_dashboard.php?page=products");
     exit;
 }
 
@@ -180,18 +138,18 @@ if (isset($_GET['delete_id'])) {
     exit;
 }
 
-/* ================== LOAD ================== */
-$seminars = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+/* ================== READ ================== */
+$products = $pdo->query("SELECT * FROM products ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <section>
-    <h2>Seminare verwalten</h2>
+    <h2>Product management</h2>
 
-    <h3>Neues Seminar anlegen</h3>
+    <h3>Create new Product</h3>
     <form method="post" enctype="multipart/form-data">
         <div>
-            <label for="name">Titel</label>
-            <input id="name" name="name" placeholder="Titel" required>
+            <label for="title">Titel</label>
+            <input id="title" name="title" placeholder="Titel" required>
         </div>
 
         <div>
@@ -253,54 +211,53 @@ $seminars = $pdo->query("SELECT * FROM products ORDER BY id DESC")->fetchAll(PDO
         </thead>
         <tbody>
 
-            <?php foreach ($seminars as $s): ?>
+            <?php foreach ($products as $p): ?>
                 <tr>
                     <form method="post" enctype="multipart/form-data">
 
-                        <td><?= $s['id'] ?></td>
-
-                        <td><?= $editId === (int) $s['id']
-                            ? "<input name='name' value='" . e($s['product_name']) . "'>"
-                            : e($s['product_name']) ?>
+                        <td><?= $p['id'] ?></td>
+                        <td><?= $editId === (int) $p['id']
+                            ? "<input name='title' value='" . e($p['title']) . "'>"
+                            : e($p['title']) ?>
                         </td>
 
-                        <td><?= $editId === (int) $s['id']
-                            ? "<input name='description' value='" . e($s['description']) . "'>"
-                            : e($s['description']) ?>
+                        <td><?= $editId === (int) $p['id']
+                            ? "<input name='description' value='" . e($p['description']) . "'>"
+                            : e($p['description']) ?>
                         </td>
 
                         <td>
-                            <?php if ($s['image_url']): ?>
-                                <img src="<?= e($s['image_url']) ?>" style="height:50px; display:block;">
+                            <?php if ($p['image_url']): ?>
+                                <img src="<?= e($p['image_url']) ?>" style="height:50px; display:block;">
                             <?php endif; ?>
 
-                            <?php if ($editId === (int) $s['id']): ?>
+                            <?php if ($editId === (int) $p['id']): ?>
                                 <input type="file" name="image_file" accept="image/jpeg,image/png,image/webp,image/gif">
                             <?php endif; ?>
                         </td>
 
-                        <td><?= $editId === (int) $s['id']
-                            ? "<input name='price' value='" . e($s['price']) . "'>"
-                            : e($s['price']) . ' €' ?>
+                        <td><?= $editId === (int) $p['id']
+                            ? "<input name='price' value='" . e($p['price']) . "'>"
+                            : e($p['price']) . ' €' ?>
                         </td>
 
-                        <td><?= $editId === (int) $s['id'] ? "<input name='min_capacity' value='{$s['min_capacity']}'>" : e($s['min_capacity']) ?>
+                        <td><?= $editId === (int) $p['id'] ? "<input name='min_capacity' value='{$p['min_capacity']}'>" : e($p['min_capacity']) ?>
                         </td>
-                        <td><?= $editId === (int) $s['id'] ? "<input name='max_capacity' value='{$s['max_capacity']}'>" : e($s['max_capacity']) ?>
+                        <td><?= $editId === (int) $p['id'] ? "<input name='max_capacity' value='{$p['max_capacity']}'>" : e($p['max_capacity']) ?>
                         </td>
-                        <td><?= $editId === (int) $s['id'] ? "<input name='start_date' value='{$s['start_date']}'>" : e($s['start_date']) ?>
+                        <td><?= $editId === (int) $p['id'] ? "<input name='start_date' value='{$p['start_date']}'>" : e($p['start_date']) ?>
                         </td>
-                        <td><?= $editId === (int) $s['id'] ? "<input name='end_date' value='{$s['end_date']}'>" : e($s['end_date']) ?>
+                        <td><?= $editId === (int) $p['id'] ? "<input name='end_date' value='{$p['end_date']}'>" : e($p['end_date']) ?>
                         </td>
 
                         <td>
-                            <?php if ($editId === (int) $s['id']): ?>
-                                <input type="hidden" name="id" value="<?= $s['id'] ?>">
+                            <?php if ($editId === (int) $p['id']): ?>
+                                <input type="hidden" name="id" value="<?= $p['id'] ?>">
                                 <button name="seminar_save">Save</button>
-                                <a href="admin_dashboard.php?page=seminars">Cancel</a>
+                                <a href="admin_dashboard.php?page=products">Cancel</a>
                             <?php else: ?>
-                                <a href="?page=seminars&edit_id=<?= $s['id'] ?>">Edit</a>
-                                <a href="?page=seminars&delete_id=<?= $s['id'] ?>"
+                                <a href="?page=products&edit_id=<?= $p['id'] ?>">Edit</a>
+                                <a href="?page=products&delete_id=<?= $p['id'] ?>"
                                     onclick="return confirm('Löschen?')">Delete</a>
                             <?php endif; ?>
                         </td>

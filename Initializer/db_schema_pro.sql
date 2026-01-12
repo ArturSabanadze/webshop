@@ -125,7 +125,7 @@ CREATE TABLE users_profiles (
   user_id       INT UNSIGNED PRIMARY KEY,
   name          VARCHAR(100),
   surname       VARCHAR(100),
-  gender        ENUM('male','female') DEFAULT '',
+  gender        VARCHAR(100),
   birthdate     DATE,
   phone         VARCHAR(20),
   biography     TEXT,

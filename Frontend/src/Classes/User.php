@@ -8,7 +8,7 @@ class User
     private string $password_hash = "";
     private string $email = "";
 
-    function __construct(Array $user_data)
+    function __construct(array $user_data)
     {
         $this->username = $user_data['username'] ?? "";
         $this->password_hash = password_hash($user_data['plain_password'] ?? "", PASSWORD_DEFAULT);
@@ -18,17 +18,9 @@ class User
         }
     }
 
-    public function getUsername(): string
+    function __get($key)
     {
-        return $this->username;
-    }
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-    public function getPasswordHash(): string
-    {
-        return $this->password_hash;
+        return $this->user_data[$key] ?? 'Key ' . $key . ' does not exist.';
     }
 
     public function setId(int $id): void
@@ -45,7 +37,7 @@ class User
     {
         $stmt = $db->prepare("SELECT id FROM users WHERE username = :u OR email = :e LIMIT 1");
         $stmt->execute([':u' => $this->username, ':e' => $this->email]);
-        return (bool)$stmt->fetch();
+        return (bool) $stmt->fetch();
     }
 
     public function save($db)

@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
         'street_number' => trim($_POST['street_number'] ?? ''),
         'state' => trim($_POST['state'] ?? ''),
         'province' => trim($_POST['province'] ?? '')
-    ];  
+    ];
     // users_profile fields
     $profile_data = [
         'name' => trim($_POST['name'] ?? ''),
@@ -66,8 +66,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
 
         try {
             // Create instances of user, address, and profile
-                $user = new User($user_data);
-                
+            $user = new User($user_data);
+
             // Check if user exists
             if ($user->exist($pdo)) {
                 $_SESSION['register_error'] = 'Username or email already exists.';

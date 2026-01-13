@@ -4,6 +4,7 @@
 
 /* ================== CONFIG ================== */
 require_once __DIR__ . '/Functions/admin_image_upload.php'; // image upload function
+require_once __DIR__ . '/Classes/Product.php'; // Product class
 
 $uploadDir = __DIR__ . '/../../assets/product_images/';
 /* $uploadUrlBase = '../../assets/product_images/'; path for developing via VSC Server*/
@@ -56,10 +57,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_product'])) {
 
     $stmt = $pdo->prepare("
         INSERT INTO products
-        (product_name, description, image_url, price, min_capacity, max_capacity, start_date, end_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        (title, description, image_url, price, status, created_at, start_selling_date)
+        VALUES (?, ?, ?, ?, ?, NOW(), ?)
     ");
-    $stmt->execute([$name, $desc, $imageUrl, $price, $min, $max, $start, $end]);
+    $stmt->execute([$name, $desc, $imageUrl, $price, $status, $starting]);
 
     header("Location: admin_dashboard.php?page=products");
     exit;
@@ -78,10 +79,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seminar_save'])) {
 
     $stmt = $pdo->prepare("
         UPDATE products SET
-            product_name = ?,
+            title = ?,
             description  = ?,
             image_url    = ?,
             price        = ?,
+            status       = ?,
+            created_at   = NOW(),
+            start_selling_date = ?,
+
             min_capacity = ?,
             max_capacity = ?,
             start_date   = ?,
@@ -89,10 +94,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['seminar_save'])) {
         WHERE id = ?
     ");
 
-    if ($_POST['name'] === '' || mb_strlen(trim($_POST['name'])) < 3) {
+    if ($_POST['title'] === '' || mb_strlen(trim($_POST['title'])) < 3) {
         die('<p style="color:red;">Titel Name empty or too short</p>');
     }
-    if (is_numeric($_POST['name'])) {
+    if (is_numeric($_POST['title'])) {
         die('<p style="color:red;">Titel cant be numeric</p>');
     }
     if (!is_numeric($_POST['price']) || $_POST['price'] < 0) {

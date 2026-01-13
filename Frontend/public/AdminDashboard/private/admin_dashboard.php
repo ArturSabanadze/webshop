@@ -40,7 +40,14 @@ $page = $_GET['page'] ?? 'home';
         <div>
             <nav class="admin-nav">
                 <a href="admin_dashboard.php?page=home">Home</a>
-                <a href="admin_dashboard.php?page=products">Products</a>
+                <div class="nav-dropdown">
+                    <a href="admin_dashboard.php?page=products">Products ▾</a>
+                    <div class="dropdown-menu">
+                        <a href="admin_dashboard.php?page=products&type=physical">Physical</a>
+                        <a href="admin_dashboard.php?page=products&type=digital">Digital</a>
+                        <a href="admin_dashboard.php?page=products&type=live">Live Seminars</a>
+                    </div>
+                </div>
                 <a href="admin_dashboard.php?page=dates">Termine</a>
                 <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
                 <a href="admin_dashboard.php?page=tickets">Tickets</a>

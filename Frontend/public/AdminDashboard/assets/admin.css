@@ -24,6 +24,42 @@ body {
   text-decoration: underline;
 }
 
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown > a {
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background: #1f1f1f;
+  min-width: 200px;
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 15px;
+  color: white;
+  text-decoration: none;
+}
+
+.dropdown-menu a:hover {
+  background: #333;
+}
+
+.nav-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
 .right-menu {
   display: flex;
   flex-direction: column;

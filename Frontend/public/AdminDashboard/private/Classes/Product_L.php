@@ -1,6 +1,9 @@
 <?php
 
-class Product
+require_once 't_Product.php';
+require_once 'i_Product.php';
+
+class Product_L implements Product
 {
     //product table fields
     private ?int $id = null;
@@ -11,9 +14,16 @@ class Product
     private string $status = "inactive";
     private string $created_at = "";
     private string $start_selling_date = "";
+    // live seminar specific fields
+    private string $start_date = "";
+    private string $end_date = "";
+    private int $location_id = 0;
+    private int $min_participants = 0;
+    private int $max_participants = 0;
 
     function __construct(array $product_data)
     {
+        // Product fields
         $this->title = $product_data['title'] ?? "";
         $this->description = $product_data['description'] ?? "";
         $this->image_url = $product_data['image_url'] ?? "";
@@ -21,6 +31,12 @@ class Product
         $this->status = $product_data['status'] ?? "inactive";
         $this->created_at = date('Y-m-d H:i:s');
         $this->start_selling_date = $product_data['start_selling_date'] ?? date('Y-m-d H:i:s');
+        // Live seminar specific fields
+        $this->start_date = $product_data['start_date'] ?? date('Y-m-d H:i:s');
+        $this->end_date = $product_data['end_date'] ?? date('Y-m-d H:i:s');
+        $this->location_id = (int) ($product_data['location_id'] ?? 0);
+        $this->min_participants = (int) ($product_data['min_participants'] ?? 0);
+        $this->max_participants = (int) ($product_data['max_participants'] ?? 0);
     }
 
     public function setId(int $id): void
@@ -52,13 +68,23 @@ class Product
         $this->id = $db->lastInsertId();
     }
 
-    public function update($db)
+    public function read($db)
     {
-        if ($this->id === null) {
-            throw new RuntimeException('Cannot update product without ID');
-        }
+        $stmt = $db->prepare("
+            SELECT 
+                products.*,
+                live_seminars.*
+            FROM products
+            JOIN live_seminars 
+            ON products.id = live_seminars.product_id
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
-        $update = $db->prepare("
+    public function update($db, $product_id)
+    {
+        $update_product = $db->prepare("
             UPDATE products SET
             title = :title,
             description = :description,
@@ -66,16 +92,44 @@ class Product
             price = :price,
             status = :status,
             start_selling_date = :start_selling_date
-            WHERE id = :id;
+            WHERE id = $product_id;
         ");
-        $update->execute([
+        $update_product->execute([
             ':title' => $this->title,
             ':description' => $this->description,
             ':image_url' => $this->image_url,
             ':price' => $this->price,
             ':status' => $this->status,
             ':start_selling_date' => $this->start_selling_date,
-            ':id' => $this->id
+        ]);
+
+        $update_live_seminars = $db->prepare("
+            UPDATE live_seminars SET
+            start_date = :start_date,
+            end_date = :end_date,
+            location_id = :location_id,
+            min_participants = :min_participants,
+            max_participants = :max_participants
+            WHERE product_id = $product_id;
+        ");
+        $update_live_seminars->execute([
+            ':start_date' => $this->start_date,
+            ':end_date' => $this->end_date,
+            ':location_id' => $this->location_id,
+            ':min_participants' => $this->min_participants,
+            ':max_participants' => $this->max_participants
         ]);
     }
+
+    public function delete($db)
+    {
+        if ($this->id === null) {
+            throw new RuntimeException('Cannot delete product without ID');
+        }
+
+        $delete = $db->prepare("DELETE FROM products WHERE id = :id");
+        $delete->execute([':id' => $this->id]);
+    }
+
+    use T_Product;
 }

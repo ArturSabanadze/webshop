@@ -1,0 +1,363 @@
+@startuml Webshop UML-Klassendiagramm
+
+class User {
+  - id: int
+  - username: string
+  - password_hash: string
+  - email: string
+  - role: string
+  - created_at: DateTime
+  - updated_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + setId(id: int): void
+  + getUsername(): string
+  + setUsername(username: string): void
+  + getEmail(): string
+  + setEmail(email: string): void
+  + getRole(): string
+  + setRole(role: string): void
+  + getPasswordHash(): string
+  + setPasswordHash(hash: string): void
+  + exist(): bool
+  + save(): bool
+  + delete(): bool
+  + authenticate(password: string): bool
+  + getProfile(): ?UserProfile
+  + getAddresses(): UserAddress[]
+  + getOrders(): Order[]
+  + isAdmin(): bool
+}
+
+class UserProfile {
+  - user_id: int
+  - name: string
+  - surname: string
+  - gender: ?string
+  - birthdate: ?DateTime
+  - phone: ?string
+  - biography: ?string
+  - profile_img_url: ?string
+  - created_at: DateTime
+  - updated_at: DateTime
+  --
+  + __construct()
+  + getUserId(): int
+  + setUserId(user_id: int): void
+  + getName(): string
+  + setName(name: string): void
+  + getSurname(): string
+  + setSurname(surname: string): void
+  + getGender(): ?string
+  + setGender(gender: ?string): void
+  + getBirthdate(): ?DateTime
+  + setBirthdate(birthdate: ?DateTime): void
+  + getPhone(): ?string
+  + setPhone(phone: ?string): void
+  + getBiography(): ?string
+  + setBiography(biography: ?string): void
+  + getProfileImgUrl(): ?string
+  + setProfileImgUrl(url: ?string): void
+  + getFullName(): string
+  + save(): bool
+  + delete(): bool
+  + getUser(): User
+}
+
+class UserAddress {
+  - id: int
+  - user_id: int
+  - type: string
+  - street: string
+  - street_number: string
+  - zip_code: string
+  - state: string
+  - province: string
+  - country: string
+  - created_at: DateTime
+  - updated_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getUserId(): int
+  + setUserId(user_id: int): void
+  + getType(): string
+  + setType(type: string): void
+  + getStreet(): string
+  + setStreet(street: string): void
+  + getStreetNumber(): string
+  + setStreetNumber(number: string): void
+  + getZipCode(): string
+  + setZipCode(zip: string): void
+  + getState(): string
+  + setState(state: string): void
+  + getProvince(): string
+  + setProvince(province: string): void
+  + getCountry(): string
+  + setCountry(country: string): void
+  + getFullAddress(): string
+  + isBillingAddress(): bool
+  + isShippingAddress(): bool
+  + save(): bool
+  + delete(): bool
+  + getUser(): User
+}
+
+class Product {
+  - id: int
+  - title: string
+  - description: string
+  - image_url: ?string
+  - price: float
+  - status: string
+  - start_selling_date: DateTime
+  - created_at: DateTime
+  - updated_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + setId(id: int): void
+  + getTitle(): string
+  + setTitle(title: string): void
+  + getDescription(): string
+  + setDescription(description: string): void
+  + getImageUrl(): ?string
+  + setImageUrl(url: ?string): void
+  + getPrice(): float
+  + setPrice(price: float): void
+  + getStatus(): string
+  + setStatus(status: string): void
+  + isActive(): bool
+  + getCategories(): Category[]
+  + getType(): ?string
+  + save(): bool
+  + delete(): bool
+  + canBeSold(): bool
+}
+
+class Category {
+  - id: int
+  - category_name: string
+  - description: string
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getCategoryName(): string
+  + setCategoryName(name: string): void
+  + getDescription(): string
+  + setDescription(description: string): void
+  + getProducts(): Product[]
+  + save(): bool
+  + delete(): bool
+}
+
+class Cart {
+  - id: int
+  - user_id: int
+  - currency: string
+  - created_at: DateTime
+  - updated_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getUserId(): int
+  + getCurrency(): string
+  + setCurrency(currency: string): void
+  + getItems(): CartItem[]
+  + addItem(product: Product, quantity: int): CartItem
+  + removeItem(product_id: int): bool
+  + getTotalPrice(): float
+  + getItemCount(): int
+  + isEmpty(): bool
+  + clear(): bool
+  + save(): bool
+}
+
+class CartItem {
+  - id: int
+  - cart_id: int
+  - product_id: int
+  - quantity: int
+  - unit_price: float
+  - applied_discount: float
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getCartId(): int
+  + getProductId(): int
+  + getQuantity(): int
+  + setQuantity(quantity: int): void
+  + getUnitPrice(): float
+  + getAppliedDiscount(): float
+  + setAppliedDiscount(discount: float): void
+  + getSubtotal(): float
+  + getProduct(): Product
+  + save(): bool
+  + delete(): bool
+}
+
+class Order {
+  - id: int
+  - user_id: int
+  - status: string
+  - total_amount: float
+  - billing_address_id: int
+  - shipping_address_id: ?int
+  - billing_address_snapshot: array
+  - shipping_address_snapshot: ?array
+  - created_at: DateTime
+  - updated_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getUserId(): int
+  + getStatus(): string
+  + setStatus(status: string): void
+  + getTotalAmount(): float
+  + getItems(): OrderItem[]
+  + getBillingAddress(): UserAddress
+  + getShippingAddress(): ?UserAddress
+  + getBillingSnapshot(): array
+  + getShippingSnapshot(): ?array
+  + addItem(product: Product, quantity: int, price: float): OrderItem
+  + getPayments(): Payment[]
+  + isPending(): bool
+  + isConfirmed(): bool
+  + isShipped(): bool
+  + isDelivered(): bool
+  + cancel(): bool
+  + save(): bool
+  + createFromCart(cart: Cart): Order
+}
+
+class OrderItem {
+  - id: int
+  - order_id: int
+  - product_id: int
+  - quantity: int
+  - unit_price: float
+  - status: string
+  - product_snapshot: array
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getOrderId(): int
+  + getProductId(): int
+  + getQuantity(): int
+  + getUnitPrice(): float
+  + getStatus(): string
+  + setStatus(status: string): void
+  + getProductSnapshot(): array
+  + getSubtotal(): float
+  + isFulfilled(): bool
+  + markFulfilled(): bool
+  + cancel(): bool
+  + getProduct(): Product
+}
+
+class Payment {
+  - id: int
+  - order_id: int
+  - provider: string
+  - transaction_id: ?string
+  - amount: float
+  - currency: string
+  - status: string
+  - paid_at: ?DateTime
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getOrderId(): int
+  + getProvider(): string
+  + setProvider(provider: string): void
+  + getTransactionId(): ?string
+  + setTransactionId(id: ?string): void
+  + getAmount(): float
+  + getCurrency(): string
+  + getStatus(): string
+  + setStatus(status: string): void
+  + getPaidAt(): ?DateTime
+  + isAuthorized(): bool
+  + isCaptured(): bool
+  + isFailed(): bool
+  + authorize(): bool
+  + capture(): bool
+  + refund(): bool
+  + getEvents(): PaymentEvent[]
+  + save(): bool
+}
+
+class PaymentEvent {
+  - id: int
+  - payment_id: int
+  - type: string
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getPaymentId(): int
+  + getType(): string
+  + getCreatedAt(): DateTime
+}
+
+class Voucher {
+  - id: int
+  - voucher_code: string
+  - value: float
+  - product_id: ?int
+  - discount_rate: ?float
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getVoucherCode(): string
+  + getValue(): float
+  + getProductId(): ?int
+  + getDiscountRate(): ?float
+  + getTypes(): VoucherType[]
+  + isPercentage(): bool
+  + isFixedAmount(): bool
+  + isFreeProduct(): bool
+  + isValid(user_id: int): bool
+  + isExpired(user_id: int): bool
+  + apply(cart: Cart): float
+  + save(): bool
+}
+
+class VoucherType {
+  - id: int
+  - type_name: string
+  - description: string
+  - created_at: DateTime
+  --
+  + __construct()
+  + getId(): int
+  + getTypeName(): string
+  + getDescription(): string
+}
+
+' Komposition und Assoziationen
+User "1" *-- "1" UserProfile : hat
+User "1" o-- "*" UserAddress : hat mehrere
+User "1" o-- "1" Cart : besitzt
+User "1" o-- "*" Order : erstellt
+User "1" o-- "*" Voucher : nutzt
+
+Product "1" o-- "*" Category : gehört zu mehreren
+Product "1" o-- "*" CartItem : wird hinzugefügt
+Product "1" o-- "*" OrderItem : wird bestellt
+Product "1" o-- "*" Voucher : kann Rabatt sein
+
+Cart "1" *-- "*" CartItem : enthält
+Order "1" *-- "*" OrderItem : enthält
+Order "1" o-- "*" Payment : hat mehrere
+Payment "1" *-- "*" PaymentEvent : erzeugt
+
+Voucher "1" o-- "*" VoucherType : hat Typ
+
+@enduml

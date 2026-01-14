@@ -1,0 +1,289 @@
+@startuml Webshop ER-Diagramm
+!define TABLENAME(x) class x << (T,#FFAAAA) >>
+!define PRIMARY_KEY(x) <b>PK:</b> x
+!define FOREIGN_KEY(x) <b>FK:</b> x
+
+entity users {
+  PRIMARY_KEY(id) : INT
+  --
+  username : VARCHAR(255) UNIQUE
+  password_hash : VARCHAR(255)
+  email : VARCHAR(255) UNIQUE
+  role : ENUM('user', 'admin')
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity users_profiles {
+  PRIMARY_KEY(user_id) : INT
+  --
+  FOREIGN_KEY(user_id) → users.id
+  name : VARCHAR(255)
+  surname : VARCHAR(255)
+  gender : ENUM('Male', 'Female', 'Other')
+  birthdate : DATE
+  phone : VARCHAR(20)
+  biography : TEXT
+  profile_img_url : VARCHAR(500)
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity users_addresses {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(user_id) → users.id
+  type : ENUM('billing', 'shipping')
+  street : VARCHAR(255)
+  street_number : VARCHAR(10)
+  zip_code : VARCHAR(10)
+  state : VARCHAR(100)
+  province : VARCHAR(100)
+  country : VARCHAR(100)
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity categories {
+  PRIMARY_KEY(id) : INT
+  --
+  category_name : VARCHAR(255) UNIQUE
+  description : TEXT
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity products {
+  PRIMARY_KEY(id) : INT
+  --
+  title : VARCHAR(255)
+  description : TEXT
+  image_url : VARCHAR(500)
+  price : DECIMAL(10,2)
+  status : ENUM('active', 'inactive', 'draft')
+  start_selling_date : DATETIME
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity product_categories {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(product_id) → products.id
+  FOREIGN_KEY(category_id) → categories.id
+}
+
+entity physical_products {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(product_id) → products.id UNIQUE
+  stock : INT
+  weight : DECIMAL(8,3)
+  pack_size_height : DECIMAL(8,2)
+  pack_size_width : DECIMAL(8,2)
+  pack_size_depth : DECIMAL(8,2)
+  shipping_required : BOOLEAN
+  created_at : TIMESTAMP
+}
+
+entity digital_products {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(product_id) → products.id UNIQUE
+  file_url : VARCHAR(500)
+  license_type : VARCHAR(50)
+  created_at : TIMESTAMP
+}
+
+entity courses {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(product_id) → products.id UNIQUE
+  content_url : VARCHAR(500)
+  content_creator : VARCHAR(255)
+  created_at : TIMESTAMP
+}
+
+entity seminars_locations {
+  PRIMARY_KEY(id) : INT
+  --
+  street : VARCHAR(255)
+  street_number : VARCHAR(10)
+  zip_code : VARCHAR(10)
+  state : VARCHAR(100)
+  province : VARCHAR(100)
+  country : VARCHAR(100)
+  created_at : TIMESTAMP
+}
+
+entity live_seminars {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(product_id) → products.id UNIQUE
+  FOREIGN_KEY(location_id) → seminars_locations.id
+  start_date : DATETIME
+  end_date : DATETIME
+  min_participants : INT
+  max_participants : INT
+  created_at : TIMESTAMP
+}
+
+entity seminar_participants {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(seminar_id) → live_seminars.id
+  FOREIGN_KEY(user_id) → users.id
+  enrolled_at : TIMESTAMP
+}
+
+entity carts {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(user_id) → users.id
+  currency : VARCHAR(3)
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity carts_items {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(cart_id) → carts.id
+  FOREIGN_KEY(product_id) → products.id
+  quantity : INT
+  unit_price : DECIMAL(10,2)
+  applied_discount : DECIMAL(10,2)
+  created_at : TIMESTAMP
+}
+
+entity wishlist {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(user_id) → users.id UNIQUE
+  created_at : TIMESTAMP
+}
+
+entity wishlist_items {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(wishlist_id) → wishlist.id
+  FOREIGN_KEY(product_id) → products.id
+  added_at : TIMESTAMP
+}
+
+entity orders {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(user_id) → users.id
+  status : ENUM('pending', 'confirmed', 'shipped', 'delivered', 'cancelled')
+  total_amount : DECIMAL(10,2)
+  FOREIGN_KEY(billing_address_id) → users_addresses.id
+  billing_address_snapshot : JSON
+  FOREIGN_KEY(shipping_address_id) → users_addresses.id
+  shipping_address_snapshot : JSON
+  created_at : TIMESTAMP
+  updated_at : TIMESTAMP
+}
+
+entity order_items {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(order_id) → orders.id
+  FOREIGN_KEY(product_id) → products.id
+  quantity : INT
+  unit_price : DECIMAL(10,2)
+  status : ENUM('pending', 'fulfilled', 'cancelled')
+  product_snapshot : JSON
+  created_at : TIMESTAMP
+}
+
+entity payments {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(order_id) → orders.id
+  provider : VARCHAR(50)
+  transaction_id : VARCHAR(255)
+  amount : DECIMAL(10,2)
+  currency : VARCHAR(3)
+  status : ENUM('authorized', 'captured', 'failed', 'refunded')
+  paid_at : TIMESTAMP
+  created_at : TIMESTAMP
+}
+
+entity payment_events {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(payment_id) → payments.id
+  type : ENUM('authorize', 'capture', 'refund', 'fail')
+  created_at : TIMESTAMP
+}
+
+entity v_types {
+  PRIMARY_KEY(id) : INT
+  --
+  type_name : VARCHAR(100) UNIQUE
+  description : TEXT
+  created_at : TIMESTAMP
+}
+
+entity vouchers {
+  PRIMARY_KEY(id) : INT
+  --
+  voucher_code : VARCHAR(50) UNIQUE
+  value : DECIMAL(10,2)
+  FOREIGN_KEY(product_id) → products.id
+  discount_rate : DECIMAL(5,2)
+  created_at : TIMESTAMP
+}
+
+entity vouchers_types {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(voucher_id) → vouchers.id
+  FOREIGN_KEY(type_id) → v_types.id
+}
+
+entity users_voucher {
+  PRIMARY_KEY(id) : INT
+  --
+  FOREIGN_KEY(user_id) → users.id
+  FOREIGN_KEY(voucher_id) → vouchers.id
+  purchased_at : TIMESTAMP
+  expiring_at : TIMESTAMP
+}
+
+' Beziehungen
+users ||--o| users_profiles : "hat"
+users ||--o{ users_addresses : "hat mehrere"
+users ||--o{ carts : "hat"
+users ||--o{ wishlist : "hat"
+users ||--o{ orders : "erstellt"
+users ||--o{ seminar_participants : "registriert sich für"
+users ||--o{ users_voucher : "nutzt"
+
+categories ||--o{ product_categories : "hat"
+products ||--o| product_categories : "gehört zu"
+products ||--o| physical_products : "kann sein"
+products ||--o| digital_products : "kann sein"
+products ||--o| courses : "kann sein"
+products ||--o| live_seminars : "kann sein"
+products ||--o{ carts_items : "liegt in"
+products ||--o{ order_items : "wird bestellt"
+products ||--o{ wishlist_items : "wird gewünscht"
+products ||--o{ vouchers : "kann Rabatt sein"
+
+seminars_locations ||--o{ live_seminars : "enthält"
+live_seminars ||--o{ seminar_participants : "hat Teilnehmer"
+
+carts ||--o{ carts_items : "enthält"
+orders ||--o{ order_items : "enthält"
+orders ||--o{ payments : "hat"
+payments ||--o{ payment_events : "erzeugt"
+
+wishlist ||--o{ wishlist_items : "enthält"
+
+vouchers ||--o{ vouchers_types : "hat Typ"
+v_types ||--o{ vouchers_types : "definiert"
+vouchers ||--o{ users_voucher : "wird zugeordnet"
+
+@enduml

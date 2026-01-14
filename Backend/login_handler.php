@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'admin
 
     try {
         // Benutzer aus der Datenbank abrufen
-        $stmt = $pdo->prepare("SELECT id, username, password_hash, role FROM users WHERE username = :username AND role = 'admin' LIMIT 1");
+        $stmt = $pdo->prepare("SELECT id, username, password_hash, role FROM admins WHERE username = :username AND role = 'admin' LIMIT 1");
         // Benutzer anhand des Benutzernamens abrufen                       
         $stmt->execute([':username' => $username]);
         // Fetch the user data
@@ -94,11 +94,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'admin
                 $_SESSION['token'] = $token;
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['username'] = $user['username'];
-                $_SESSION['name'] = $user['name'];
-                $_SESSION['surname'] = $user['surname'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['role'] = $user['role'];
-                $_SESSION['login_success'] = 'Login successful! Hello, ' . $user['name'] . ' ' . $user['surname'] . '.';
+                $_SESSION['login_success'] = 'Login successful! Hello, ' . $user['username'] . '.';
                 header('Location: admin_dashboard.php?page=home');
 
             } else {

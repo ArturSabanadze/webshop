@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS webshopPro
+CREATE DATABASE IF NOT EXISTS gruppe1
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_unicode_ci;
 
-USE webshopPro;
+USE gruppe1;
 -- =========================
 -- Products & categories
 -- =========================
@@ -110,15 +110,23 @@ CREATE TABLE seminar_participants (
 ) ENGINE=InnoDB;
 
 -- =========================
--- Users & related
+-- Users, Admins & related
 -- =========================
+CREATE TABLE admins (
+  id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  username       VARCHAR(100) NOT NULL UNIQUE,
+  password_hash  VARCHAR(255) NOT NULL,
+  email          VARCHAR(255) NOT NULL UNIQUE,
+  role           ENUM('admin','superadmin') NOT NULL DEFAULT 'admin'
+) ENGINE=InnoDB;
+
 
 CREATE TABLE users (
   id             INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   username       VARCHAR(100) NOT NULL UNIQUE,
   password_hash  VARCHAR(255) NOT NULL,
   email          VARCHAR(255) NOT NULL UNIQUE,
-  role           ENUM('user','admin') NOT NULL DEFAULT 'user'
+  role           ENUM('user','contributor') NOT NULL DEFAULT 'user'
 ) ENGINE=InnoDB;
 
 CREATE TABLE users_profiles (
@@ -138,7 +146,7 @@ CREATE TABLE users_profiles (
 CREATE TABLE users_addresses (
   id            INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   user_id       INT UNSIGNED NOT NULL,
-  type          ENUM('billing','shipping','other') NOT NULL DEFAULT 'other',
+  type          ENUM('billing','shipping','general') NOT NULL DEFAULT 'general',
   zip_code      VARCHAR(20),
   country       VARCHAR(100),
   street        VARCHAR(255),
@@ -283,9 +291,9 @@ CREATE TABLE vouchers (
     ON DELETE SET NULL
 ) ENGINE=InnoDB;
 
-CREATE TABLE v_types (
+CREATE TABLE voucher_categories (
   id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  type_name   VARCHAR(100) NOT NULL,
+  category_name   VARCHAR(100) NOT NULL,
   description TEXT
 ) ENGINE=InnoDB;
 
@@ -297,7 +305,7 @@ CREATE TABLE vouchers_types (
     FOREIGN KEY (voucher_id) REFERENCES vouchers(id)
     ON DELETE CASCADE,
   CONSTRAINT fk_vt_type
-    FOREIGN KEY (type_id) REFERENCES v_types(id)
+    FOREIGN KEY (type_id) REFERENCES voucher_categories(id)
     ON DELETE CASCADE
 ) ENGINE=InnoDB;
 

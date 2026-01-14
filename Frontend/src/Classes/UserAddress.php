@@ -12,10 +12,10 @@ class UserAddress
     private ?string $country;
     private ?string $zip_code;
 
-    function __construct(Array $address_data, $userID)
+    function __construct(array $address_data, int $userID)
     {
         $this->user_id = $userID;
-        $this->type = $address_data['type'] ?? 'default';
+        $this->type = $address_data['type'] ?? 'general';
         $this->street = $address_data['street'] ?? null;
         $this->street_number = $address_data['street_number'] ?? null;
         $this->state = $address_data['state'] ?? null;

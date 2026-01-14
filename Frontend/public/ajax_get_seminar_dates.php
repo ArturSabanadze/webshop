@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once __DIR__ . '/../src/Functions/product_card_loader_pro.php';
+require_once __DIR__ . '/../src/Functions/product_card_loader.php';
 
 $productId = (int) ($_POST['product_id'] ?? 0);
 

@@ -48,8 +48,7 @@ $page = $_GET['page'] ?? 'home';
                         <a href="admin_dashboard.php?page=products&type=live">Live Seminars</a>
                     </div>
                 </div>
-                <a href="admin_dashboard.php?page=dates">Termine</a>
-                <a href="admin_dashboard.php?page=participants">Teilnehmer</a>
+                <a href="admin_dashboard.php?page=participants">Participants</a>
                 <a href="admin_dashboard.php?page=tickets">Tickets</a>
             </nav>
         </div>
@@ -67,9 +66,6 @@ $page = $_GET['page'] ?? 'home';
         switch ($page) {
             case 'products':
                 require __DIR__ . '/products.php';
-                break;
-            case 'dates':
-                require __DIR__ . '/seminar_dates.php';
                 break;
             case 'participants':
                 require __DIR__ . '/participants.php';

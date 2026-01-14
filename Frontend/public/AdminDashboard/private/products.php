@@ -1,4 +1,3 @@
-<h2>Product Management - <?php echo ucfirst($type); ?> Products</h2>
 <?php
 
 require __DIR__ . '/Classes/Product_P.php';
@@ -7,6 +6,7 @@ require __DIR__ . '/Classes/Product_D.php';
 require_once __DIR__ . '/Functions/image_upload.php';
 
 $type = $_GET['type'] ?? 'physical';
+echo '<h2>Product Management - ' . ucfirst($type) . ' Products</h2>';
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $product_list = [];
     switch ($type) {
@@ -31,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             break;
     }
 }
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'create-product') {
     $product_img_url = handleImageUpload();
     $product_data = $_POST;
@@ -62,3 +63,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['action'] === 'create-produc
     }
     echo "<script>window.location.href = '" . $_SERVER['HTTP_REFERER'] . "';</script>";
 }
+?>

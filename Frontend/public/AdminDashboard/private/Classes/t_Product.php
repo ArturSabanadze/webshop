@@ -147,7 +147,7 @@ trait T_Product
                     </label>
                 </div>
                 <div>
-                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="submit" class="btn-primary">Create</button>
                 </div>
             </form>
         </section>
@@ -225,7 +225,7 @@ trait T_Product
                     </label>
                 </div>
                 <div>
-                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="submit" class="btn-primary">Create</button>
                 </div>
             </form>
         </section>
@@ -326,7 +326,7 @@ trait T_Product
                     </label>
                 </div>
                 <div>
-                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="submit" class="btn-primary">Create</button>
                 </div>
             </form>
         </section>

@@ -1,99 +1,62 @@
 <?php
-// Admin: Teilnehmer eines Termins anzeigen
+$seminarId = isset($_GET['seminar_id']) ? (int) $_GET['seminar_id'] : null;
 
-$dateId = isset($_GET['date_id']) ? (int) $_GET['date_id'] : 0;
-
-// Termine für Dropdown (Filter)
+// Fetch seminar date details
 $stmt = $pdo->query("
-    SELECT d.id, p.product_name, d.start_datetime
-    FROM seminar_dates d
-    JOIN products p ON d.product_id = p.id
-    ORDER BY d.start_datetime DESC
+    SELECT ls.id, ls.start_date, ls.end_date, p.title
+    FROM live_seminars ls
+    JOIN products p ON ls.product_id = p.id
+    ORDER BY ls.start_date DESC
 ");
 $allDates = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Teilnehmer des ausgewählten Termins laden
-$participants = [];
-$selectedDate = null;
-
-if ($dateId > 0) {
-    // Infos zum Termin
-    $stmt = $pdo->prepare("
-        SELECT d.id, p.product_name, d.start_datetime, d.end_datetime, d.room
-        FROM seminar_dates d
-        JOIN products p ON d.product_id = p.id
-        WHERE d.id = :id
-    ");
-    $stmt->execute([':id' => $dateId]);
-    $selectedDate = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($selectedDate) {
-        // Teilnehmer holen (User)
-        $stmt = $pdo->prepare("
-            SELECT u.id, u.username, u.email, r.registration_datetime
-            FROM seminar_registrations r
-            JOIN users u ON r.user_id = u.id
-            WHERE r.seminar_date_id = :id
-            ORDER BY u.username
-        ");
-        $stmt->execute([':id' => $dateId]);
-        $participants = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-}
+//fetch participants from certain seminar date
+$stmt = $pdo->query("
+    SELECT sp.user_id, up.name, up.surname, ls.product_id, p.title, p.id, sl.id 
+    FROM seminar_participants sp
+    JOIN users_profiles up ON sp.user_id = up.user_id
+    JOIN live_seminars ls ON sp.seminar_id = ls.id
+    JOIN seminars_locations sl ON ls.location_id = sl.id
+    JOIN products p ON ls.product_id = p.id 
+    WHERE sp.seminar_id = " . (int) $seminarId . "
+");
+$participants = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 <section>
     <h2>Teilnehmer anzeigen</h2>
 
     <form method="get">
         <input type="hidden" name="page" value="participants">
 
-        <div class="form-group">
-            <label for="date_id">Termin auswählen</label>
-            <select name="date_id" id="date_id" onchange="this.form.submit()">
-                <option value="">Bitte wählen</option>
-                <?php foreach ($allDates as $d): ?>
-                    <option value="<?= (int)$d['id'] ?>" <?= $d['id'] === $dateId ? 'selected' : '' ?>>
-                        <?= htmlspecialchars($d['product_name']) ?>
-                        (<?= htmlspecialchars($d['start_datetime']) ?>)
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        <noscript><button type="submit">Anzeigen</button></noscript>
+        <label for="seminar_id">Choice Seminar</label>
+        <select name="seminar_id" id="seminar_id" onchange="this.form.submit()">
+            <option value="">Please choose</option>
+            <?php foreach ($allDates as $d): ?>
+                <option value="<?= (int) $d['id'] ?>" <?= $d['id'] == $seminarId ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($d['title']) ?> (<?= htmlspecialchars($d['start_date']) ?>)
+                </option>
+            <?php endforeach; ?>
+        </select>
     </form>
 
-    <?php if ($selectedDate): ?>
-        <h3>Termin: <?= htmlspecialchars($selectedDate['product_name']) ?></h3>
-        <p>
-            Start: <?= htmlspecialchars($selectedDate['start_datetime']) ?><br>
-            Ende: <?= htmlspecialchars($selectedDate['end_datetime']) ?><br>
-            Raum: <?= htmlspecialchars($selectedDate['room']) ?>
-        </p>
-
-        <h4>Teilnehmer</h4>
-        <?php if (count($participants) === 0): ?>
-            <p>Für diesen Termin sind noch keine Teilnehmer angemeldet.</p>
-        <?php else: ?>
-            <table>
-                <thead>
+    <h3>Participants</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>User-ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($participants as $p): ?>
                 <tr>
-                    <th>User-ID</th>
-                    <th>Benutzername</th>
-                    <th>E-Mail</th>
-                    <th>Angemeldet seit</th>
+                    <td><?= (int) $p['user_id'] ?></td>
+                    <td><?= htmlspecialchars($p['name']) ?></td>
+                    <td><?= htmlspecialchars($p['surname']) ?></td>
                 </tr>
-                </thead>
-                <tbody>
-                <?php foreach ($participants as $p): ?>
-                    <tr>
-                        <td><?= (int)$p['id'] ?></td>
-                        <td><?= htmlspecialchars($p['username']) ?></td>
-                        <td><?= htmlspecialchars($p['email']) ?></td>
-                        <td><?= htmlspecialchars($p['registration_datetime']) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-                </tbody>
-            </table>
-        <?php endif; ?>
-    <?php endif; ?>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </section>

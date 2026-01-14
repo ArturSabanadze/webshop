@@ -3,6 +3,9 @@ USE gruppe1;
 -- ========================================
 -- USERS (12 Benutzer)
 -- ========================================
+INSERT INTO admins (username, password_hash email, role) VALUES
+('admin', '$2y$12$wTvJXqcfg1e6df0RtRUFB.7vkDvRWdCHJlO/S/6veiGYCJIar5khG', 'admin@example.com', 'admin');
+
 INSERT INTO users (username, password_hash, email, role) VALUES
   ('alice', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'alice@example.com', 'user'),
   ('bob', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'bob@example.com', 'user'),

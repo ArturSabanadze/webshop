@@ -54,6 +54,11 @@ class Product_P implements Product
         return $this->id;
     }
 
+    public function setImgUrl(string $url): void
+    {
+        $this->image_url = $url;
+    }
+
     public function create($db)
     {
         $insert = $db->prepare("

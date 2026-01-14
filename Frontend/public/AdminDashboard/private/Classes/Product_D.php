@@ -16,7 +16,7 @@ class Product_D implements Product
     private string $start_selling_date = "";
     // digital product specific fields
     private string $file_url = "";
-    private string $liciense_type = "";
+    private string $license_type = "";
 
     function __construct(
         array $product_data
@@ -29,7 +29,7 @@ class Product_D implements Product
         $this->created_at = date('Y-m-d H:i:s');
         $this->start_selling_date = $product_data['start_selling_date'] ?? date('Y-m-d H:i:s');
         $this->file_url = $product_data['file_url'] ?? "";
-        $this->liciense_type = $product_data['liciense_type'] ?? "";
+        $this->license_type = $product_data['license_type'] ?? "";
     }
 
     public function setId(int $id): void
@@ -40,6 +40,11 @@ class Product_D implements Product
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setImgUrl(string $url): void
+    {
+        $this->image_url = $url;
     }
 
     public function create($db)
@@ -59,6 +64,16 @@ class Product_D implements Product
             ':start_selling_date' => $this->start_selling_date
         ]);
         $this->id = $db->lastInsertId();
+        $insert_digital = $db->prepare("
+            INSERT INTO digital_products 
+            (product_id, file_url, license_type)
+            VALUES (:product_id, :file_url, :license_type);
+        ");
+        $insert_digital->execute([
+            ':product_id' => $this->id,
+            ':file_url' => $this->file_url,
+            ':license_type' => $this->license_type
+        ]);
     }
 
     public function read($db)
@@ -109,7 +124,7 @@ class Product_D implements Product
         ");
         $update_digital->execute([
             ':file_url' => $this->file_url,
-            ':liciense_type' => $this->liciense_type,
+            ':license_type' => $this->license_type,
             ':product_id' => $product_id
         ]);
     }

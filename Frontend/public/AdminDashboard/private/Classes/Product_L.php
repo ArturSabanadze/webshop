@@ -49,8 +49,16 @@ class Product_L implements Product
         return $this->id;
     }
 
+    public function setImgUrl(string $url): void
+    {
+        $this->image_url = $url;
+    }
+
     public function create($db)
     {
+        if ($db === null) {
+            throw new RuntimeException('Database connection is null');
+        }
         $insert = $db->prepare("
             INSERT INTO products 
             (title, description, image_url, price, status, created_at, start_selling_date)
@@ -66,6 +74,19 @@ class Product_L implements Product
             ':start_selling_date' => $this->start_selling_date
         ]);
         $this->id = $db->lastInsertId();
+        $insert_live_seminar = $db->prepare("
+            INSERT INTO live_seminars 
+            (product_id, start_date, end_date, location_id, min_participants, max_participants)
+            VALUES (:product_id, :start_date, :end_date, :location_id, :min_participants, :max_participants);
+        ");
+        $insert_live_seminar->execute([
+            ':product_id' => $this->id,
+            ':start_date' => $this->start_date,
+            ':end_date' => $this->end_date,
+            ':location_id' => $this->location_id,
+            ':min_participants' => $this->min_participants,
+            ':max_participants' => $this->max_participants
+        ]);
     }
 
     public function read($db)

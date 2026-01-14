@@ -7,6 +7,10 @@ trait T_Product
         if (empty($product_list)) {
             return '<p>No products found.</p>';
         }
+
+        $editingId = $_GET['id'] ?? null;
+        $action = $_GET['action'] ?? null;
+
         ob_start();
         ?>
         <section>
@@ -19,34 +23,61 @@ trait T_Product
                         <th>Actions</th>
                     </tr>
                 </thead>
-
                 <tbody>
+
                     <?php foreach ($product_list as $row): ?>
+                        <?php
+                        $isEditing = ($action === 'edit' && $editingId == $row['product_id']);
+                        ?>
+
                         <tr>
-                            <?php foreach ($row as $value): ?>
-                                <td><?= htmlspecialchars((string) $value) ?></td>
-                            <?php endforeach; ?>
+                            <form method="post">
+                                <input type="hidden" name="action" value="update-product">
+                                <input type="hidden" name="product_id" value="<?= $row['product_id'] ?>">
+                                <input type="hidden" name="product_type" value="<?= htmlspecialchars($_GET['type']) ?>">
 
-                            <td>
-                                <a href="?page=products&type=<?= $_GET['type'] ?>&action=edit&id=<?= $row['product_id'] ?>">
-                                    Edit
-                                </a>
+                                <?php foreach ($row as $key => $value): ?>
+                                    <td>
+                                        <?php if ($isEditing && $key !== 'product_id' && $key !== 'id'): ?>
+                                            <input type="text" name="<?= htmlspecialchars($key) ?>" value="<?= htmlspecialchars($value) ?>"
+                                                style="width:100%">
+                                        <?php else: ?>
+                                            <?= htmlspecialchars((string) $value) ?>
+                                        <?php endif; ?>
+                                    </td>
+                                <?php endforeach; ?>
 
-                                &nbsp;|&nbsp;
+                                <td>
+                                    <?php if ($isEditing): ?>
+                                        <button type="submit" onclick="return confirm('Save changes?')">
+                                            💾 Save
+                                        </button>
+                                        |
+                                        <a href="?page=products&type=<?= $_GET['type'] ?>">Cancel</a>
+                                    <?php else: ?>
+                                        <a href="?page=products&type=<?= $_GET['type'] ?>&action=edit&id=<?= $row['product_id'] ?>">
+                                            ✏ Edit
+                                        </a>
+                                        |
+                                        <a href="?page=products&type=<?= $_GET['type'] ?>&action=delete&id=<?= $row['product_id'] ?>"
+                                            onclick="return confirm('Delete this product?')">
+                                            🗑 Delete
+                                        </a>
+                                    <?php endif; ?>
+                                </td>
 
-                                <a href="?page=products&type=<?= $_GET['type'] ?>&action=delete&id=<?= $row['product_id'] ?>"
-                                    onclick="return confirm('Delete this product?')">
-                                    Delete
-                                </a>
-                            </td>
+                            </form>
                         </tr>
+
                     <?php endforeach; ?>
+
                 </tbody>
             </table>
         </section>
         <?php
         return ob_get_clean();
     }
+
 
     public function new_physical_product_form(): string
     {

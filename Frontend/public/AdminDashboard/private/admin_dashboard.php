@@ -56,7 +56,6 @@ $page = $_GET['page'] ?? 'home';
             <nav class="right-menu">
                 <a href="admin_dashboard.php?page=login">Login</a>
                 <a href="admin_dashboard.php?page=logout">Logout</a>
-                <a href="../../index.php">Back to Website</a>
             </nav>
         </div>
     </header>

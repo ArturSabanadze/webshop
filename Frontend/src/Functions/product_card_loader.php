@@ -38,6 +38,8 @@ function getSeminarDates(int $productId): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+
+
 function enrollInSeminar(int $userId, int $seminarDateId): string
 {
     global $pdo;

@@ -1,18 +1,29 @@
 <?php
 require_once __DIR__ . '/../db_connection.php';
 
+
+function getCategories(): array
+{
+    global $pdo;
+    $stmt = $pdo->prepare("SELECT id, category_name FROM categories ORDER BY category_name ASC");
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC); // returns an array of categories
+}
+
+// ===== FETCH PRODUCTS =====
 function getProducts(string $search = '', string $category = '', string $sort = 'newest'): array
 {
     global $pdo;
 
     $query = "SELECT p.* FROM products p
-        LEFT JOIN product_categories pc ON p.id = pc.product_id
-        LEFT JOIN categories c ON c.id = pc.category_id
-        WHERE 1";
+              LEFT JOIN product_categories pc ON p.id = pc.product_id
+              LEFT JOIN categories c ON c.id = pc.category_id
+              WHERE p.status = 'active'";
+
     $params = [];
 
     if (!empty($search)) {
-        $query .= " AND (p.product_name LIKE ? OR p.description LIKE ?)";
+        $query .= " AND (p.title LIKE ? OR p.description LIKE ?)";
         $params[] = "%$search%";
         $params[] = "%$search%";
     }
@@ -38,8 +49,6 @@ function getProducts(string $search = '', string $category = '', string $sort = 
     $stmt->execute($params);
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
-
-
 
 
 

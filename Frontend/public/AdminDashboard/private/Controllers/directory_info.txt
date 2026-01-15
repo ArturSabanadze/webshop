@@ -1,3 +1,0 @@
-# Controller: HTTP-Requests → Aktionen
-
-Alle POST/GET handler sollen in diese Ordner gespeichert werden.

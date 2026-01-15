@@ -2,21 +2,28 @@
 require_once '../src/Functions/product_card_loader.php';
 require_once '../api/products_api.php';
 
+// ===== GET FILTER VALUES =====
 $search = $_GET['search'] ?? '';
-$category = $_GET['category'] ?? '';
+$category = $_GET['category'] ?? '';  // <- use this for filtering
+$selectedCategory = $category;        // <- use this for marking selected option
 $sort = $_GET['sort'] ?? 'newest';
+
+// ===== FETCH DATA =====
+$categories = getCategories();
+$products = getProducts($search, $category, $sort);
 ?>
 
 <section class="main-container">
     <div class="courses-header-filter">
         <input type="text" class="filter-search" placeholder="Search products..."
             value="<?= htmlspecialchars($search) ?>" />
-        <select class="filter-category">
+        <select class="filter-category" name="category">
             <option value="">All Categories</option>
-            <option value="electronics" <?= $category === 'electronics' ? 'selected' : '' ?>>Electronics</option>
-            <option value="e-books" <?= $category === 'e-books' ? 'selected' : '' ?>>E-Books</option>
-            <option value="online courses" <?= $category === 'online courses' ? 'selected' : '' ?>>Online Courses</option>
-            <option value="seminars" <?= $category === 'seminars' ? 'selected' : '' ?>>Seminars</option>
+            <?php foreach ($categories as $cat): ?>
+                <option value="<?= htmlspecialchars($cat['category_name']) ?>" <?= $selectedCategory === $cat['category_name'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($cat['category_name']) ?>
+                </option>
+            <?php endforeach; ?>
         </select>
         <select class="filter-sort">
             <option value="newest" <?= $sort === 'newest' ? 'selected' : '' ?>>Newest</option>
@@ -27,32 +34,13 @@ $sort = $_GET['sort'] ?? 'newest';
     </div>
 
     <div class="courses-grid">
-        <?php
-        try {
-            if (!empty($search) || !empty($category) || $sort !== 'newest') {
-            $products = getProducts($search, $category, $sort);
-
-            if (!empty($products)) {
-                foreach ($products as $row) {
-                    echo generateProductCard($row);
-                }
-            } else {
-                echo "<p>No products found.</p>";
-            }
-        } else {
-            $products = getProducts();
-            if (!empty($products)) {
-                foreach ($products as $row) {
-                    echo generateProductCard($row);
-                }
-            } else {
-                echo "<p>No products available at the moment.</p>";
-            }
-        }
-        } catch (Exception $e) {
-            echo "<p>Error loading products: " . htmlspecialchars($e->getMessage()) . "</p>";
-        }
-        ?>
+        <?php if (!empty($products)): ?>
+            <?php foreach ($products as $row): ?>
+                <?= generateProductCard($row) ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p>No products found.</p>
+        <?php endif; ?>
     </div>
 
     <!-- ENROLL MODAL -->
@@ -83,7 +71,6 @@ $sort = $_GET['sort'] ?? 'newest';
     document.querySelectorAll('.course-btn').forEach(btn => {
         btn.addEventListener('click', function () {
             const productId = this.dataset.id;
-            console.log('Selected product ID:', productId);
             const seminarSelect = document.getElementById('seminar_date_select');
             seminarSelect.innerHTML = '';
 

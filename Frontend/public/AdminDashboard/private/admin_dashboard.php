@@ -29,7 +29,7 @@ $page = $_GET['page'] ?? 'home';
 <head>
     <meta charset="UTF-8">
     <title>Admin-Dashboard</title>
-    <link rel="stylesheet" href="../assets/admin.css">
+    <link rel="stylesheet" href="../styles/admin.css">
 </head>
 
 <body>

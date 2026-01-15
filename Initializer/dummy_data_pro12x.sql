@@ -91,18 +91,18 @@ INSERT INTO categories (category_name, description) VALUES
 -- PRODUCTS (12 Produkte - gemischte Typen)
 -- ========================================
 INSERT INTO products (title, description, image_url, price, status, start_selling_date) VALUES
-  ('Wireless Mouse Pro', 'Ergonomic wireless mouse with precision tracking', 'https://example.com/mouse.jpg', 25.90, 'active', NOW()),
-  ('USB-C Hub 7-in-1', 'Multi-port USB-C hub for laptops', 'https://example.com/hub.jpg', 45.50, 'active', NOW()),
-  ('Mechanical Keyboard RGB', 'Gaming keyboard with RGB lighting', 'https://example.com/keyboard.jpg', 89.99, 'active', NOW()),
-  ('Learning SQL eBook', 'Introductory SQL book for beginners', 'https://example.com/sql_ebook.jpg', 9.99, 'active', NOW()),
-  ('Advanced Python eBook', 'Deep dive into Python programming', 'https://example.com/python_ebook.jpg', 14.99, 'active', NOW()),
-  ('Web Design eBook Collection', 'Complete guide to modern web design', 'https://example.com/webdesign_ebook.jpg', 19.99, 'active', NOW()),
-  ('PHP for Beginners Course', 'Video course for PHP basics', 'https://example.com/php_course.jpg', 49.00, 'active', NOW()),
-  ('JavaScript Mastery Course', 'Complete JavaScript video course', 'https://example.com/js_course.jpg', 69.00, 'active', NOW()),
-  ('React.js Advanced Course', 'Advanced React development techniques', 'https://example.com/react_course.jpg', 79.00, 'active', NOW()),
-  ('Web Development Seminar Athens', '2-day live seminar in Athens', 'https://example.com/seminar_athens.jpg', 199.00, 'active', NOW()),
-  ('Web Development Seminar Thessaloniki', '2-day live seminar in Thessaloniki', 'https://example.com/seminar_thessaloniki.jpg', 199.00, 'active', NOW()),
-  ('UX/UI Design Bootcamp', 'Intensive 1-week live bootcamp', 'https://example.com/bootcamp_ux.jpg', 299.00, 'active', NOW());
+  ('Wireless Mouse Pro', 'Ergonomic wireless mouse with precision tracking', 'https://ae-pic-a1.aliexpress-media.com/kf/Sc7da1d931c6a48ceb7346cb09ec7dbf2v.jpg_960x960q75.jpg_.avif', 25.90, 'active', NOW()),
+  ('USB-C Hub 7-in-1', 'Multi-port USB-C hub for laptops', 'https://assets.kotsovolos.gr/product/320757-b.jpg', 45.50, 'active', NOW()),
+  ('Mechanical Keyboard RGB', 'Gaming keyboard with RGB lighting', 'https://market1.gr/wp-content/uploads/2023/03/SMK9RB-768x768-1.jpg', 89.99, 'active', NOW()),
+  ('Learning SQL eBook', 'Introductory SQL book for beginners', 'https://m.media-amazon.com/images/I/91hGui3k+SL._SY385_.jpg', 9.99, 'active', NOW()),
+  ('Advanced Python eBook', 'Deep dive into Python programming', 'https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=600', 14.99, 'active', NOW()),
+  ('Web Design eBook Collection', 'Complete guide to modern web design', 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=600', 19.99, 'active', NOW()),
+  ('PHP for Beginners Course', 'Video course for PHP basics', 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600', 49.00, 'active', NOW()),
+  ('JavaScript Mastery Course', 'Complete JavaScript video course', 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=600', 69.00, 'active', NOW()),
+  ('React.js Advanced Course', 'Advanced React development techniques', 'https://images.pexels.com/photos/1181264/pexels-photo-1181264.jpeg?auto=compress&cs=tinysrgb&w=600', 79.00, 'active', NOW()),
+  ('Web Development Seminar Athens', '2-day live seminar in Athens', 'https://images.pexels.com/photos/3184319/pexels-photo-3184319.jpeg?auto=compress&cs=tinysrgb&w=600', 199.00, 'active', NOW()),
+  ('Web Development Seminar Thessaloniki', '2-day live seminar in Thessaloniki', 'https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=600', 199.00, 'active', NOW()),
+  ('UX/UI Design Bootcamp', 'Intensive 1-week live bootcamp', 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600', 299.00, 'active', NOW());
 
 
 -- ========================================

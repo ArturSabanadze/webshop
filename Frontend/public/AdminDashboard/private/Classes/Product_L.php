@@ -103,17 +103,17 @@ class Product_L implements Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update($db, $product_id)
+    public function update($db)
     {
         $update_product = $db->prepare("
-            UPDATE products SET
+        UPDATE products SET
             title = :title,
             description = :description,
             image_url = :image_url,
             price = :price,
             status = :status,
             start_selling_date = :start_selling_date
-            WHERE id = $product_id;
+        WHERE id = :id
         ");
         $update_product->execute([
             ':title' => $this->title,
@@ -122,23 +122,25 @@ class Product_L implements Product
             ':price' => $this->price,
             ':status' => $this->status,
             ':start_selling_date' => $this->start_selling_date,
+            ':id' => $this->id
         ]);
 
         $update_live_seminars = $db->prepare("
-            UPDATE live_seminars SET
+        UPDATE live_seminars SET
             start_date = :start_date,
             end_date = :end_date,
             location_id = :location_id,
             min_participants = :min_participants,
             max_participants = :max_participants
-            WHERE product_id = $product_id;
+        WHERE product_id = :product_id
         ");
         $update_live_seminars->execute([
             ':start_date' => $this->start_date,
             ':end_date' => $this->end_date,
             ':location_id' => $this->location_id,
             ':min_participants' => $this->min_participants,
-            ':max_participants' => $this->max_participants
+            ':max_participants' => $this->max_participants,
+            ':product_id' => $this->id
         ]);
     }
 

@@ -29,16 +29,22 @@ trait T_Product
                         <?php
                         $isEditing = ($action === 'edit' && $editingId == $row['product_id']);
                         ?>
-
-                        <tr>
-                            <form method="post">
+                        <form method="post" enctype="multipart/form-data">
+                            <tr>
                                 <input type="hidden" name="action" value="update-product">
                                 <input type="hidden" name="product_id" value="<?= $row['product_id'] ?>">
                                 <input type="hidden" name="product_type" value="<?= htmlspecialchars($_GET['type']) ?>">
+                                <input type="hidden" name="id" value="<?= $row['id'] ?>">
 
                                 <?php foreach ($row as $key => $value): ?>
                                     <td>
-                                        <?php if ($isEditing && $key !== 'product_id' && $key !== 'id'): ?>
+                                        <?php if ($isEditing && $key === 'image_url'): ?>
+                                            <input type="hidden" name="existing_image" value="<?= htmlspecialchars($value) ?>">
+                                            <input type="file" name="product_image" accept="image/*">
+                                            <?php if ($value): ?>
+                                                <small>Current: <?= htmlspecialchars(basename($value)) ?></small>
+                                            <?php endif; ?>
+                                        <?php elseif ($isEditing && $key !== 'product_id' && $key !== 'id'): ?>
                                             <input type="text" name="<?= htmlspecialchars($key) ?>" value="<?= htmlspecialchars($value) ?>"
                                                 style="width:100%">
                                         <?php else: ?>
@@ -50,27 +56,24 @@ trait T_Product
                                 <td>
                                     <?php if ($isEditing): ?>
                                         <button type="submit" onclick="return confirm('Save changes?')">
-                                            💾 Save
+                                            Save
                                         </button>
                                         |
                                         <a href="?page=products&type=<?= $_GET['type'] ?>">Cancel</a>
                                     <?php else: ?>
                                         <a href="?page=products&type=<?= $_GET['type'] ?>&action=edit&id=<?= $row['product_id'] ?>">
-                                            ✏ Edit
+                                            Edit
                                         </a>
                                         |
                                         <a href="?page=products&type=<?= $_GET['type'] ?>&action=delete&id=<?= $row['product_id'] ?>"
                                             onclick="return confirm('Delete this product?')">
-                                            🗑 Delete
+                                            Delete
                                         </a>
                                     <?php endif; ?>
                                 </td>
-
-                            </form>
-                        </tr>
-
+                            </tr>
+                        </form>
                     <?php endforeach; ?>
-
                 </tbody>
             </table>
         </section>

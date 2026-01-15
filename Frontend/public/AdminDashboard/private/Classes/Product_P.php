@@ -14,7 +14,6 @@ class Product_P implements Product
     private string $status = "inactive";
     private string $created_at = "";
     private string $start_selling_date = "";
-    private string $product_id = "";
     private int $stock = 0;
     private float $weight = 0.0;
     private float $pack_size_height = 0.0;
@@ -108,22 +107,24 @@ class Product_P implements Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update($db, $product_id)
+    public function update($db)
     {
         if ($this->id === null) {
             throw new RuntimeException('Cannot update product without ID');
         }
 
+        // products table
         $update = $db->prepare("
-            UPDATE products SET
+        UPDATE products SET
             title = :title,
             description = :description,
             image_url = :image_url,
             price = :price,
             status = :status,
             start_selling_date = :start_selling_date
-            WHERE id = $product_id;
-        ");
+        WHERE id = :id
+    ");
+
         $update->execute([
             ':title' => $this->title,
             ':description' => $this->description,
@@ -134,16 +135,18 @@ class Product_P implements Product
             ':id' => $this->id
         ]);
 
+        // physical_products table
         $update = $db->prepare("
-            UPDATE physical_products SET
+        UPDATE physical_products SET
             stock = :stock,
             weight = :weight,
             pack_size_height = :pack_size_height,
             pack_size_width = :pack_size_width,
             pack_size_depth = :pack_size_depth,
             shipping_required = :shipping_required
-            WHERE product_id = $product_id;
-        ");
+        WHERE product_id = :product_id
+    ");
+
         $update->execute([
             ':stock' => $this->stock,
             ':weight' => $this->weight,
@@ -154,6 +157,7 @@ class Product_P implements Product
             ':product_id' => $this->id
         ]);
     }
+
 
     public function delete($db)
     {

@@ -90,42 +90,42 @@ class Product_D implements Product
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function update($db, $product_id)
+    public function update($db)
     {
         if ($this->id === null) {
             throw new RuntimeException('Cannot update product without ID');
         }
 
         $update_product = $db->prepare("
-            UPDATE products SET
+        UPDATE products SET
             title = :title,
             description = :description,
             image_url = :image_url,
             price = :price,
             status = :status,
             start_selling_date = :start_selling_date
-            WHERE id = $product_id;
+        WHERE id = :id
         ");
         $update_product->execute([
+            ':id' => $this->id,
             ':title' => $this->title,
             ':description' => $this->description,
             ':image_url' => $this->image_url,
             ':price' => $this->price,
             ':status' => $this->status,
-            ':start_selling_date' => $this->start_selling_date,
-            ':id' => $product_id
+            ':start_selling_date' => $this->start_selling_date
         ]);
 
         $update_digital = $db->prepare("
-            UPDATE digital_products SET
+        UPDATE digital_products SET
             file_url = :file_url,
-            liciense_type = :liciense_type
-            WHERE product_id = $product_id;
+            license_type = :license_type
+        WHERE product_id = :product_id
         ");
         $update_digital->execute([
+            ':product_id' => $this->id,
             ':file_url' => $this->file_url,
             ':license_type' => $this->license_type,
-            ':product_id' => $product_id
         ]);
     }
 

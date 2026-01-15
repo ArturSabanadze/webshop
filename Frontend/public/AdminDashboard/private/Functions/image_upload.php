@@ -2,6 +2,10 @@
 
 function handleImageUpload(): ?string
 {
+    if (!isset($_FILES['product_image']) || $_FILES['product_image']['error'] === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
 
         $uploadDir = __DIR__ . '/../../../assets/product_images/';

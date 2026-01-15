@@ -368,4 +368,17 @@ trait T_Product
         return ob_get_clean();
     }
 
+    public function new_product_form_handler($product_type): string
+    {
+        if ($product_type instanceof Product_P) {
+            return $this->new_physical_product_form();
+        } elseif ($product_type instanceof Product_D) {
+            return $this->new_digital_product_form();
+        } elseif ($product_type instanceof Product_L) {
+            return $this->new_live_product_form();
+        } else {
+            return '<p>Invalid product type.</p>';
+        }
+    }
+
 }

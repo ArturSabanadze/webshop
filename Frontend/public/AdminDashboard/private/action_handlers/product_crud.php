@@ -7,10 +7,7 @@ require_once __DIR__ . '/../Functions/image_upload.php';
 
 $type = $_GET['type'] ?? 'physical';
 
-
-// ================================
 // DELETE
-// ================================
 if (($_GET['action'] ?? '') === 'delete') {
     $page = $_GET['page'] ?? 'products';
     $type = $_GET['type'] ?? 'physical';
@@ -36,15 +33,11 @@ if (($_GET['action'] ?? '') === 'delete') {
             $p->delete($pdo);
         }
     }
-
     header("Location: ?page=$page&type=$type");
     exit;
 }
 
-
-// ================================
 // UPDATE
-// ================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'update-product') {
 
     $product_img_url = handleImageUpload();
@@ -82,10 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
     exit;
 }
 
-
-// ================================
 // CREATE
-// ================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'create-product') {
 
     $product_img_url = handleImageUpload();
@@ -128,22 +118,18 @@ switch ($type) {
     case 'physical':
         $p = new Product_P([]);
         $product_list = $p->read($pdo);
-        echo $p->new_physical_product_form();
-        echo $p->listAll($product_list);
         break;
 
     case 'live':
         $p = new Product_L([]);
         $product_list = $p->read($pdo);
-        echo $p->new_live_product_form();
-        echo $p->listAll($product_list);
         break;
 
     case 'digital':
     default:
         $p = new Product_D([]);
         $product_list = $p->read($pdo);
-        echo $p->new_digital_product_form();
-        echo $p->listAll($product_list);
         break;
 }
+echo $p->new_product_form_handler($p);
+echo $p->listAll($product_list);

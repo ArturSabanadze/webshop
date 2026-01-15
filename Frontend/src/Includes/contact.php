@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
     $formSubmitted = true;
 
     // Validate captcha
-    if (trim($_POST['captcha']) === "7") {
+    if (trim($_POST['captcha']) === "7" && isset($_SESSION['username'])) {
         $captchaCorrect = true;
 
         // ----- Sanitization -----
@@ -21,19 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
 
         // Validierung
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            $error = "Bitte eine gültige E-Mail-Adresse eingeben.";
+            $error = "Please enter a valid email address.";
             $captchaCorrect = false;
         }
 
         //strlen method to count characters in name
         if (strlen(trim($name)) < 2) {
-            $error = "Bitte einen gültigen Namen eingeben.";
+            $error = "Please enter a valid name.";
             $captchaCorrect = false;
         }
 
         //strlen method to count characters in message
         if (strlen(trim($message)) < 10) {
-            $error = "Bitte eine aussagekräftige Nachricht eingeben.";
+            $error = "Please enter a message with at least 10 characters.";
             $captchaCorrect = false;
         }
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
         }
 
     } else {
-        $error = "Das Captcha ist falsch. Bitte erneut versuchen.";
+        $error = "Captcha is incorrect or user not logged in. Please try again.";
     }
 }
 ?>
@@ -61,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_contact'])) {
 
     <?php else: ?>
         <div class="content-contact-page">
-            <h1>Kontakt</h1>
-            <p>Sie haben Fragen zu unseren Seminaren oder Ihrem Zugang? Schreiben Sie uns gern eine Nachricht.</p>
+            <h1>Contact</h1>
+            <p>If you have questions about our seminars or your access, please feel free to send us a message.</p>
 
-            <!-- Formular -->
+            <!-- Form -->
             <form method="post" action="index.php?page=contact">
 
                 <div class="form-group">

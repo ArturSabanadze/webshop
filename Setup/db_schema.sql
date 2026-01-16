@@ -185,7 +185,7 @@ CREATE TABLE carts_items (
     ON DELETE CASCADE,
   CONSTRAINT fk_ci_product
     FOREIGN KEY (product_id) REFERENCES products(id)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
 CREATE TABLE wishlist (

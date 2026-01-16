@@ -1,32 +1,58 @@
-## Installation and Setup (with XAMPP as APACHE and MYSQL server)
+## 📋 Table of Contents
+
+- [Overview](#overview)
+- [Installation](#installation)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Core Classes & Traits](#core-classes--traits)
+- [Key Functions](#key-functions)
+- [Database Schema](#database-schema)
+- [Security Features](#security-features)
+- [Tech Stack](#tech-stack)
+- [Team](#team)
+- [Repository](#repository)
+
+## Overview
+
+A comprehensive web-based platform for managing and booking seminars/courses online. This project implements a full-featured webshop designed for multi products.
+
+⚠️ Important Warning
+
+Attention: This web application is currently under active development and is not yet production-ready. By installing or using this software, you acknowledge and accept the following risks:
+
+Incomplete Features: Some functionalities are not implemented or partially implemented. Certain pages, workflows, or admin features may not behave as expected.
+
+Potential Bugs: The application may contain bugs, errors, or security gaps. Use at your own risk; data loss or unexpected behavior is possible.
+
+Security Limitations: While basic security measures (password hashing, prepared statements, session management) are implemented, the application has not been fully security-audited. Do not deploy this system in production or on the public internet without proper review and hardening.
+
+Data Integrity: Test data is included for demonstration purposes. Using your own data may lead to unexpected behavior or conflicts if database schemas or constraints are altered.
+
+Experimental Setup: Installation scripts (e.g., setup.bat) are designed for Windows + XAMPP environments. Running them in other environments may fail or cause errors.
+
+Recommendations:
+
+Use this software in a development or testing environment only.
+
+Avoid exposing the application to the internet until full testing, security hardening, and feature completion are done.
+
+Backup any important data before testing.
+
+Contribute improvements, bug fixes, or security enhancements responsibly.
+
+Disclaimer: This software is intended for educational and demonstration purposes only. The authors are not responsible for data loss, system damage, or security issues resulting from its use.
+
+## Installation
 
 ### Prerequisites .
 
-- XAMPP (Apache + MySQL)
+- XAMPP installed at C:/xampp (Apache + MySQL)
 - Windows operating system (for setup.bat automation)
+- Ensure MySQL has no password (default)
 
 ### Installation Steps
 
-1. **Clone the repository:** (If you have the Project zip folder skip to step 2)
-
-   ```bash
-   git clone https://github.com/ArturSabanadze/webshop.git
-   cd webshop
-   ```
-
-2. **Install XAMPP:** (If already installed skip to 3)
-
-   - Download and install XAMPP from https://www.apachefriends.org/
-   - Install to default location: `C:\xampp` **<--- (Important for setup.bat workflow)**
-
-3. **Configure MySQL:**
-
-   - Start Apache and MySQL from XAMPP Control Panel
-   - Ensure MySQL has no password (default), or update credentials in:
-     - `Backend/config/.env`
-     - `setup.bat`
-
-4. **Automated Setup:**
+1. **Automated Setup:**
 
    - Run `setup.bat` to:
      - Copy project files to XAMPP htdocs
@@ -34,30 +60,33 @@
      - Import test data
      - Configure environment
 
-5. **Access the Application:**
+1. **Start Apache and MySQL:**
 
-   - Frontend: `http://localhost/Die_Fantastische_4/Frontend/public/index.php`
-   - User Credentials: username: user | password: user1
+   - Start xampp
+   - Run Apache and MySQL from XAMPP Control Panel
 
-   - Admin Dashboard: `http://localhost/Die_Fantastische_4/Frontend/public/AdminDashboard/private/admin_dashboard.php`
-   - Admin Credentials: username: admin | password: admin1
+1. **Access the Application:**
 
-# Webshop - Seminar Management System
+   - Open Browser
+   - Frontend URL: http://localhost/gruppe1/Frontend/public/index.php
+   - Test User Credentials:
 
-A comprehensive web-based platform for managing and booking seminars/courses online. This project implements a full-featured webshop specifically designed for educational seminars with user authentication, admin dashboard, and enrollment management.
+     - username: user
+     - password: user1
 
-## Project Overview
-
-This webshop is a seminar management system that enables users to browse available courses, register for seminars, and manage their enrollments. The platform provides a user-friendly interface for customers and a powerful admin dashboard for managing seminars, dates, and participants.
+   - Admin Dashboard URL: http://localhost/gruppe1/Frontend/public/AdminDashboard/private/admin_dashboard.php
+   - Admin Credentials:
+     - username: admin
+     - password: admin1
 
 ## Architecture
 
 The project follows a modern three-tier architecture:
 
-- **Frontend**: PHP-based user interface with responsive design
 - **Backend**: RESTful API handlers for business logic and database operations
-- **Database**: MySQL database with normalized schema using PDO for secure data access
 - **Admin Dashboard**: Protected administrative interface for system management
+- **Frontend**: PHP-based user interface with responsive design
+- **Database**: MySQL database with normalized schema using PDO for secure data access
 
 ## Key Features
 
@@ -196,6 +225,15 @@ webshop/
 - **Artur Sabanadze** - Full-Stack Developer
 - **Tobias Heinrich Dyck** - Backend Developer
 - **Ingo Paar** - Frontend Developer
+
+## Repository
+
+1. **Clone the repository:** (If you have the Project zip folder skip to step 2)
+
+   ```bash
+   git clone https://github.com/ArturSabanadze/webshop.git
+   cd webshop
+   ```
 
 ## License
 

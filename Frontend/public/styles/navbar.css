@@ -8,8 +8,8 @@ NAVBAR
   z-index: 10;
   background: linear-gradient(
     to right,
-    rgba(5, 32, 54, 0.8),
-    rgba(27, 81, 131, 0.6)
+    rgba(24, 24, 24, 0.884),
+    rgba(20, 20, 20, 0.842)
   );
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -19,15 +19,17 @@ NAVBAR
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
+  padding: 4px 4vw;
   gap: 20px;
   color: #fff;
 }
 
 .logo {
   display: flex;
+  border-radius: 2px;
   align-items: center;
   cursor: pointer;
+  padding: 3px;
   transition: 0.2s;
 }
 
@@ -42,7 +44,8 @@ NAVBAR
 .links {
   display: flex;
   justify-content: center;
-  gap: 25px;
+  align-items: center;
+  gap: 10px;
   font-size: 1.1rem;
 }
 
@@ -55,33 +58,49 @@ NAVBAR
   border-radius: 50%;
   min-width: 100px;
   text-align: center;
-  font-weight: 400;
+  font-size: clamp(0.8rem, 0.89vw, 1.2rem);
+  white-space: nowrap;
 }
 
 .links a:hover {
   background-color: #d6d6d659;
   padding: 8px 12px;
-  border-radius: 20%;
+  border-radius: 5px;
   font-weight: 400;
 }
 
-.links:hover > :not(:hover) {
-  opacity: 0.9;
+/* .links:hover > :not(:hover) {
+  opacity: 0.95;
   filter: blur(1px);
   font-weight: 400;
+} */
+
+.nav-filter-search {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.658);
+  background: rgba(212, 212, 212, 0.74);
+  color: #202020;
+  font-size: 0.95rem;
+  width: 20dvw;
+  height: 30px;
+  min-width: 200px;
+  outline: none;
+  transition: 0.25s;
 }
 
 .dsk-login-btn {
-  background-color: rgb(49, 68, 92);
-  padding: 8px 12px;
-  border: none;
+  background-color: rgba(49, 68, 92, 0);
+  padding: 3px 6px;
   border-radius: 5px;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 2px;
   color: #fff;
   text-decoration: none;
   transition: all 0.3s ease;
+  min-width: 70px;
 }
 
 .dsk-login-btn svg {
@@ -164,9 +183,9 @@ NAVBAR
   transform: rotate(-45deg) translate(5px, -5px);
 }
 
-@media (max-width: 1140px) {
+@media (max-width: 1278px) {
   .navbarContainerWrapper {
-    background: linear-gradient(to right, rgb(70, 99, 122), rgb(108, 146, 182));
+    background: linear-gradient(to right, rgb(219, 219, 219), rgb(70, 99, 122));
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -208,7 +227,6 @@ NAVBAR
 }
 
 @media (max-height: 800px) {
-
   .logo img {
     width: clamp(50px, 15vw, 80px);
   }
@@ -221,5 +239,4 @@ NAVBAR
   .desktop-menu {
     padding: 4px 8px;
   }
-
 }

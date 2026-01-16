@@ -1,0 +1,36 @@
+Installation
+
+Prerequisites .
+
+- XAMPP installed at C:/xampp (Apache + MySQL)
+- Windows operating system (for setup.bat automation)
+- Ensure MySQL has no password (default)
+
+Installation Steps
+
+1. **Automated Setup:**
+
+   - Run `setup.bat` to:
+     - Copy project files to XAMPP htdocs
+     - Create database schema
+     - Import test data
+     - Configure environment
+
+1. **Start Apache and MySQL:**
+
+   - Start xampp
+   - Run Apache and MySQL from XAMPP Control Panel
+
+1. **Access the Application:**
+
+   - Open Browser
+   - Frontend URL: http://localhost/gruppe1/Frontend/public/index.php
+   - Test User Credentials:
+
+     - username: user
+     - password: user1
+
+   - Admin Dashboard URL: http://localhost/gruppe1/Frontend/public/AdminDashboard/private/admin_dashboard.php
+   - Admin Credentials:
+     - username: admin
+     - password: admin1

@@ -87,16 +87,14 @@ INSERT INTO categories (category_name, description) VALUES
   ('Language Learning', 'Language courses and learning materials'),
   ('Design & Graphics', 'Design courses and graphic resources'),
   ('Health & Wellness', 'Health, fitness and wellness courses'),
-  ('Creative Arts', 'Art and creative skills development');
+  ('Creative Arts', 'Art and creative skills development'),
+  ('Bootcamps', 'Intensive multi-day or multi-week training programs');
 
 
 -- ========================================
 -- PRODUCTS (12 Produkte - gemischte Typen)
 -- ========================================
 INSERT INTO products (title, description, image_url, price, status, start_selling_date) VALUES
-  ('Wireless Mouse Pro', 'Ergonomic wireless mouse with precision tracking', 'https://ae-pic-a1.aliexpress-media.com/kf/Sc7da1d931c6a48ceb7346cb09ec7dbf2v.jpg_960x960q75.jpg_.avif', 25.90, 'active', NOW()),
-  ('USB-C Hub 7-in-1', 'Multi-port USB-C hub for laptops', 'https://assets.kotsovolos.gr/product/320757-b.jpg', 45.50, 'active', NOW()),
-  ('Mechanical Keyboard RGB', 'Gaming keyboard with RGB lighting', 'https://market1.gr/wp-content/uploads/2023/03/SMK9RB-768x768-1.jpg', 89.99, 'active', NOW()),
   ('Learning SQL eBook', 'Introductory SQL book for beginners', 'https://m.media-amazon.com/images/I/91hGui3k+SL._SY385_.jpg', 9.99, 'active', NOW()),
   ('Advanced Python eBook', 'Deep dive into Python programming', 'https://images.pexels.com/photos/3861972/pexels-photo-3861972.jpeg?auto=compress&cs=tinysrgb&w=600', 14.99, 'active', NOW()),
   ('Web Design eBook Collection', 'Complete guide to modern web design', 'https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=600', 19.99, 'active', NOW()),
@@ -105,7 +103,16 @@ INSERT INTO products (title, description, image_url, price, status, start_sellin
   ('React.js Advanced Course', 'Advanced React development techniques', 'https://images.pexels.com/photos/1181264/pexels-photo-1181264.jpeg?auto=compress&cs=tinysrgb&w=600', 79.00, 'active', NOW()),
   ('Web Development Seminar Athens', '2-day live seminar in Athens', 'https://images.pexels.com/photos/3184319/pexels-photo-3184319.jpeg?auto=compress&cs=tinysrgb&w=600', 199.00, 'active', NOW()),
   ('Web Development Seminar Thessaloniki', '2-day live seminar in Thessaloniki', 'https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=600', 199.00, 'active', NOW()),
-  ('Testing Booked out seminar', 'Intensive 1-week live bootcamp', 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600', 299.00, 'active', NOW());
+  ('Testing Booked out seminar', 'Intensive 1-week live bootcamp', 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600', 299.00, 'active', NOW()),
+  ('Photography Basics Course', 'Beginner photography online course', NULL, 39.00, 'active', NOW()),
+  ('Business Strategy Masterclass', 'Professional business training program', NULL, 99.00, 'active', NOW()),
+  ('Spanish Language Course A1', 'Beginner Spanish language course', NULL, 59.00, 'active', NOW()),
+  ('Graphic Design Essentials', 'Design & graphics fundamentals course', NULL, 69.00, 'active', NOW()),
+  ('Yoga & Mindfulness Course', 'Health and wellness online course', NULL, 45.00, 'active', NOW()),
+  ('Creative Writing Workshop', 'Creative arts online workshop', NULL, 55.00, 'active', NOW()),
+  ('Mobile App UX Course', 'Designing UX for mobile apps', NULL, 79.00, 'active', NOW()),
+  ('Software Tools Productivity Pack', 'Learning productivity software tools', NULL, 29.00, 'active', NOW()),
+  ('Full-Stack Web Bootcamp', '12-week intensive full-stack bootcamp', NULL, 499.00, 'active', NOW());
 
 
 -- ========================================
@@ -123,16 +130,17 @@ INSERT INTO product_categories (product_id, category_id) VALUES
   (9, 3),   -- React.js Advanced -> Online Courses
   (10, 4),  -- Web Dev Seminar Athens -> Live Seminars
   (11, 4),  -- Web Dev Seminar Thessaloniki -> Live Seminars
-  (12, 4);  -- UX/UI Bootcamp -> Live Seminars
-
-
--- ========================================
--- PHYSICAL PRODUCTS (3 Stück)
--- ========================================
-INSERT INTO physical_products (product_id, stock, weight, pack_size_height, pack_size_width, pack_size_depth, shipping_required) VALUES
-  (1, 50, 0.150, 10.0, 6.0, 4.0, 1),
-  (2, 35, 0.280, 15.0, 10.0, 5.0, 1),
-  (3, 25, 0.850, 45.0, 12.0, 5.0, 1);
+  (12, 4),  -- UX/UI Bootcamp -> Live Seminars
+  (13, 13), -- Testing Booked out seminar -> Bootcamps
+  (14, 7),  -- Photography Basics Course -> Photography
+  (15, 8),  -- Business Strategy Masterclass -> Business Training
+  (16, 9),  -- Spanish Language Course A1 -> Language Learning
+  (17, 10), -- Graphic Design Essentials -> Design & Graphics
+  (18, 11), -- Yoga & Mindfulness Course -> Health & Wellness
+  (19, 12), -- Creative Writing Workshop -> Creative Arts
+  (20, 6),  -- Mobile App UX Course -> Mobile Apps
+  (21, 5),  -- Software Tools Productivity Pack -> Software Tools
+  (22, 13); -- Full-Stack Web Bootcamp -> Bootcamps
 
 
 -- ========================================

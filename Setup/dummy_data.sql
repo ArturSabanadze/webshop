@@ -18,8 +18,8 @@ INSERT INTO users (username, password_hash, email, role) VALUES
   ('iris', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'iris@example.com', 'user'),
   ('jack', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'jack@example.com', 'user'),
   ('kate', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'kate@example.com', 'user'),
-  ('liam', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'liam@example.com', 'user');
-
+  ('liam', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcg7b3XeKeUxWdeS86E36DusJea', 'liam@example.com', 'user'),
+  ('user', '$2y$12$E6xVt0Pb6FiK99JK9A67DeLZ5cK8vdm/tsjtkW0BoDr.0kSfEU.uK', 'user@example.com', 'user');
 
 -- ========================================
 -- USER PROFILES (12 Profile)
@@ -36,7 +36,8 @@ INSERT INTO users_profiles (user_id, name, surname, gender, birthdate, phone, bi
   (9, 'Iris', 'Iverson', 'Female', '1993-06-12', '+30-210-9012345', 'E-book collector and reader', NULL),
   (10, 'Jack', 'Johnson', 'Male', '1986-04-20', '+30-211-0123456', 'Tech blogger and reviewer', NULL),
   (11, 'Kate', 'Kelly', 'Female', '1994-10-05', '+30-211-1234567', 'Online course enthusiast', NULL),
-  (12, 'Liam', 'Lewis', 'Male', '1997-12-17', '+30-211-2345678', 'Student and part-time learner', NULL);
+  (12, 'Liam', 'Lewis', 'Male', '1997-12-17', '+30-211-2345678', 'Student and part-time learner', NULL),
+  (13, 'User', 'Test', 'Male', '1997-12-17', '+30-211-2345678', 'Part-time learner', '/assets/profile_images/test_user.jpg');
 
 
 -- ========================================
@@ -66,7 +67,9 @@ INSERT INTO users_addresses (user_id, type, street, street_number, zip_code, sta
   (11, 'billing', 'Mitropoleos', '2', '10556', 'Attica', 'Attica', 'Greece'),
   (11, 'shipping', 'Mitropoleos', '2', '10556', 'Attica', 'Attica', 'Greece'),
   (12, 'billing', 'Athinas', '80', '10552', 'Attica', 'Attica', 'Greece'),
-  (12, 'shipping', 'Athinas', '80', '10552', 'Attica', 'Attica', 'Greece');
+  (12, 'shipping', 'Athinas', '80', '10552', 'Attica', 'Attica', 'Greece'),
+  (13, 'billing', 'Athinas', '81', '10552', 'Attica', 'Attica', 'Greece'),
+  (13, 'shipping', 'Athinas', '81', '10552', 'Attica', 'Attica', 'Greece');
 
 
 -- ========================================
@@ -102,7 +105,7 @@ INSERT INTO products (title, description, image_url, price, status, start_sellin
   ('React.js Advanced Course', 'Advanced React development techniques', 'https://images.pexels.com/photos/1181264/pexels-photo-1181264.jpeg?auto=compress&cs=tinysrgb&w=600', 79.00, 'active', NOW()),
   ('Web Development Seminar Athens', '2-day live seminar in Athens', 'https://images.pexels.com/photos/3184319/pexels-photo-3184319.jpeg?auto=compress&cs=tinysrgb&w=600', 199.00, 'active', NOW()),
   ('Web Development Seminar Thessaloniki', '2-day live seminar in Thessaloniki', 'https://images.pexels.com/photos/3184287/pexels-photo-3184287.jpeg?auto=compress&cs=tinysrgb&w=600', 199.00, 'active', NOW()),
-  ('UX/UI Design Bootcamp', 'Intensive 1-week live bootcamp', 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600', 299.00, 'active', NOW());
+  ('Testing Booked out seminar', 'Intensive 1-week live bootcamp', 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600', 299.00, 'active', NOW());
 
 
 -- ========================================
@@ -166,16 +169,13 @@ INSERT INTO seminars_locations (street, street_number, zip_code, state, province
 INSERT INTO live_seminars (product_id, start_date, end_date, location_id, min_participants, max_participants) VALUES
   (10, DATE_ADD(NOW(), INTERVAL 10 DAY), DATE_ADD(NOW(), INTERVAL 11 DAY), 1, 5, 30),
   (10, DATE_ADD(NOW(), INTERVAL 45 DAY), DATE_ADD(NOW(), INTERVAL 46 DAY), 1, 5, 30),
-  (11, DATE_ADD(NOW(), INTERVAL 15 DAY), DATE_ADD(NOW(), INTERVAL 16 DAY), 2, 5, 25),
-  (11, DATE_ADD(NOW(), INTERVAL 50 DAY), DATE_ADD(NOW(), INTERVAL 51 DAY), 2, 5, 25),
   (10, DATE_ADD(NOW(), INTERVAL 20 DAY), DATE_ADD(NOW(), INTERVAL 21 DAY), 3, 5, 28),
   (10, DATE_ADD(NOW(), INTERVAL 55 DAY), DATE_ADD(NOW(), INTERVAL 56 DAY), 3, 5, 28),
+  (11, DATE_ADD(NOW(), INTERVAL 15 DAY), DATE_ADD(NOW(), INTERVAL 16 DAY), 2, 5, 25),
+  (11, DATE_ADD(NOW(), INTERVAL 50 DAY), DATE_ADD(NOW(), INTERVAL 51 DAY), 2, 5, 25), 
   (11, DATE_ADD(NOW(), INTERVAL 25 DAY), DATE_ADD(NOW(), INTERVAL 26 DAY), 4, 5, 32),
   (11, DATE_ADD(NOW(), INTERVAL 60 DAY), DATE_ADD(NOW(), INTERVAL 61 DAY), 4, 5, 32),
-  (12, DATE_ADD(NOW(), INTERVAL 30 DAY), DATE_ADD(NOW(), INTERVAL 36 DAY), 1, 8, 40),
-  (12, DATE_ADD(NOW(), INTERVAL 70 DAY), DATE_ADD(NOW(), INTERVAL 76 DAY), 2, 8, 40),
-  (12, DATE_ADD(NOW(), INTERVAL 35 DAY), DATE_ADD(NOW(), INTERVAL 41 DAY), 3, 8, 35),
-  (12, DATE_ADD(NOW(), INTERVAL 75 DAY), DATE_ADD(NOW(), INTERVAL 81 DAY), 4, 8, 35);
+  (12, DATE_ADD(NOW(), INTERVAL 75 DAY), DATE_ADD(NOW(), INTERVAL 81 DAY), 4, 6, 10);
 
 
 -- ========================================
@@ -190,10 +190,7 @@ INSERT INTO seminar_participants (seminar_id, user_id) VALUES
   (6, 4), (6, 5), (6, 6),
   (7, 7), (7, 8), (7, 9),
   (8, 10), (8, 11), (8, 12),
-  (9, 1), (9, 2), (9, 3), (9, 4),
-  (10, 5), (10, 6), (10, 7), (10, 8),
-  (11, 9), (11, 10), (11, 11), (11, 12),
-  (12, 1), (12, 3), (12, 5), (12, 7);
+  (9, 1), (9, 2), (9, 3), (9, 4), (9, 5), (9, 6), (9, 7), (9, 8), (9, 9), (9, 10);
 
 
 -- ========================================
@@ -295,7 +292,7 @@ VALUES
   (9, 'completed', 49.00, 17, JSON_OBJECT('street','Patission','number','120'), 18, JSON_OBJECT('street','Patission','number','120'), DATE_SUB(NOW(), INTERVAL 8 DAY)),
   (10, 'confirmed', 179.98, 19, JSON_OBJECT('street','Aiolou','number','45'), 20, JSON_OBJECT('street','Aiolou','number','45'), DATE_SUB(NOW(), INTERVAL 9 DAY)),
   (11, 'pending', 59.98, 21, JSON_OBJECT('street','Mitropoleos','number','2'), 22, JSON_OBJECT('street','Mitropoleos','number','2'), DATE_SUB(NOW(), INTERVAL 10 DAY)),
-  (12, 'shipped', 99.98, 23, JSON_OBJECT('street','Athinas','number','80'), 24, JSON_OBJECT('street','Athinas','number','80'), DATE_SUB(NOW(), INTERVAL 11 DAY));
+  (13, 'shipped', 99.98, 23, JSON_OBJECT('street','Athinas','number','80'), 24, JSON_OBJECT('street','Athinas','number','80'), DATE_SUB(NOW(), INTERVAL 11 DAY));
 
 
 -- ========================================
@@ -325,7 +322,8 @@ INSERT INTO order_items (order_id, product_id, quantity, unit_price, status, pro
   (11, 4, 1, 9.99, 'fulfilled', JSON_OBJECT('title','Learning SQL eBook','price',9.99)),
   (12, 9, 1, 79.00, 'fulfilled', JSON_OBJECT('title','React.js Advanced Course','price',79.00)),
   (12, 5, 1, 14.99, 'fulfilled', JSON_OBJECT('title','Advanced Python eBook','price',14.99)),
-  (12, 6, 1, 19.99, 'pending', JSON_OBJECT('title','Web Design eBook Collection','price',19.99));
+  (12, 6, 1, 19.99, 'fulfilled', JSON_OBJECT('title','Web Design eBook Collection','price',19.99)),
+  (12, 12, 1, 19.99, 'fulfilled', JSON_OBJECT('title','UX/UI Design Bootcamp','price',19.99));
 
 
 -- ========================================
@@ -368,7 +366,7 @@ INSERT INTO payment_events (payment_id, type, created_at) VALUES
 -- ========================================
 -- VOUCHER TYPES (12 Gutschein-Typen)
 -- ========================================
-INSERT INTO v_types (type_name, description) VALUES
+INSERT INTO voucher_categories (category_name, description) VALUES
   ('Percentage', 'Percentage discount on purchase'),
   ('FixedAmount', 'Fixed amount discount in EUR'),
   ('FreeProduct', 'Gives a specific product for free'),
@@ -470,3 +468,5 @@ INSERT INTO users_voucher (user_id, voucher_id, purchased_at, expiring_at) VALUE
 -- User Vouchers: 16
 
 -- Alle Daten wurden erfolgreich eingefügt! ✅
+
+

@@ -1,15 +1,15 @@
 <?php
 
 function handleImageUpload(): ?string
-{   
-if (isset($_FILES['profile_img_url']) && $_FILES['profile_img_url']['error'] === UPLOAD_ERR_OK) {
+{
+    if (isset($_FILES['profile_img_url']) && $_FILES['profile_img_url']['error'] === UPLOAD_ERR_OK) {
 
         $uploadDir = '../public/assets/profile_images/';
         if (!is_dir($uploadDir)) {
             $_SESSION['register_error'] = 'Failed to create upload directory.';
             return null;
         }
-        
+
         $fileTmpPath = $_FILES['profile_img_url']['tmp_name'];
         $fileName = $_FILES['profile_img_url']['name'];
         $fileSize = $_FILES['profile_img_url']['size'];

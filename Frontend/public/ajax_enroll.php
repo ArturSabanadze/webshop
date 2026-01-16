@@ -68,6 +68,15 @@ if ($capacity['current_participants'] >= $capacity['max_participants']) {
 // Enroll user, speichere die Anmeldung in der Datenbank
 $stmt = $pdo->prepare("INSERT INTO seminar_participants (seminar_id, user_id) VALUES (?, ?)");
 $stmt->execute([$seminarDateId, $userId]);
+$stmt = $pdo->prepare("INSERT INTO orders (user_id) VALUES (?)");
+$stmt->execute([$userId]);
+$orderId = $pdo->lastInsertId();
+$stmt = $pdo->prepare("INSERT INTO order_items (order_id, product_id, quantity, unit_price) 
+                       SELECT ?, product_id, 1, p.price 
+                       FROM live_seminars ls 
+                       JOIN products p ON ls.product_id = p.id 
+                       WHERE ls.id = ?");
+$stmt->execute([$orderId, $seminarDateId]);
 
 //speichere die Anmeldung in der Datei wenn es nicht schon existiert
 file_put_contents($logFile, $serialized, FILE_APPEND);

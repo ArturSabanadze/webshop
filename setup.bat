@@ -1,6 +1,6 @@
 @echo off
 echo ===============================
-echo Webshop Setup Script
+echo Webshop App Setup Script
 echo ===============================
 
 :: -------------------------------
@@ -8,15 +8,14 @@ echo ===============================
 :: -------------------------------
 set XAMPP_PATH=C:\xampp
 set Htdocs_PATH=%XAMPP_PATH%\htdocs
-set SQL_PATH=%~dp0Initializer\
-set DummyData_PATH=%SQL_PATH%Dummy\
-set CSV_PATH=%~dp0Initializer\Dummy\products_for_xampp.csv
+set SQL_PATH=%~dp0Setup\
+set DummyData_PATH=%SQL_PATH%Setup\
 
 :: -------------------------------
 :: Webshop-Ordner erstellen
 :: -------------------------------
-mkdir "%Htdocs_PATH%\Die_Fantastische_4"
-set Project_PATH=%Htdocs_PATH%\Die_Fantastische_4
+mkdir "%Htdocs_PATH%\gruppe1"
+set Project_PATH=%Htdocs_PATH%\gruppe1
 
 :: -------------------------------
 :: Prüfen, ob XAMPP existiert
@@ -57,27 +56,20 @@ if not exist "%XAMPP_PATH%\mysql\bin\mysql.exe" (
 :: -------------------------------
 :: Datenbank erstellen
 :: -------------------------------
-echo Erstelle Datenbank 'webshop'...
-"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS webshop;"
+echo Erstelle Datenbank 'gruppe1'...
+"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root -e "CREATE DATABASE IF NOT EXISTS gruppe1;"
 
 :: -------------------------------
 :: Initial-SQL importieren
 :: -------------------------------
 echo Importiere Initial SQL ...
-"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root webshop < "%SQL_PATH%db_schema.sql"
-
-:: -------------------------------
-:: CSV-Datei in products importieren
-:: -------------------------------
-echo Importiere products.csv ...
-"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root webshop -e "LOAD DATA LOCAL INFILE '%CSV_PATH:\=/%' INTO TABLE products FIELDS TERMINATED BY ';' OPTIONALLY ENCLOSED BY '\"' LINES TERMINATED BY '\r\n' IGNORE 1 LINES (product_name, image_url, description, price, min_capacity, max_capacity, start_date, end_date);"
-
+"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root gruppe1 < "%SQL_PATH%db_schema.sql"
 
 :: -------------------------------
 :: Restliche Dummy-Daten importieren
 :: -------------------------------
 echo Importiere Dummy Daten ...
-"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root webshop < "%SQL_PATH%dummy_data.sql"
+"%XAMPP_PATH%\mysql\bin\mysql.exe" -u root gruppe1 < "%SQL_PATH%dummy_data.sql"
 
 
 :: -------------------------------

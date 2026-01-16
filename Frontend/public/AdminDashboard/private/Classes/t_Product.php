@@ -4,6 +4,8 @@ trait T_Product
 {
     public function listAll(array $product_list): string
     {
+
+        $type = $_GET['type'] ?? '';
         if (empty($product_list)) {
             return '<p>No products found.</p>';
         }
@@ -11,74 +13,54 @@ trait T_Product
         $editingId = $_GET['id'] ?? null;
         $action = $_GET['action'] ?? null;
 
-        ob_start();
-        ?>
-        <section>
-            <table border="1" cellpadding="6">
-                <thead>
-                    <tr>
-                        <?php foreach (array_keys($product_list[0]) as $column): ?>
-                            <th><?= htmlspecialchars($column) ?></th>
-                        <?php endforeach; ?>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+        $html = '<section>';
+        $html .= '<table border="1" cellpadding="6"><thead><tr>';
 
-                    <?php foreach ($product_list as $row): ?>
-                        <?php
-                        $isEditing = ($action === 'edit' && $editingId == $row['product_id']);
-                        ?>
-                        <form method="post" enctype="multipart/form-data">
-                            <tr>
-                                <input type="hidden" name="action" value="update-product">
-                                <input type="hidden" name="product_id" value="<?= $row['product_id'] ?>">
-                                <input type="hidden" name="product_type" value="<?= htmlspecialchars($_GET['type']) ?>">
-                                <input type="hidden" name="id" value="<?= $row['id'] ?>">
+        foreach (array_keys($product_list[0]) as $column) {
+            $html .= '<th>' . htmlspecialchars($column) . '</th>';
+        }
+        $html .= '<th>Actions</th></tr></thead><tbody>';
 
-                                <?php foreach ($row as $key => $value): ?>
-                                    <td>
-                                        <?php if ($isEditing && $key === 'image_url'): ?>
-                                            <input type="hidden" name="existing_image" value="<?= htmlspecialchars($value) ?>">
-                                            <input type="file" name="product_image" accept="image/*">
-                                            <?php if ($value): ?>
-                                                <small>Current: <?= htmlspecialchars(basename($value)) ?></small>
-                                            <?php endif; ?>
-                                        <?php elseif ($isEditing && $key !== 'product_id' && $key !== 'id'): ?>
-                                            <input type="text" name="<?= htmlspecialchars($key) ?>" value="<?= htmlspecialchars($value) ?>"
-                                                style="width:100%">
-                                        <?php else: ?>
-                                            <?= htmlspecialchars((string) $value) ?>
-                                        <?php endif; ?>
-                                    </td>
-                                <?php endforeach; ?>
+        foreach ($product_list as $row) {
+            $isEditing = ($action === 'edit' && $editingId == $row['product_id']);
+            $html .= '<form method="post" enctype="multipart/form-data"><tr>';
+            $html .= '<input type="hidden" name="action" value="update-product">';
+            $html .= '<input type="hidden" name="product_id" value="' . $row['product_id'] . '">';
+            $html .= '<input type="hidden" name="product_type" value="' . htmlspecialchars($type) . '">';
+            $html .= '<input type="hidden" name="id" value="' . $row['id'] . '">';
 
-                                <td>
-                                    <?php if ($isEditing): ?>
-                                        <button type="submit" onclick="return confirm('Save changes?')">
-                                            Save
-                                        </button>
-                                        |
-                                        <a href="?page=products&type=<?= $_GET['type'] ?>">Cancel</a>
-                                    <?php else: ?>
-                                        <a href="?page=products&type=<?= $_GET['type'] ?>&action=edit&id=<?= $row['product_id'] ?>">
-                                            Edit
-                                        </a>
-                                        |
-                                        <a href="?page=products&type=<?= $_GET['type'] ?>&action=delete&id=<?= $row['product_id'] ?>"
-                                            onclick="return confirm('Delete this product?')">
-                                            Delete
-                                        </a>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        </form>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </section>
-        <?php
-        return ob_get_clean();
+            foreach ($row as $key => $value) {
+                $html .= '<td>';
+                if ($isEditing && $key === 'image_url') {
+                    $html .= '<input type="hidden" name="existing_image" value="' . htmlspecialchars($value) . '">';
+                    $html .= '<input type="file" name="product_image" accept="image/*">';
+                    if ($value) {
+                        $html .= '<small>Current: ' . htmlspecialchars(basename($value)) . '</small>';
+                    }
+                } elseif ($isEditing && $key !== 'product_id' && $key !== 'id') {
+                    $html .= '<input type="text" name="' . htmlspecialchars($key) . '" value="' . htmlspecialchars($value) . '" style="width:100%">';
+                } else {
+                    $html .= htmlspecialchars((string) $value);
+                }
+                $html .= '</td>';
+            }
+
+            $html .= '<td>';
+            if ($isEditing) {
+                $html .= '<button type="submit" onclick="return confirm(\'Save changes?\')">Save</button> | ';
+                $html .= '<a href="?page=products&type=' . $type . '">Cancel</a>';
+            } else {
+                $html .= '<a href="?page=products&type=' . $type . '&action=edit&id=' . $row['product_id'] . '">Edit</a> | ';
+                $html .= '<a href="?page=products&type=' . $type . '&action=delete&id=' . $row['product_id'] . '" onclick="return confirm(\'Delete this product?\')">Delete</a>';
+            }
+            $html .= '</td>';
+
+            $html .= '</tr></form>';
+        }
+
+        $html .= '</tbody></table></section>';
+
+        return $html;
     }
 
 
@@ -380,5 +362,4 @@ trait T_Product
             return '<p>Invalid product type.</p>';
         }
     }
-
 }

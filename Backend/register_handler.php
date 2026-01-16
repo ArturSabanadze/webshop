@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'regis
         'profile_img_url' => $profile_img_url ?? null,
     ];
     // POST Validation
-    if ($user_data['username'] === '' /* || !$profile_data['surname'] || !$user_data['username'] || !$user_data['password'] || !$user_data['email'] */) {
+    if ($user_data['username'] === '') {
         $_SESSION['register_error'] = 'Name are required.';
         return;
     } elseif (!preg_match($namePattern, $profile_data['name'])) {

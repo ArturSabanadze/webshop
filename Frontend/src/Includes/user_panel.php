@@ -126,13 +126,29 @@ function e($v)
         <div class="register-msg-error"><?= e($error_msg) ?></div>
     <?php endif; ?>
 
-    
+
     <p>Welcome, <strong><?= e($user['username']) ?></strong></p>
     <div class="profile-image-container">
-    <img src="<?= e($user['profile_img_url'] ?? 'assets/default_profile.png') ?>" alt="Profile Image" class="profile-image">
+        <?php
+        // Default image
+        $defaultImage = 'assets/default_profile.png';
+
+        // Use user profile image if set
+        $profileImage = $user['profile_img_url'] ?? $defaultImage;
+
+        // Automatically detect subfolder in XAMPP
+        $subFolder = str_replace($_SERVER['DOCUMENT_ROOT'], '', realpath(__DIR__ . '/../../public')) ?? '';
+
+        // Remove leading slash if in a subfolder
+        if (!empty($subFolder) && str_starts_with($profileImage, '/')) {
+            $profileImage = ltrim($profileImage, '/');       // remove leading slash
+            $profileImage = '' . $profileImage; // prepend subfolder
+        }
+        ?>
+        <img src="<?= e($profileImage) ?>" alt="Profile Image" class="profile-image">
     </div>
-    
-        <h2>User Panel</h2>
+
+    <h2>User Panel</h2>
     <!-- USER ACCOUNT DATA -->
     <form method="post" class="user-form">
         <input type="hidden" name="action" value="<?= $is_editing ? 'save' : '' ?>">
@@ -295,5 +311,9 @@ function e($v)
         </div>
     </form>
 
-    
+    <!-- USER ORDERS -->
+    <?php include __DIR__ . '/user_orders.php'; ?>
+
+
+
 </div>
